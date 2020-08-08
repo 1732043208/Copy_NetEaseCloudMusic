@@ -7,27 +7,30 @@
                 v-show="isShowTabControl"
         >
         </tab-control>
-      <scroll class="content"
+      <scroll
+              class="content"
               ref="scroll"
               :probe-type="3"
               :pull-up-load="true"
 
       >
-        <recommend v-show="this.currentType==='recommend'">
+          <div >
+              <recommend v-show="this.currentType==='recommend'"></recommend>
+              <!--          <router-link to="/login">toLogin</router-link>-->
+          </div>
 
-      </recommend>
       </scroll>
 
 
-        <!--    <router-link to="/login">toLogin</router-link>-->
+
     </div>
 </template>
 
 <script>
     // @ is an alias to /src
-    import TabControl from "../../components/music-home-child/TabControl";
-    import Scroll from "../../components/Scroll";
-    import recommend from "../../components/music-home-child/recommend";
+    import TabControl from "../../components/music-home-child/tabControl";
+    import Scroll from "../../components/scroll";
+    import Recommend from "../../components/music-home-child/recommend";
 
     export default {
         name: 'Home',
@@ -54,7 +57,7 @@
                 }
             },
         },
-        components: {TabControl, Scroll, recommend},
+        components: {TabControl, Scroll, Recommend},
     }
 </script>
 <style scoped lang="less">
@@ -65,6 +68,14 @@
         bottom: 0;
         left: 0;
         right: 0;
-        z-index: 999;
+        z-index: 0;
+        touch-action: none;
+    }
+    .content1{
+        /*width: 100vw;*/
+        overflow: hidden;
+        ul{
+            display: flex;
+        }
     }
 </style>

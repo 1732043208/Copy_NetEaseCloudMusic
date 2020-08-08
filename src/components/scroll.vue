@@ -1,8 +1,8 @@
 <template>
     <div class="wrapper" ref="wrapper">
-        <div class="content">
+
             <slot></slot>
-        </div>
+
     </div>
 </template>
 
@@ -23,7 +23,16 @@
                 default() {
                     return false;
                 }
-            }
+            },
+            scrollX: {
+                type: Boolean,
+                default: false
+            },
+            scrollY:{
+                type:Boolean,
+                default:true
+            },
+
         },
         data() {
             return {
@@ -36,12 +45,16 @@
                 tap: true,
                 // 设置2或者3都可以监听滚动
                 probeType: this.probeType,
-                pullUpLoad: this.pullUpLoad
+                pullUpLoad: this.pullUpLoad,
+                scrollX: this.scrollX,
+                scrollY: this.scrollY,
+                // eventPassthrough: 'vertical'
+                // eventPassthrough: 'horizontal'
             });
-                // 监听滚动事件
-                this.scroll.on('scroll', (position) => {
-                    this.$emit('scroll', position)
-                });
+            // 监听滚动事件
+            this.scroll.on('scroll', (position) => {
+                this.$emit('scroll', position)
+            });
             this.scroll.on('pullingUp', () => {
                 this.$emit('pullingUp')
             })

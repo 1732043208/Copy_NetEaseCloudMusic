@@ -36,12 +36,13 @@
 
 <style scoped>
     .tab-control {
+        position: relative;
         height: 60px;
         display: flex;
         text-align: center;
         padding: 10px 0 10px;
         background: white;
-        z-index: 9;
+        z-index: 999;
     }
 
     .tab-control-item {

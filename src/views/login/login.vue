@@ -1,7 +1,7 @@
 <template>
     <div class="loginPage">
-        <img class="logo" src="../assets/logo.jpg" alt="logo">
-        <router-link class="phone-login" to="/">手机号登录</router-link>
+        <img class="logo" src="../../assets/logo.jpg" alt="logo">
+        <router-link class="phone-login" to="/phone-login">手机号登录</router-link>
         <router-link class="register" to="/register">注册</router-link>
     </div>
 </template>
@@ -13,7 +13,6 @@
 </script>
 
 <style scoped lang="less">
-    @theme-color: #c2463a;
     @button-height: 126px;
     .loginPage {
         width: 1080px;

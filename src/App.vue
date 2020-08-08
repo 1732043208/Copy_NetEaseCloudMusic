@@ -1,19 +1,21 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+    <div id="app">
+        <home-nav v-if="$route.meta.isShow"></home-nav>
+        <keep-alive>
+            <router-view v-if="$route.meta.isShow"></router-view>
+        </keep-alive>
+        <router-view v-if="!$route.meta.isShow"></router-view>
     </div>
-    <router-view/>
-  </div>
 </template>
+<script>
+    import homeNav from './components/nav/home-nav'
 
-<style lang="stylus">
-#app
-  font-family Avenir, Helvetica, Arial, sans-serif
-  -webkit-font-smoothing antialiased
-  -moz-osx-font-smoothing grayscale
-  text-align center
-  color #2c3e50
-  margin-top 60px
+    export default {
+        components: {
+            homeNav
+        }
+    }
+</script>
+<style>
+
 </style>

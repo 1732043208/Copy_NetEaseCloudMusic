@@ -25,7 +25,18 @@
             </van-swipe-item>
 
         </van-swipe>
+        <!--        轮播图下面的推荐-->
+        <music-sort></music-sort>
+        <!--        推荐歌单-->
+        <recommended-song-list
+                :recommend-song-list="songListInfoList"
+                :top-title="topTitle"
+                :btn-more="btnMore">
+
+        </recommended-song-list>
+        <recommend-music :recommend-music="recommendMusic"></recommend-music>
     </div>
+
 </template>
 
 <script>
@@ -33,25 +44,57 @@
     import {Swipe, SwipeItem} from 'vant';
 
     // 引入网络请求方法
-    import {getBannerAPI} from "../../http/all-api";
+    import {GetBannerAPI, GetHomeFindAPI} from "../../http/all-api";
+
+    // 引入组件
+    import MusicSort from "./musicSort";
+    import RecommendedSongList from './recommendedSongList';
+    import Scroll from '../scroll'
+    import HorizontalScroll from '../horizontalScroll'
+    import RecommendMusic from "./recommendMusic";
 
     export default {
         name: "recommend",
+        created() {
+            GetHomeFindAPI().then(res => {
+                this.recommendSongList = res.data.data.blocks[0];
+                this.recommendMusic = res.data.data.blocks[1];
+                console.log(this.recommendSongList.creatives);
+                this.songListInfoList.push(...this.recommendSongList.creatives)
+            }).catch(error => {
+                console.log('首页-发现出错');
+                console.log(error);
+            });
+        },
         mounted() {
-            getBannerAPI(1).then(res => {
+            GetBannerAPI(1).then(res => {
                 if (res.data.banners.length !== 0) {
                     // 将接口返回时轮播图数据解构加入新数组中
                     this.bannerList.push(...res.data.banners);
-                    console.log(this.bannerList);
                 }
             }).catch(err => {
                 console.log('轮播图网络请求失败');
                 console.log(err);
-            })
+            });
+
         },
         data() {
             return {
-                bannerList: []
+                bannerList: [],
+                // 推荐歌单
+                recommendSongList: [],
+                // 推荐歌单详情 图片/文案
+                songListInfoList: [],
+                // 推荐歌曲
+                recommendMusic: null,
+            }
+        },
+        computed: {
+            topTitle() {
+                return this.recommendSongList.uiElement.subTitle.title
+            },
+            btnMore() {
+                return this.recommendSongList.uiElement.button.text
             }
         },
         methods: {
@@ -66,6 +109,11 @@
         components: {
             [Swipe.name]: Swipe,
             [SwipeItem.name]: SwipeItem,
+            MusicSort,
+            RecommendedSongList,
+            Scroll,
+            HorizontalScroll,
+            RecommendMusic,
         }
     }
 </script>
@@ -100,5 +148,32 @@
         }
     }
 
+    .cont {
+        list-style: none;
+        white-space: nowrap;
+        font-size: 12px;
+        text-align: center;
+        padding-right: .24rem;
+
+        .cont-item {
+            position: relative;
+            display: inline-block;
+            padding: .06rem 0 .2rem;
+            width: 600px;
+            margin: 0 .1rem;
+
+            .cont-img {
+                overflow: hidden;
+                /*width: 600px;*/
+                height: 0;
+                padding-bottom: 100%;
+
+                .img {
+                    width: 100%;
+                }
+            }
+
+        }
+    }
 
 </style>

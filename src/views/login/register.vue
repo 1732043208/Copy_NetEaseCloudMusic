@@ -16,6 +16,7 @@
                     left-icon="phone-o"
                     placeholder="请输入手机号"
                     input-align="left"
+                    clearable
                     name="tel"
                     maxlength=11
                     :border=true
@@ -24,6 +25,7 @@
                     message: '请输入手机号' }]"
             />
             <van-field
+                    type="password"
                     v-model="password"
                     left-icon="bag-o"
                     placeholder="设置登录密码,不小于6位"
@@ -31,19 +33,23 @@
                     name="password"
                     :border=true
                     :center=true
-                    :rules="[{ validator:padTest,
-                    message: '请输入大于6位'}]"
+                    :rules="[{ validator:padTest}]"
             />
-            <van-button class="btn"color="#c2463a" round block type="info" native-type="submit">
-                下一步
-            </van-button>
+            <button class="disabledBtn"
+                    :class="{'activeBtn':isNotEmpty}"
+                    :disabled="!isNotEmpty"
+                    @click="nextBtnClick">下一步
+            </button>
         </van-form>
+
     </div>
 </template>
 
 <script>
     // 引入Vant组件库
-    import {NavBar, Field, Toast, Form, Button} from 'vant';
+    import {NavBar, Field, Form, Button} from 'vant';
+
+    import {CheckPhoneAPI} from "../../http/all-api";
 
     export default {
         name: "register",
@@ -51,6 +57,15 @@
             return {
                 tel: '',
                 password: ''
+            }
+        },
+        computed: {
+            isNotEmpty() {
+                if (this.tel.trim().length > 0 && this.password.trim().length > 0) {
+                    return true;
+                } else {
+                    return false;
+                }
             }
         },
         methods: {
@@ -68,16 +83,41 @@
                 if (test) {
                     return true;
                 } else {
-                    Toast('密码不能为纯数字或纯英文字母');
+                    this.$toast('密码不能为纯数字或纯英文字母并且不小于6位');
                     return false;
                 }
+            },
+            nextBtnClick() {
+                console.log('点击');
+                // 当手机号和密码符合要求时
+                if (this.telTest(this.tel) && this.padTest(this.password)) {
+                    // 检验手机号是否注册过
+                    CheckPhoneAPI(this.tel).then(res => {
+                        if (res.data.exist === 1) {
+                            this.$toast('手机号已注册');
+                        } else {
+                            this.$router.push({
+                                path: '/captcha',
+                                query: {
+                                    'phone': this.tel,
+                                    'password':this.password
+                                }
+                            });
+                            this.$toast('验证码已发送');
+
+                        }
+                    }).catch(error => {
+                        console.log(error);
+                    });
+
+                }
+
             }
         },
         components: {
             // 注册Vant组件库的组件
             [NavBar.name]: NavBar,
             [Field.name]: Field,
-            [Toast.name]: Toast,
             [Form.name]: Form,
             [Button.name]: Button,
         }
@@ -85,16 +125,35 @@
 </script>
 
 <style scoped lang="less">
-    .registerPage{
+    @button-height: 120px;
+    .nextBtn() {
+        display: block;
+        width: 90vw;
+        line-height: @button-height;
+        background-color: @theme-color;
+        color: darkgray;
+        border-radius: @button-height/2;
+        margin: 92px auto 0;
+        text-align: center;
+        border-color: transparent;
+    }
+
+    .registerPage {
         width: 100vw;
         height: 100vh;
     }
-.telInput{
-    margin-top: 120px;
-    margin-bottom: 30px;
-}
-    .btn{
-        margin-top: 85px;
 
+    .telInput {
+        margin-top: 120px;
+        margin-bottom: 30px;
+    }
+
+    .activeBtn {
+        .nextBtn();
+        color: white !important;
+    }
+
+    .disabledBtn {
+        .nextBtn();
     }
 </style>
