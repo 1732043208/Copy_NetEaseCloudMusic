@@ -22,9 +22,8 @@
                     >
                         <van-image
                                 fit="cover"
-                                height="110px"
                                 radius="5px"
-                                :src="item.uiElement.image.imageUrl"/>
+                                :src="imageUrlSize(item)"/>
                         <div class="text">{{item.uiElement.mainTitle.title}}</div>
 
                     </div>
@@ -54,11 +53,15 @@
                 type: Array,
                 default: []
             },
-            topTitle:String,
-            btnMore:String
+            topTitle: String,
+            btnMore: String
         },
         computed: {
-
+            imageUrlSize() {
+                return function (item) {
+                    return item.uiElement.image.imageUrl+'?param=120y120'
+                }
+            }
 
         },
         mounted() {
@@ -125,12 +128,8 @@
         .list {
             display: flex;
             justify-content: space-around;
-            flex: 1;
         }
 
-
-        .songListInfo {
-        }
 
         .text {
             width: 300px;
