@@ -18,7 +18,7 @@
                                 :key="indey"
 
                                 :label="labelText(value)"
-                                :label-class="{'ov':true,'labelTextStyle':true,'labelColor':!isLabelColor}"
+                                :label-class="{'ov':true,'labelTextStyle':isLabelColor,'labelColor':!isLabelColor}"
                                 title-class="ov titleText"
                                 @click="getMusicId(value.resourceId)">
                             <!--                            :title="value.uiElement.mainTitle.title"-->
@@ -160,13 +160,20 @@
                     }
                 }
 
+                .labelTextStyle {
+                    width: 500px;
+                    font-size: 30px;
+                }
+
                 .labelColor {
                     width: 210px;
-                    font-size: 24px;
+                    font-size: 30px;
                     background: rgba(247, 230, 230, 1);
+                    padding: 0 7px;
                     color: @theme-color;
                     text-align: center;
                 }
+
             }
         }
 
