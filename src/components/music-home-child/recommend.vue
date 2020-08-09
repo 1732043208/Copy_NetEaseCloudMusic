@@ -47,6 +47,9 @@
         >
 
         </official-song-list>
+        <yun-cun
+                v-if="Object.keys(yunCun).length>0"
+                :yun-cun="yunCun"></yun-cun>
     </div>
 
 </template>
@@ -65,7 +68,8 @@
     import HorizontalScroll from '../horizontalScroll'
     import RecommendMusic from "./recommendMusic";
     import OfficialSongList from "./officialSongList";
-    import Yuncun from "./yunCun";
+    import YunCun from "./yunCun";
+
     export default {
         name: "recommend",
         created() {
@@ -80,13 +84,14 @@
                     this.btnMore1 = this.recommendSongList.uiElement.button.text;
                 } else {
                     return ''
-                }
+                };
                 if (this.officialSongList.uiElement !== undefined) {
                     this.topTitle2 = this.officialSongList.uiElement.subTitle.title;
                     this.btnMore2 = this.officialSongList.uiElement.button.text;
                 } else {
                     return ''
-                }
+                };
+                this.yunCun=res.data.data.blocks[3].extInfo;
             }).catch(error => {
                 console.log('首页-发现出错');
                 console.log(error);
@@ -119,11 +124,12 @@
                 btnMore1: '',
                 // 官方歌单
                 officialSongList: {},
-                officialSongInfoList:[],
+                officialSongInfoList: [],
                 // 官方歌单顶部标题
                 topTitle2: '',
                 // 官方歌单更多按钮文案
-                btnMore2: ''
+                btnMore2: '',
+                yunCun:{},
             }
         },
         computed: {},
@@ -144,7 +150,8 @@
             Scroll,
             HorizontalScroll,
             RecommendMusic,
-            OfficialSongList
+            OfficialSongList,
+            YunCun
         }
     }
 </script>
