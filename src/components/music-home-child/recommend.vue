@@ -29,12 +29,24 @@
         <music-sort></music-sort>
         <!--        推荐歌单-->
         <recommended-song-list
+                v-if="songListInfoList.length>0"
                 :recommend-song-list="songListInfoList"
-                :top-title="topTitle"
-                :btn-more="btnMore">
+                :top-title="topTitle1"
+                :btn-more="btnMore1"></recommended-song-list>
+        <!--        推荐音乐-->
+        <recommend-music
+                v-if="Object.keys(recommendMusic).length>0"
+                :recommend-music="recommendMusic"
+        ></recommend-music>
+        <!--   官方歌单-->
+        <official-song-list
+                v-if="officialSongInfoList.length>0"
+                :official-song-list="officialSongInfoList"
+                :top-title="topTitle2"
+                :btn-more="btnMore2"
+        >
 
-        </recommended-song-list>
-        <recommend-music :recommend-music="recommendMusic"></recommend-music>
+        </official-song-list>
     </div>
 
 </template>
@@ -52,15 +64,29 @@
     import Scroll from '../scroll'
     import HorizontalScroll from '../horizontalScroll'
     import RecommendMusic from "./recommendMusic";
-
+    import OfficialSongList from "./officialSongList";
+    import Yuncun from "./yunCun";
     export default {
         name: "recommend",
         created() {
             GetHomeFindAPI().then(res => {
                 this.recommendSongList = res.data.data.blocks[0];
                 this.recommendMusic = res.data.data.blocks[1];
-                console.log(this.recommendSongList.creatives);
-                this.songListInfoList.push(...this.recommendSongList.creatives)
+                this.officialSongList = res.data.data.blocks[2];
+                this.songListInfoList.push(...this.recommendSongList.creatives);
+                this.officialSongInfoList.push(...this.officialSongList.creatives);
+                if (this.recommendSongList.uiElement !== undefined) {
+                    this.topTitle1 = this.recommendSongList.uiElement.subTitle.title;
+                    this.btnMore1 = this.recommendSongList.uiElement.button.text;
+                } else {
+                    return ''
+                }
+                if (this.officialSongList.uiElement !== undefined) {
+                    this.topTitle2 = this.officialSongList.uiElement.subTitle.title;
+                    this.btnMore2 = this.officialSongList.uiElement.button.text;
+                } else {
+                    return ''
+                }
             }).catch(error => {
                 console.log('首页-发现出错');
                 console.log(error);
@@ -86,17 +112,21 @@
                 // 推荐歌单详情 图片/文案
                 songListInfoList: [],
                 // 推荐歌曲
-                recommendMusic: null,
+                recommendMusic: {},
+                // 推荐歌单的标题
+                topTitle1: '',
+                // 推荐歌单更多按钮文案
+                btnMore1: '',
+                // 官方歌单
+                officialSongList: {},
+                officialSongInfoList:[],
+                // 官方歌单顶部标题
+                topTitle2: '',
+                // 官方歌单更多按钮文案
+                btnMore2: ''
             }
         },
-        computed: {
-            topTitle() {
-                return this.recommendSongList.uiElement.subTitle.title
-            },
-            btnMore() {
-                return this.recommendSongList.uiElement.button.text
-            }
-        },
+        computed: {},
         methods: {
             BannerImgClick(item) {
                 if (item.url !== null) {
@@ -114,6 +144,7 @@
             Scroll,
             HorizontalScroll,
             RecommendMusic,
+            OfficialSongList
         }
     }
 </script>
