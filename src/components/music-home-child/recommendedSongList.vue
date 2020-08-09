@@ -1,11 +1,11 @@
 <template>
-    <div v-if="Object.keys(recommendSongList).length!==0" class="songList">
+    <div class="songList">
         <div class="topTitle">
             <h4 @click="TopClick">{{topTitle}}</h4>
             <btn-more :title="btnMore" @click.native="TopClick"></btn-more>
         </div>
 
-        <horizontal-scroll>
+        <horizontal-scroll ref="hScroll">
             <div ref="list" class="list">
                 <div
                         v-for="(item,index) in recommendSongList"
@@ -22,8 +22,7 @@
                     >
                         <van-image
                                 fit="cover"
-                                width="100px"
-                                height="100px"
+                                height="110px"
                                 radius="5px"
                                 :src="item.uiElement.image.imageUrl"/>
                         <div class="text">{{item.uiElement.mainTitle.title}}</div>
@@ -63,13 +62,13 @@
 
         },
         mounted() {
-
             this.$nextTick(() => {
                 setTimeout(() => {
                     this.itemWidth = 28;
-                    this.itemMargin = 2;
+                    this.itemMargin = 5;
                     this.initPics();
-                }, 1000)
+                    this.$refs.hScroll.refresh()
+                }, 600);
 
             })
         },
@@ -110,7 +109,7 @@
 
 <style scoped lang="less">
     .songList {
-        margin: 30px;
+        padding: 30px;
 
         .topTitle {
             display: flex;
@@ -148,12 +147,13 @@
 
     .gridItem {
         position: relative;
+        margin-right: 30px;
     }
 
     .playCount {
         position: absolute;
         top: 1px;
-        right: 25px;
+        right: 10px;
         z-index: 999;
         font-size: 36px;
         color: #eeeeee;
