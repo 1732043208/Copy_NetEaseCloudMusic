@@ -127,7 +127,6 @@
         }
 
         .text {
-            width: 300px;
             font-size: 30px;
             overflow: hidden;
             text-overflow: ellipsis;
