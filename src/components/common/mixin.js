@@ -15,7 +15,6 @@ export const initScroll = {
             let margin = this.itemMargin;
             // width是整个列表的宽度
             let width = (itemWidth + margin) * 6 - margin;
-            console.log(width);
             this.$refs.list.style.width = width + 'vw'; // 设置.list的宽度的宽度
         },
     }

@@ -13,10 +13,10 @@
                         :key="index"
                         class="gridItem">
 
-                                      <div class="playCount">
-                                          <van-icon name="service-o" color="#eee"/>
-                                          {{item.resources[0].resourceExtInfo.playCount|playCount}}
-                                      </div>
+                    <div class="playCount">
+                        <van-icon name="service-o" color="#eee"/>
+                        {{item.resources[0].resourceExtInfo.playCount|playCount}}
+                    </div>
 
                     <div class="songListInfo"
                          @click="SongListClick(item.creativeId)"
