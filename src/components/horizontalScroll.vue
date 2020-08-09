@@ -58,8 +58,11 @@
             // 实现多次上拉加载更多
             finishPullUp() {
                 // 上拉加载
-                this.scroll && this.scroll.finishPullUp();
+                this.horizontalScroll && this.horizontalScroll.finishPullUp();
             },
+            refresh() {
+                this.horizontalScroll && this.horizontalScroll.refresh();
+            }
         },
     }
 </script>
