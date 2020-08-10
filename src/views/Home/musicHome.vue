@@ -7,20 +7,20 @@
                 v-show="isShowTabControl"
         >
         </tab-control>
-      <scroll
-              class="content"
-              ref="scroll"
-              :probe-type="3"
-              :pull-up-load="true"
+        <scroll
+                class="content"
+                ref="scroll"
+                :probe-type="3"
+                :pull-up-load="true"
 
-      >
-          <div >
-              <recommend v-show="this.currentType==='recommend'"></recommend>
-              <!--          <router-link to="/login">toLogin</router-link>-->
-          </div>
+        >
+            <div>
+                <recommend v-show="this.currentType==='recommend'"></recommend>
+                <!--          <router-link to="/login">toLogin</router-link>-->
+            </div>
 
-      </scroll>
-
+        </scroll>
+        <music-play v-if="isMusicId" :music-id="$store.state.musicId"></music-play>
 
 
     </div>
@@ -31,6 +31,7 @@
     import TabControl from "../../components/music-home-child/tabControl";
     import Scroll from "../../components/scroll";
     import Recommend from "../../components/music-home-child/recommend";
+    import MusicPlay from "../../components/common/musicPlay";
 
     export default {
         name: 'Home',
@@ -38,8 +39,14 @@
             return {
                 active: 0,
                 isShowTabControl: true,
-                currentType: 'recommend'
+                currentType: 'recommend',
+                // 音乐Id
 
+            }
+        },
+        computed: {
+            isMusicId() {
+                return this.$store.state.musicId !== null
             }
         },
         methods: {
@@ -57,7 +64,7 @@
                 }
             },
         },
-        components: {TabControl, Scroll, Recommend},
+        components: {TabControl, Scroll, Recommend, MusicPlay},
     }
 </script>
 <style scoped lang="less">
@@ -71,10 +78,12 @@
         z-index: 0;
         touch-action: none;
     }
-    .content1{
+
+    .content1 {
         /*width: 100vw;*/
         overflow: hidden;
-        ul{
+
+        ul {
             display: flex;
         }
     }
