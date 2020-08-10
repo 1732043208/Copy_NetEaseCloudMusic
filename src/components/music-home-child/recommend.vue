@@ -1,3 +1,4 @@
+<!--推荐-->
 <template>
     <div class="recommendPage">
         <van-swipe
@@ -50,6 +51,12 @@
         <yun-cun
                 v-if="Object.keys(yunCun).length>0"
                 :yun-cun="yunCun"></yun-cun>
+        <live
+                v-if="this.liveInfoList.length>0"
+                :live-list="liveInfoList"
+                :top-title="topTitle3"
+                :btn-more="btnMore3"
+        ></live>
     </div>
 
 </template>
@@ -57,7 +64,6 @@
 <script>
     // 引入vant组件的轮播图
     import {Swipe, SwipeItem} from 'vant';
-
     // 引入网络请求方法
     import {GetBannerAPI, GetHomeFindAPI} from "../../http/all-api";
 
@@ -69,6 +75,7 @@
     import RecommendMusic from "./recommendMusic";
     import OfficialSongList from "./officialSongList";
     import YunCun from "./yunCun";
+    import Live from "./live";
 
     export default {
         name: "recommend",
@@ -77,21 +84,30 @@
                 this.recommendSongList = res.data.data.blocks[0];
                 this.recommendMusic = res.data.data.blocks[1];
                 this.officialSongList = res.data.data.blocks[2];
+                this.yunCun = res.data.data.blocks[3].extInfo;
+                this.liveList = res.data.data.blocks[4];
                 this.songListInfoList.push(...this.recommendSongList.creatives);
                 this.officialSongInfoList.push(...this.officialSongList.creatives);
+                this.liveInfoList.push(...this.liveList.extInfo);
                 if (this.recommendSongList.uiElement !== undefined) {
                     this.topTitle1 = this.recommendSongList.uiElement.subTitle.title;
                     this.btnMore1 = this.recommendSongList.uiElement.button.text;
                 } else {
                     return ''
-                };
+                }
                 if (this.officialSongList.uiElement !== undefined) {
                     this.topTitle2 = this.officialSongList.uiElement.subTitle.title;
                     this.btnMore2 = this.officialSongList.uiElement.button.text;
                 } else {
                     return ''
-                };
-                this.yunCun=res.data.data.blocks[3].extInfo;
+                }
+                if (this.liveList.uiElement !== undefined) {
+                    this.topTitle3 = this.liveList.uiElement.subTitle.title;
+                    this.btnMore3 = this.liveList.uiElement.button.text;
+                } else {
+                    return ''
+                }
+
             }).catch(error => {
                 console.log('首页-发现出错');
                 console.log(error);
@@ -129,7 +145,15 @@
                 topTitle2: '',
                 // 官方歌单更多按钮文案
                 btnMore2: '',
-                yunCun:{},
+                // 云村
+                yunCun: {},
+                // 直播
+                liveList: {},
+                liveInfoList: [],
+                topTitle3: '',
+                btnMore3: '',
+
+
             }
         },
         computed: {},
@@ -151,7 +175,8 @@
             HorizontalScroll,
             RecommendMusic,
             OfficialSongList,
-            YunCun
+            YunCun,
+            Live,
         }
     }
 </script>
