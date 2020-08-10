@@ -1,3 +1,4 @@
+<!--每日推荐-->
 <template>
     <div class="musicSort">
         <horizontal-scroll>
