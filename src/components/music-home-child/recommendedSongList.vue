@@ -1,3 +1,4 @@
+<!--每日推荐歌单-->
 <template>
     <div class="songList">
         <div class="topTitle">
@@ -43,7 +44,7 @@
     import {Image as VanImage, Icon} from 'vant';
 
     //  网络请求方法
-    import {GetHotPlayList, GetHomeFindAPI} from "../../http/all-api";
+    import {GetHotPlayList} from "../../http/all-api";
 
     export default {
         name: "recommendedSongList",
