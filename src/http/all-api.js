@@ -65,18 +65,21 @@ export function GetBannerAPI(type) {
         }
     })
 }
+
 // 首页-发现
 export function GetHomeFindAPI() {
     return http({
         url: '/homepage/block/page',
     })
 }
+
 // 首页-发现-圆形图标入口列表
 export function GetHomeIconAPI() {
     return http({
         url: '/homepage/dragon/ball',
     })
 }
+
 // 私人FM
 export function GetFmAPI() {
     return http({
@@ -117,5 +120,35 @@ export function GetHotPlayList(limit = 50, order = 'hot', cat = '全部') {
 export function GetTopListAPI() {
     return http({
         url: '/toplist/detail'
+    })
+}
+
+// 获取音乐详情
+export function GetMusicDetail(musicId) {
+    return http({
+        url: '/song/detail',
+        params: {
+            ids: musicId
+        }
+    })
+}
+
+// 获取音乐MP3文件
+export function GetMusicUrlAPI(musicId) {
+    return http({
+        url: '/song/url',
+        params: {
+            id: musicId
+        }
+    })
+}
+
+// 获取音乐是否又版权
+export function GetMusicCheck(musicId) {
+    return http({
+        url: '/check/music',
+        params: {
+            id: musicId
+        }
     })
 }
