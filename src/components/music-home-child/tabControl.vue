@@ -42,7 +42,7 @@
         text-align: center;
         padding: 10px 0 10px;
         background: white;
-        z-index: 999;
+        z-index: 200;
     }
 
     .tab-control-item {
