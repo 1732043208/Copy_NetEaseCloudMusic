@@ -33,29 +33,3 @@ export function realFormatSecond(second) {
         return '00:00'
     }
 }
-
-export const controlPlay = {
-    methods: {
-        // 控制音频的播放与暂停
-        startPlayOrPause(index) {
-            console.log(index);
-            this.isPlaying ? this.pause(index) : this.play(index)
-        },
-        // 播放音频
-        play(index) {
-            if (index === -1) return this.$refs.audio.play();
-            this.$refs.audio[index].play();
-        },
-        // 暂停音频
-        pause(index) {
-            if (index === -1) return this.$refs.audio.pause();
-            this.$refs.audio[index].pause();
-        },
-        onPlay() {
-            this.$store.state.isPlay = true;
-        },
-        onPause() {
-            this.$store.state.isPlay = false;
-        },
-    }
-}
