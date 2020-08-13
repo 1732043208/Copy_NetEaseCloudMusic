@@ -49,6 +49,7 @@
         methods: {
             leftIconClick() {
                 console.log('左边图标');
+                this.$store.commit('toggleDrawer');
             },
             centerIconClick(index) {
                 this.currentIndex = index;
@@ -84,7 +85,8 @@
         display: flex;
         padding: 25px;
         background-color: #fff;
-z-index: 999;
+        z-index: 200;
+
         .left {
             flex: 1;
         }
