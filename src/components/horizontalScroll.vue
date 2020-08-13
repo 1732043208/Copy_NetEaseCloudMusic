@@ -41,8 +41,8 @@
                     pullUpLoad: this.pullUpLoad,
 
                 });
-                // 监听滚动事件
 
+                // 监听滚动事件
                 this.horizontalScroll.on('scroll', (position) => {
                     this.$emit('scroll', position)
                 });
