@@ -1,13 +1,10 @@
 <template>
     <div class="musicPlay">
-        <audio
+        <audio-com
                 ref="audio"
-                :src="url"
-                @pause="onPause"
-                @play="onPlay"
-                @timeupdate="onTimeupdate"
-                @loadedmetadata="onLoadedmetadata"
-                controls="controls"></audio>
+                :audio-src="changeMusicUrls">
+
+        </audio-com>
         <div class="audio-com-box">
             <van-image
                     round
@@ -21,18 +18,18 @@
             </div>
             <div class="musicIcon">
                 <van-icon
-                        v-show='!isPlaying'
+                        v-show='changeIcons'
                         name="play-circle-o"
                         size="24px"
                         color="#c2463a"
-                        @click="startPlayOrPause(-1)"
+                        @click="$refs.audio.startPlayOrPause(-1),ChangeIcon()"
                 />
                 <van-icon
-                        v-show='isPlaying'
+                        v-show='!changeIcons'
                         name="pause-circle-o"
                         size="24px"
                         color="#c2463a"
-                        @click="startPlayOrPause"
+                        @click="$refs.audio.startPlayOrPause(-1),ChangeIcon()"
                 />
             </div>
 
@@ -43,13 +40,13 @@
 
 <script>
     // 格式化音乐时间
-    import {realFormatSecond,controlPlay} from '../common/mixin'
+    import {realFormatSecond} from '../common/mixin'
     import {Slider, Icon, Image as VanImage} from 'vant';
     import {GetMusicDetail, GetMusicUrlAPI, GetMusicCheck} from "../../http/all-api";
+    import AudioCom from "./audioCom";
 
     export default {
         name: "musicPlay",
-        mixins:[controlPlay],
         props: {
             musicId: {
                 type: String | Number,
@@ -57,40 +54,64 @@
             }
         },
         mounted() {
+            // changeI保存vuex里面的全局播放按钮状态
             this.getMusicUrl(this.musicId);
             this.getMusicDetail(this.musicId);
         },
         data() {
             return {
-                url: null,
                 audio: {
                     currentTime: 0,// 音频当前播放时长
                     maxTime: 0// 音频最大播放时长
                 },
                 sliderTime: 0,
-                musicName: '',
-                musicAr: '',
-                picUrl:''
+                musicUrl: null, // 音乐MP3的Url
+                musicName: '', // 音乐名字
+                musicAr: '', // 歌手名字
+                picUrl: '', // 音乐图片
             }
         },
-        computed:{
-          isPlaying(){
-              return this.$store.state.isPlay;
-          }
-        },
+
         watch: {
+            // 监听音乐id的变化
             musicId: {
                 deep: true,
                 handler(nv, ov) {
                     this.getMusicUrl(nv);
                     this.getMusicDetail(nv);
+                    this.changeI = false;
+                    this.$store.commit('NotPlaying');
+                }
+            }
+        },
+        computed: {
+            // 需要使用到vuex数据并且随时修改vuex数据时
+            // 使用get/set 获取和修改
+            changeIcons: {
+                get() {
+                    console.log('执行get');
+                    return this.$store.state.changeIcon
+                },
+                set(nv) {
+                    return !this.$store.state.changeIcon
+                }
+            },
+            changeMusicUrls: {
+                get() {
+                    return this.$store.state.musicUrl;
+                },
+                set(nv) {
+                    return this.$store.state.musicUrl = nv;
                 }
             }
         },
         methods: {
+            ChangeIcon() {
+                this.$store.commit('showIcon');
+            },
             getMusicUrl(musicId) {
                 GetMusicUrlAPI(musicId).then(res => {
-                    this.url = res.data.data[0].url;
+                    this.$store.commit('changeMusicUrl', res.data.data[0].url);
                 }).catch(error => {
                     console.log('获取音乐url失败');
                     console.log(error);
@@ -99,7 +120,7 @@
             getMusicDetail(musicId) {
                 GetMusicDetail(musicId).then(res => {
                     this.musicName = res.data.songs[0].name;
-                    this.picUrl =res.data.songs[0].al.picUrl
+                    this.picUrl = res.data.songs[0].al.picUrl
 
                 }).catch(error => {
                     console.log('获取音乐名字出错');
@@ -107,24 +128,12 @@
                 })
             },
 
-            // 当音频当前时间改变后，进度条也要改变
-            onTimeupdate(el) {
-                this.audio.currentTime = el.target.currentTime;
-                this.sliderTime = parseInt(this.audio.currentTime / this.audio.maxTime * 100)
-            },
-            onLoadedmetadata(el) {
-                this.audio.maxTime = parseInt(el.target.duration)
-            },
-            // 拖动进度条，改变当前时间，index是进度条改变时的回调函数的参数0-100之间，需要换算成实际时间
-            changeCurrentTime(index) {
-                this.$refs.audio.currentTime = parseInt(index / 100 * this.audio.maxTime)
-            },
-
         },
         components: {
             [Slider.name]: Slider,
             [Icon.name]: Icon,
             [VanImage.name]: VanImage,
+            AudioCom,
         },
         filters: {
             // 将整数转化成时分秒
@@ -141,9 +150,6 @@
         bottom: 0;
         z-index: 999;
 
-        audio {
-            display: none;
-        }
 
         .audio-com-box {
             width: 100vw;
@@ -172,6 +178,10 @@
 
             .musicIcon {
                 flex: 1;
+
+                .aaa {
+                    background-color: #c2463a;
+                }
             }
 
             /*进度条*/
@@ -200,7 +210,7 @@
 
                 > .current-time, > .total-time {
                     position: absolute;
-                    bottom: -15px;
+                    /*bottom: -15px;*/
                     color: #AAAAAA;
                 }
 
