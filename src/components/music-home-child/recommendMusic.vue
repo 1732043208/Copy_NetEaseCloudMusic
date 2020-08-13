@@ -1,3 +1,4 @@
+<!--每日推荐音乐-->
 <template>
     <div class="recommendMusic">
         <div class="topTitle">
@@ -16,7 +17,6 @@
                                 :border="false"
                                 v-for="(value,indey) in item.resources"
                                 :key="indey"
-
                                 :label="labelText(value)"
                                 :label-class="{'ov':true,'labelTextStyle':isLabelColor,'labelColor':!isLabelColor}"
                                 title-class="ov titleText"
@@ -36,20 +36,11 @@
                                         :src="value.uiElement.image.imageUrl" alt="">
                                 </van-image>
                             </template>
-                            <template #right-icon>
-                                <van-icon name="play-circle-o"
-                                          size="24px"
-                                          color="#c2463a"
-                                />
-                            </template>
                         </van-cell>
-
                     </van-cell-group>
                 </div>
             </div>
-
         </horizontal-scroll>
-
     </div>
 </template>
 
@@ -59,6 +50,7 @@
     import {initScroll} from "../common/mixin";
     import BtnMore from "../common/btnMore";
     import HorizontalScroll from "../horizontalScroll";
+    import AudioCom from "../common/audioCom";
 
     export default {
         name: "recommendMusic",
@@ -76,10 +68,10 @@
                 setTimeout(() => {
                     this.initPics();
                     this.$refs.hScroll.refresh()
-
                 }, 600)
             })
         },
+
         computed: {
             labelText() {
                 return function (value) {
@@ -92,17 +84,21 @@
                     }
                 }
             },
+
+
         },
         data() {
             return {
-                isLabelColor: true
+                isLabelColor: true,
             }
         },
         methods: {
             getMusicId(musicId) {
                 // 音乐id
                 console.log(musicId);
-            }
+                this.$store.commit('changeMusicId', musicId);
+                this.musicCheck(musicId);
+            },
         },
         components: {
             [Cell.name]: Cell,
@@ -111,6 +107,7 @@
             [Icon.name]: Icon,
             BtnMore,
             HorizontalScroll,
+            AudioCom,
         }
     }
 </script>
@@ -124,6 +121,10 @@
 
     .recommendMusic {
         margin: 50px 30px;
+
+        audio {
+            display: none;
+        }
 
         .topTitle {
             display: flex;
