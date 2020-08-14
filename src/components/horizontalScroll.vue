@@ -44,7 +44,7 @@
 
                 // 监听滚动事件
                 this.horizontalScroll.on('scroll', (position) => {
-                    this.$emit('scroll', position)
+                    this.$emit('HScroll', position)
                 });
                 // 监听上拉加载事件
                 this.horizontalScroll.on('pullingUp', () => {
@@ -70,6 +70,7 @@
 <style scoped lang="less">
     .wrapper {
         width: 100%;
+        /*height: 0;*/
         overflow: hidden;
         white-space: nowrap; /*当子元素超过父元素宽度的时候，不会折行*/
 
