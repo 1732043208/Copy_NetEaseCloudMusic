@@ -1,5 +1,12 @@
 import {http} from './http';
 
+// 获取登录状态
+export function LoginStatusAPI() {
+    return http({
+        url: '/login/status',
+    })
+}
+
 //手机号码登录
 export function PhoneLoginAPI(phone, md5_password) {
     return http({
