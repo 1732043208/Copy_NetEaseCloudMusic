@@ -16,11 +16,10 @@
         >
             <div>
                 <recommend v-show="this.currentType==='recommend'"></recommend>
-                <!--          <router-link to="/login">toLogin</router-link>-->
             </div>
 
         </scroll>
-        <music-play v-if="isMusicId" :music-id="$store.state.musicId"></music-play>
+        <music-play v-if="isMusicId" :music-id.sync="$store.state.musicId"></music-play>
 
 
     </div>
@@ -77,14 +76,5 @@
         right: 0;
         z-index: 0;
         touch-action: none;
-    }
-
-    .content1 {
-        /*width: 100vw;*/
-        overflow: hidden;
-
-        ul {
-            display: flex;
-        }
     }
 </style>
