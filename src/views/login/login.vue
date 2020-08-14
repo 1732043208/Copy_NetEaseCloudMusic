@@ -1,5 +1,8 @@
 <template>
     <div class="loginPage">
+        <div class="backIcon" @click="backIconClick">
+            <van-icon size="20px" name="arrow-left" />
+        </div>
         <img class="logo" src="../../assets/logo.jpg" alt="logo">
         <router-link class="phone-login" to="/phone-login">手机号登录</router-link>
         <router-link class="register" to="/register">注册</router-link>
@@ -7,8 +10,18 @@
 </template>
 
 <script>
+    import {Icon} from 'vant';
+
     export default {
-        name: "login"
+        name: "login",
+        methods:{
+            backIconClick(){
+                this.$router.back();
+            }
+        },
+        components: {
+            [Icon.name]: Icon
+        }
     }
 </script>
 
@@ -18,7 +31,10 @@
         width: 1080px;
         height: 2248px;
     }
-
+    .backIcon{
+        padding-top: 35px;
+        padding-left: 40px;
+    }
     .logo {
         width: 270px;
         height: 270px;
