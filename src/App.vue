@@ -4,8 +4,6 @@
     </div>
 </template>
 <script>
-    import drawer from "./components/common/drawer";
-    import homeNav from './components/nav/home-nav'
     import appCom from "./components/common/appCom";
     export default {
         components: {
