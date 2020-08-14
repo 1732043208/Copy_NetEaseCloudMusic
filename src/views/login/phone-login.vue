@@ -32,8 +32,6 @@
                     name="password"
                     :border=true
                     :center=true
-                    :rules="[{ validator:padTest,
-                    message: '请输入大于6位'}]"
             />
             <button class="disabledBtn"
                     :class="{'activeBtn':isNotEmpty}"
@@ -52,6 +50,7 @@
     import md5 from 'js-md5';
     //导入api请求方法
     import {PhoneLoginAPI} from "../../http/all-api";
+    import {userInfoModel} from "../../http/model";
 
     export default {
         name: "phone-login",
@@ -79,28 +78,42 @@
             telTest(val) {
                 return /^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\d{8}$/.test(val)
             },
-            // 密码不小于6位
-            padTest(val) {
-                let test = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,}/.test(val);
-                if (test) {
-                    return true;
-                } else {
-                    this.$toast('密码不能为纯数字或纯英文字母');
-                    return false;
-                }
-            },
+
             nextBtnClick() {
                 // 使用md5加密 密码
                 let md5pad = md5(this.password);
+                this.$toast.loading({
+                    message: '登录中',
+                    forbidClick: true,
+                    duration: 0
+                });
                 PhoneLoginAPI(this.tel, md5pad).then(res => {
-                    console.log('手机登录请求成功');
                     console.log(res.data);
-                    if (res.data.code === 200){
-                        // todo 登录成功后跳转首页
-
+                    if (res.data.code === 200) {
+                        this.$toast.clear();
+                        this.$toast.success({
+                            message: '登录成功',
+                            duration: 1000
+                        });
+                        console.log('手机登录请求成功');
+                        this.$store.state.userInfo = new userInfoModel(res.data.profile)
+                        console.log(this.$store.state.userInfo);
+                        this.$router.push({
+                            path: '/'
+                        })
+                    } else {
+                        this.$toast.clear();
+                        this.$toast({
+                            message: res.data.message,
+                            duration: 1000
+                        })
                     }
                 }).catch(error => {
-                    console.log(error);
+                    this.$toast.clear();
+                    this.$toast({
+                        message: error.data.message,
+                        duration: 1000
+                    })
                 })
             }
         },
