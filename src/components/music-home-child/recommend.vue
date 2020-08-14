@@ -51,12 +51,18 @@
         <yun-cun
                 v-if="Object.keys(yunCun).length>0"
                 :yun-cun="yunCun"></yun-cun>
-        <live
-                v-if="this.liveInfoList.length>0"
-                :live-list="liveInfoList"
-                :top-title="topTitle3"
-                :btn-more="btnMore3"
-        ></live>
+        <new-musci-or-disc
+                v-if="newMusic.length>0 && newDisc.length>0"
+                :new-disc="newDisc"
+                :new-music="newMusic">
+
+        </new-musci-or-disc>
+        <!--        <live-->
+        <!--                v-if="liveInfoList.length>0"-->
+        <!--                :live-list="liveInfoList"-->
+        <!--                :top-title="topTitle3"-->
+        <!--                :btn-more="btnMore3"-->
+        <!--        ></live>-->
     </div>
 
 </template>
@@ -75,6 +81,7 @@
     import RecommendMusic from "./recommendMusic";
     import OfficialSongList from "./officialSongList";
     import YunCun from "./yunCun";
+    import NewMusciOrDisc from "./newMusciOrDisc";
     import Live from "./live";
 
     export default {
@@ -85,10 +92,15 @@
                 this.recommendMusic = res.data.data.blocks[1];
                 this.officialSongList = res.data.data.blocks[2];
                 this.yunCun = res.data.data.blocks[3].extInfo;
-                this.liveList = res.data.data.blocks[4];
                 this.songListInfoList.push(...this.recommendSongList.creatives);
                 this.officialSongInfoList.push(...this.officialSongList.creatives);
-                this.liveInfoList.push(...this.liveList.extInfo);
+                this.newMusic.push(res.data.data.blocks[4].creatives[0], res.data.data.blocks[4].creatives[1]);
+                this.newDisc.push(res.data.data.blocks[4].creatives[2], res.data.data.blocks[4].creatives[3]);
+
+                // this.liveList = res.data.data.blocks[4];
+                // this.liveInfoList.push(...this.liveList.creatives);
+
+                console.log(this.liveList);
                 if (this.recommendSongList.uiElement !== undefined) {
                     this.topTitle1 = this.recommendSongList.uiElement.subTitle.title;
                     this.btnMore1 = this.recommendSongList.uiElement.button.text;
@@ -101,16 +113,17 @@
                 } else {
                     return ''
                 }
-                if (this.liveList.uiElement !== undefined) {
-                    this.topTitle3 = this.liveList.uiElement.subTitle.title;
-                    this.btnMore3 = this.liveList.uiElement.button.text;
-                } else {
-                    return ''
-                }
+                // 直播
+                // if (this.liveList.uiElement !== undefined) {
+                //     this.topTitle3 = this.liveList.uiElement.mainTitle.title;
+                //     // this.btnMore3 = this.liveList.uiElement.button.text;
+                // } else {
+                //     return ''
+                // }
 
             }).catch(error => {
                 console.log('首页-发现出错');
-                console.log(error);
+                console.dir(error);
             });
         },
         mounted() {
@@ -152,6 +165,9 @@
                 liveInfoList: [],
                 topTitle3: '',
                 btnMore3: '',
+                // 新歌，新碟
+                newMusic: [],
+                newDisc: []
 
 
             }
@@ -176,6 +192,7 @@
             RecommendMusic,
             OfficialSongList,
             YunCun,
+            NewMusciOrDisc,
             Live,
         }
     }
