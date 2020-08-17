@@ -41,8 +41,8 @@
 <script>
     // 格式化音乐时间
     import {realFormatSecond} from '../common/mixin'
-    import {Slider, Icon, Image as VanImage} from 'vant';
-    import {GetMusicDetail, GetMusicUrlAPI, GetMusicCheck} from "../../http/all-api";
+    import {Icon, Image as VanImage, Slider} from 'vant';
+    import {GetMusicDetail, GetMusicUrlAPI} from "../../http/all-api";
     import AudioCom from "./audioCom";
 
     export default {
@@ -111,7 +111,16 @@
             },
             getMusicUrl(musicId) {
                 GetMusicUrlAPI(musicId).then(res => {
-                    this.$store.commit('changeMusicUrl', res.data.data[0].url);
+                    if (res.data.data[0].url !== null) {
+                        this.$store.commit('changeMusicUrl', res.data.data[0].url);
+                        this.$store.commit('NotPlaying');
+                        this.$store.state.changeIcon = false;
+                    } else {
+                        this.$toast('获取音乐播放地址失败');
+                        this.$store.commit('NotPlaying');
+                        this.$store.commit('showIcon');
+                        this.$store.commit('changeMusicUrl', '')
+                    }
                 }).catch(error => {
                     console.log('获取音乐url失败');
                     console.log(error);
@@ -127,6 +136,7 @@
                     console.log(error.message);
                 })
             },
+
 
         },
         components: {
@@ -144,22 +154,20 @@
     }
 </script>
 
-<style lang="less">
+<style scoped lang="less">
     .musicPlay {
         position: absolute;
         bottom: 0;
         z-index: 999;
 
-
         .audio-com-box {
-            width: 100vw;
+            width: 94.9vw;
             border: 1px solid #E5E5E5;
             border-radius: 10px;
             padding: 15px 25px;
             display: flex;
             align-items: center;
             background-color: rgba(255, 255, 255, 0.96);
-
             // 音乐 歌手名字
             .musicName {
                 flex: 3;
@@ -186,42 +194,42 @@
 
             /*进度条*/
 
-            > .progress-box {
-                flex: 1;
-                margin-left: 15px;
-                position: relative;
+            /*> .progress-box {*/
+            /*    flex: 1;*/
+            /*    margin-left: 15px;*/
+            /*    position: relative;*/
 
-                > .slider {
-                    > .el-slider__runway {
-                        height: 3px;
+            /*    > .slider {*/
+            /*        > .el-slider__runway {*/
+            /*            height: 3px;*/
 
-                        > .el-slider__bar {
-                            height: 3px;
-                            background-color: #17CE88;
-                        }
+            /*            > .el-slider__bar {*/
+            /*                height: 3px;*/
+            /*                background-color: #17CE88;*/
+            /*            }*/
 
-                        .el-slider__button {
-                            width: 10px;
-                            height: 10px;
-                            border: 2px solid #17CE88
-                        }
-                    }
-                }
+            /*            .el-slider__button {*/
+            /*                width: 10px;*/
+            /*                height: 10px;*/
+            /*                border: 2px solid #17CE88*/
+            /*            }*/
+            /*        }*/
+            /*    }*/
 
-                > .current-time, > .total-time {
-                    position: absolute;
-                    /*bottom: -15px;*/
-                    color: #AAAAAA;
-                }
+            /*    > .current-time, > .total-time {*/
+            /*        position: absolute;*/
+            /*        !*bottom: -15px;*!*/
+            /*        color: #AAAAAA;*/
+            /*    }*/
 
-                > .current-time {
-                    left: 0;
-                }
+            /*    > .current-time {*/
+            /*        left: 0;*/
+            /*    }*/
 
-                > .total-time {
-                    right: 0;
-                }
-            }
+            /*    > .total-time {*/
+            /*        right: 0;*/
+            /*    }*/
+            /*}*/
         }
     }
 

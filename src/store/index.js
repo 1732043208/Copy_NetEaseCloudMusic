@@ -5,13 +5,13 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
     state: {
-        isLogin:false,
+        isLogin: false,
         musicId: null,
         musicUrl: null,
         isPlay: false,
         isShowDrawer: false,
         changeIcon: false,
-        userInfo:{}
+        userInfo: {},
     },
     mutations: {
         // musicId
@@ -36,5 +36,6 @@ export default new Vuex.Store({
         }
     },
     actions: {},
-    modules: {}
+    modules: {},
+    getters: {}
 })

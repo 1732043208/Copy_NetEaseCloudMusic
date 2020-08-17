@@ -11,16 +11,12 @@
                 class="content"
                 ref="scroll"
                 :probe-type="3"
-                :pull-up-load="true"
-
-        >
+                :pull-up-load="true">
             <div>
                 <recommend v-show="this.currentType==='recommend'"></recommend>
             </div>
 
         </scroll>
-        <music-play v-if="isMusicId" :music-id.sync="$store.state.musicId"></music-play>
-
 
     </div>
 </template>

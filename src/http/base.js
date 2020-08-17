@@ -9,7 +9,7 @@ export default {
                 }
             }).catch(error => {
                 console.log('获取音乐是否可用失败');
-                console.dir(error.message);
+                console.dir(error);
             })
         }
 

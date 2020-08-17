@@ -1,13 +1,13 @@
 <template>
     <div class="appCom">
-        <drawer>
+        <drawer ref="drawer1">
             <div slot="drawer">
                 <scroll
                         class="content"
                         ref="scroll"
                         :probe-type="3"
                         :pull-up-load="true"
-
+                        @scroll="drawerScroll"
                 >
                     <transition
                             enter-active-class="animate__fadeIn"
@@ -98,6 +98,8 @@
                     <router-view v-if="$route.meta.isShow"></router-view>
                 </keep-alive>
                 <router-view v-if="!$route.meta.isShow"></router-view>
+                <music-play v-if="isMusicPlay" :music-id.sync="$store.state.musicId"></music-play>
+                <!--                <router-view v-if="$route.meta.isShow"></router-view>-->
             </div>
         </drawer>
     </div>
@@ -110,7 +112,8 @@
     import drawer from "./drawer";
     import {Divider, Button, Grid, GridItem, Cell, CellGroup, Image as VanImage} from 'vant'
     import {LoginStatusAPI} from "../../http/all-api";
-    import {userInfoModel} from "../../http/model";
+    import {userInfoModel} from "../../../model/userInfo";
+    import musicPlay from "./musicPlay";
 
     export default {
         name: "appCom",
@@ -133,6 +136,9 @@
                 set(nv) {
                     return this.$store.state.isLogin = nv
                 }
+            },
+            isMusicPlay() {
+                return this.$store.state.musicId !== null
             },
             userInfo: {
                 get() {
@@ -193,12 +199,18 @@
                         })
                     }, 300)
                 }
+            },
+            drawerScroll(position) {
+                this.$refs.drawer1.moveX = 0;
+                this.$refs.drawer1.startPos = 0;
+                this.$refs.drawer1.leftMove = 0;
             }
         },
         components: {
             scroll,
             homeNav,
             drawer,
+            musicPlay,
             [Divider.name]: Divider,
             [Button.name]: Button,
             [Grid.name]: Grid,
@@ -223,12 +235,12 @@
         height: 100vh;
 
         .content {
+            /*width: 100vw;*/
+            /*height: 100%;*/
             overflow: hidden;
             position: absolute;
             top: 0;
             bottom: 0;
-            left: 0;
-            right: 0;
             z-index: 0;
             touch-action: none;
         }

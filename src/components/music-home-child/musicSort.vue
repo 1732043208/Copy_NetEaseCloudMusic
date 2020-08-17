@@ -69,29 +69,26 @@
         methods: {
             MusicSortClick(index) {
                 if (index === 0) {
-                    GetFmAPI().then(res => {
-                        // todo 私人FM接口接通
-                        console.log(res);
-                    }).catch(err => {
-                        console.log(err);
+                    this.$router.push({
+                        path:'/dayMusic'
                     })
                 } else if (index === 1) {
-                    GetRecommendSongAPI().then(res => {
-                        // todo 每日推荐歌曲接通
+                    GetHotPlayList().then(res => {
+                        // todo 热门歌单接通
                         console.log(res);
                     }).catch(err => {
                         console.log(err);
                     })
                 } else if (index === 2) {
-                    GetHotPlayList().then(res => {
-                        // todo 热门歌单接通 上拉加载更多未实现
+                    GetTopListAPI().then(res => {
+                        // todo 所有榜单
                         console.log(res);
                     }).catch(err => {
                         console.log(err);
                     })
                 } else if (index === 3) {
-                    GetTopListAPI().then(res => {
-                        // todo 所有榜单
+                    GetFmAPI().then(res => {
+                        // todo 私人FM接口接通
                         console.log(res);
                     }).catch(err => {
                         console.log(err);

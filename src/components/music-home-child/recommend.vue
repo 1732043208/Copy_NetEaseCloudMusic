@@ -100,7 +100,6 @@
                 // this.liveList = res.data.data.blocks[4];
                 // this.liveInfoList.push(...this.liveList.creatives);
 
-                console.log(this.liveList);
                 if (this.recommendSongList.uiElement !== undefined) {
                     this.topTitle1 = this.recommendSongList.uiElement.subTitle.title;
                     this.btnMore1 = this.recommendSongList.uiElement.button.text;

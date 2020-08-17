@@ -60,7 +60,7 @@
         computed: {
             imageUrlSize() {
                 return function (item) {
-                    return item.uiElement.image.imageUrl+'?param=120y120'
+                    return item.uiElement.image.imageUrl + '?param=120y120'
                 }
             }
 
@@ -89,6 +89,10 @@
                 // todo 跳转歌单详情
                 console.log('歌单点击跳转');
                 console.log(id);
+                this.$router.push({
+                    path: '/daySongList',
+                    query: {id}
+                })
             }
         },
         components: {

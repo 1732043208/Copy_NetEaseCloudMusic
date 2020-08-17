@@ -48,12 +48,14 @@
             onPause() {
                 console.log('执行 onPause');
                 // this.$store.state.changeIcon = false;
-                this.$store.commit('NotPlaying')
-
+                this.$store.commit('NotPlaying');
+                this.$store.state.musicCurrentTime = this.$refs.audio.currentTime;
             },
             // 当音频当前时间改变后，进度条也要改变
             onTimeupdate(el) {
-                // this.audio.currentTime = el.target.currentTime;
+                // console.log(el.target.currentTime);
+                // this.$store.state.musicCurrentTime = el.target.currentTime;
+                // this.audio.currentTime =
                 // this.sliderTime = parseInt(this.audio.currentTime / this.audio.maxTime * 100)
             },
             onLoadedmetadata(el) {
@@ -68,7 +70,9 @@
                 this.$store.commit('showIcon');
                 console.log('音乐播放完了');
                 console.log(this.$$state.state.changeIcon);
-
+            },
+            setTime() {
+                this.$refs.audio.currentTime = this.$store.getters.getMusicTime;
             }
         }
     }

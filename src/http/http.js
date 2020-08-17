@@ -33,6 +33,7 @@ export function http(config) {
         return response
     }, error => {
         console.log('响应出错');
+        console.dir(error);
         if (error.response.status) {
             switch (error.response.status) {
                 case 401:

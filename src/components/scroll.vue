@@ -32,7 +32,11 @@
                 type:Boolean,
                 default:true
             },
-
+            // 滚动回弹效果
+            bounce:{
+                type:Boolean,
+                default:true
+            }
         },
         data() {
             return {
@@ -48,6 +52,7 @@
                 pullUpLoad: this.pullUpLoad,
                 scrollX: this.scrollX,
                 scrollY: this.scrollY,
+                bounce: this.bounce
                 // eventPassthrough: 'vertical'
                 // eventPassthrough: 'horizontal'
             });
@@ -77,5 +82,4 @@
 </script>
 
 <style scoped>
-
 </style>

@@ -159,3 +159,13 @@ export function GetMusicCheck(musicId) {
         }
     })
 }
+
+// 歌单详情
+export function GetSongListAPI(id) {
+    return http({
+        url: '/playlist/detail',
+        params: {
+            id
+        }
+    })
+}
