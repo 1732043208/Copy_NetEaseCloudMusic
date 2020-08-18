@@ -47,7 +47,13 @@ export function CheckCaptchaAPI(phone, captcha) {
             captcha
         }
     })
+}
 
+// 退出登录
+export function logoutAPI() {
+    return http({
+        url: '/logout'
+    })
 }
 
 // 注册

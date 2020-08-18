@@ -38,7 +38,7 @@ export function http(config) {
             switch (error.response.status) {
                 case 401:
                     sessionStorage.removeItem('token');
-                    router.replace({
+                    router.push({
                         path: '/login',
                         query: {
                             redirect: router.currentRoute.fullPath

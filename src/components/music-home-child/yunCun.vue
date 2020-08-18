@@ -113,6 +113,7 @@
 
             .text {
                 width: 300px;
+                line-height: 52px;
                 font-size: 30px;
                 overflow: hidden;
                 text-overflow: ellipsis;
@@ -135,7 +136,7 @@
 
     .playCount {
         position: absolute;
-        bottom: 125px;
+        bottom: 135px;
         left: 20px;
         z-index: 999;
         font-size: 36px;

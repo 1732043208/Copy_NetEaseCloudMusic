@@ -6,6 +6,7 @@ Vue.use(VueRouter);
 
 // 路由按需加载写法
 const Login = () => import('../views/login/login');
+const Setting = () => import('../views/login/setting');
 const Register = () => import('../views/login/register');
 const PhoneLogin = () => import('../views/login/phone-login');
 const Captcha = () => import('../views/login/captcha');
@@ -14,6 +15,7 @@ const MusicMV = () => import('../views/mv/musicMv');
 const Recommend = () => import('../components/music-home-child/recommend');
 const DayMusic = () => import('../views/Home/everyDayRecommend/dayMusic');
 const DaySongList = () => import('../views/Home/everyDayRecommend/daySongList')
+
 
 const routes = [
     {
@@ -75,6 +77,14 @@ const routes = [
         path: '/captcha',
         name: 'captcha',
         component: Captcha,
+        meta: {
+            isShow: false
+        }
+    },
+    {
+        path: '/setting',
+        name: 'setting',
+        component: Setting,
         meta: {
             isShow: false
         }

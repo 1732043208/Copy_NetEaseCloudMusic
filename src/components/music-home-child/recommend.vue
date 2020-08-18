@@ -51,12 +51,12 @@
         <yun-cun
                 v-if="Object.keys(yunCun).length>0"
                 :yun-cun="yunCun"></yun-cun>
-        <new-musci-or-disc
-                v-if="newMusic.length>0 && newDisc.length>0"
-                :new-disc="newDisc"
-                :new-music="newMusic">
+<!--        <new-musci-or-disc-->
+<!--                v-if="newMusic.length>0 && newDisc.length>0"-->
+<!--                :new-disc="newDisc"-->
+<!--                :new-music="newMusic">-->
 
-        </new-musci-or-disc>
+<!--        </new-musci-or-disc>-->
         <!--        <live-->
         <!--                v-if="liveInfoList.length>0"-->
         <!--                :live-list="liveInfoList"-->
@@ -94,8 +94,9 @@
                 this.yunCun = res.data.data.blocks[3].extInfo;
                 this.songListInfoList.push(...this.recommendSongList.creatives);
                 this.officialSongInfoList.push(...this.officialSongList.creatives);
-                this.newMusic.push(res.data.data.blocks[4].creatives[0], res.data.data.blocks[4].creatives[1]);
-                this.newDisc.push(res.data.data.blocks[4].creatives[2], res.data.data.blocks[4].creatives[3]);
+                // 新歌新碟
+                // this.newMusic.push(res.data.data.blocks[4].creatives[0], res.data.data.blocks[4].creatives[1]);
+                // this.newDisc.push(res.data.data.blocks[4].creatives[2], res.data.data.blocks[4].creatives[3]);
 
                 // this.liveList = res.data.data.blocks[4];
                 // this.liveInfoList.push(...this.liveList.creatives);
@@ -165,8 +166,8 @@
                 topTitle3: '',
                 btnMore3: '',
                 // 新歌，新碟
-                newMusic: [],
-                newDisc: []
+                // newMusic: [],
+                // newDisc: []
 
 
             }

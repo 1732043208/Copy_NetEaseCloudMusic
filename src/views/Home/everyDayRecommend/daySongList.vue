@@ -31,16 +31,18 @@
                 <div class="bg"></div>
                 <div>
                     <div class="songListInfo">
-                        <div class="playCount">
-                            <van-icon name="service-o" color="#eee"/>
-                            {{songListData.playCount|playCount1}}
+                        <div>
+                            <div class="playCount">
+                                <van-icon name="service-o" color="#eee"/>
+                                {{songListData.playCount|playCount1}}
+                            </div>
+                            <van-image
+                                    class="leftImage"
+                                    width="130" height="120"
+                                    radius="5"
+                                    :src="songListPic" alt="">
+                            </van-image>
                         </div>
-                        <van-image
-                                class="leftImage"
-                                width="130" height="120"
-                                radius="5"
-                                :src="songListData.picUrl" alt="">
-                        </van-image>
                         <div class="songListTitle">
                             <h4>{{songListData.title}}</h4>
                             <div class="avatarInfo">
@@ -153,6 +155,11 @@
                 isShowTop: false,
             }
         },
+        computed: {
+            songListPic() {
+                return this.songListData.picUrl + '?param=120y120'
+            }
+        },
         methods: {
             getSongListData(id) {
                 GetSongListAPI(id).then(res => {
@@ -259,10 +266,12 @@
                 }
 
                 .songListInfo {
+                    width: 90vw;
                     display: flex;
                     position: absolute;
                     top: 200px;
                     left: 30px;
+                    justify-content: space-around;
                 }
 
                 .orderInfo {
@@ -295,7 +304,7 @@
                 .playCount {
                     position: absolute;
                     top: 8px;
-                    right: 730px;
+                    right: 620px;
                     z-index: 200;
                     font-size: 30px;
                     color: #eeeeee;

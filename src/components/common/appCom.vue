@@ -7,8 +7,8 @@
                         ref="scroll"
                         :probe-type="3"
                         :pull-up-load="true"
-                        @scroll="drawerScroll"
-                >
+                        @scroll="drawerScroll">
+
                     <transition
                             enter-active-class="animate__fadeIn"
                             leave-active-class="animate__fadeIn"
@@ -71,6 +71,7 @@
                                         :value="item.title"
                                         :key="index"
                                         value-class="cellText"
+                                        @click="cellItemClick(index)"
                                 />
                             </van-cell-group>
                             <div style="margin: 30px 0">
@@ -150,8 +151,8 @@
             return {
                 cellItem1: [
                     {
-                        icon: 'service-o',
-                        title: '听歌识曲'
+                        icon: 'setting-o',
+                        title: '设置'
                     }, {
                         icon: 'hot-sale',
                         title: '演出'
@@ -204,6 +205,18 @@
                 this.$refs.drawer1.moveX = 0;
                 this.$refs.drawer1.startPos = 0;
                 this.$refs.drawer1.leftMove = 0;
+            },
+            cellItemClick(index) {
+                switch (index) {
+                    case 0:
+                        this.$router.push({
+                            path: '/setting'
+                        });
+                        this.$store.commit('toggleDrawer');
+                        break;
+                    case 1:
+                        console.log('打印1');
+                }
             }
         },
         components: {
@@ -272,6 +285,7 @@
         }
 
         .mineFun {
+            width: 70vw;
             margin-top: 30px;
         }
 

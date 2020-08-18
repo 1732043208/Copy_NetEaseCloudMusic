@@ -50,7 +50,7 @@
     import md5 from 'js-md5';
     //导入api请求方法
     import {PhoneLoginAPI} from "../../http/all-api";
-    import {userInfoModel} from "../../http/model";
+    import {userInfoModel} from "../../../model/userInfo";
 
     export default {
         name: "phone-login",
@@ -62,11 +62,7 @@
         },
         computed: {
             isNotEmpty() {
-                if (this.tel.trim().length > 0 && this.password.trim().length > 0) {
-                    return true;
-                } else {
-                    return false;
-                }
+                return this.tel.trim().length > 0 && this.password.trim().length > 0;
             }
         },
         methods: {
@@ -110,6 +106,7 @@
                     }
                 }).catch(error => {
                     this.$toast.clear();
+                    console.log(error);
                     this.$toast({
                         message: error.data.message,
                         duration: 1000

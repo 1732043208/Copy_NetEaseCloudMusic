@@ -32,7 +32,8 @@
     import {PasswordInput, NumberKeyboard} from 'vant';
 
     // 导入api请求方法
-    import {SendCaptchaAPI, CheckCaptchaAPI, RegisterAPI} from "../../http/all-api";
+    import {SendCaptchaAPI, CheckCaptchaAPI, RegisterAPI, LoginStatusAPI} from "../../http/all-api";
+    import {userInfoModel} from "../../../model/userInfo";
 
     export default {
         name: "captcha",
@@ -60,15 +61,29 @@
                         .then(res => {
                             if (res.data.code === 200) {
                                 // todo 未检测是否成功
+                                // 注册
                                 RegisterAPI(
                                     this.captchaNumber,
                                     this.$route.query.phone,
                                     this.$route.query.password,
-                                    'Hello'
+                                    'SuperSuperJoker'
                                 ).then(res => {
                                     console.log('注册成功' + res);
+                                    this.$toast.success({message: '注册成功'});
+                                    this.$router.replace({
+                                        path: '/'
+                                    });
+                                    // 成功注册后，获取用户信息
+                                    LoginStatusAPI().then(res => {
+                                        this.$store.state.userInfo = new userInfoModel(res.data.profile);
+                                    }).catch(error => {
+                                        if (error.status === 301) {
+                                            this.$toast('未登录')
+                                        }
+                                    })
                                 }).catch(err => {
                                     console.log(err);
+                                    this.$toast(err.data.msg);
                                 })
                             }
                         }).catch(err => {

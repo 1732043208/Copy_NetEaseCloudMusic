@@ -39,11 +39,6 @@
 
             }
         },
-        computed: {
-            isMusicId() {
-                return this.$store.state.musicId !== null
-            }
-        },
         methods: {
             tabClick(index) {
                 switch (index) {
