@@ -13,9 +13,9 @@ const Captcha = () => import('../views/login/captcha');
 const MusicMine = () => import('../views/Mine/musicMine');
 const MusicMV = () => import('../views/mv/musicMv');
 const Recommend = () => import('../components/music-home-child/recommend');
-const DayMusic = () => import('../views/Home/everyDayRecommend/dayMusic');
-const DaySongList = () => import('../views/Home/everyDayRecommend/daySongList')
-
+const DayMusic = () => import('../views/Home/everyDayRecommendDetail/dayMusic');
+const DaySongList = () => import('../views/Home/everyDayRecommendDetail/daySongList')
+const AllPlayList = () => import('../views/Home/allPlayList');
 
 const routes = [
     {
@@ -101,6 +101,14 @@ const routes = [
         path: '/daySongList',
         name: 'daySongList',
         component: DaySongList,
+        meta: {
+            isShow: false
+        }
+    },
+    {
+        path: '/allPlayList',
+        name: 'allPlayList',
+        component: AllPlayList,
         meta: {
             isShow: false
         }

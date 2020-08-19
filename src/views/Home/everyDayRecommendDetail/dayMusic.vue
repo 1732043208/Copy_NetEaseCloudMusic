@@ -89,8 +89,16 @@
 
     export default {
         name: "dayMusic",
-        created() {
-            this.getMusicInfo();
+        beforeCreate() {
+            this.$toast.loading({
+                message: '加载中',
+                forbidClick: true,
+                duration: 0
+            });
+        },
+        async created() {
+            await this.getMusicInfo();
+            this.$toast.clear();
         },
         computed: {
             isMusicPlay() {
@@ -104,16 +112,15 @@
             }
         },
         methods: {
-            getMusicInfo() {
-                GetRecommendSongAPI().then(res => {
-                    // todo 每日推荐歌曲接通
+            async getMusicInfo() {
+                await GetRecommendSongAPI().then(res => {
                     const result = res.data.data.dailySongs;
                     result.forEach(item => {
                         this.musicInfo.push(createMusicInfo(item));
                     });
-
+                    return res;
                     // this.musicInfo = new musicReModel();
-                    console.log(this.musicInfo);
+                    // console.log(this.musicInfo);
                 }).catch(err => {
                     console.log(err);
                 })

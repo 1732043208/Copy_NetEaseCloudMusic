@@ -73,11 +73,8 @@
                         path:'/dayMusic'
                     })
                 } else if (index === 1) {
-                    GetHotPlayList().then(res => {
-                        // todo 热门歌单接通
-                        console.log(res);
-                    }).catch(err => {
-                        console.log(err);
+                    this.$router.push({
+                        path:'/allPlayList'
                     })
                 } else if (index === 2) {
                     GetTopListAPI().then(res => {

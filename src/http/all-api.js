@@ -118,12 +118,23 @@ export function GetRecommendSongListAPI() {
 }
 
 // 热门歌单
-export function GetHotPlayList(limit = 50, order = 'hot', cat = '全部') {
+export function GetHotPlayList({limit = 51, order = 'hot', cat = '全部'}) {
     return http({
         url: '/top/playlist',
         params: {
             limit,
             order,
+            cat
+        }
+    })
+}
+
+// 精品歌单
+export function GetHighqualityAPI({limit = 21, cat = '全部'}) {
+    return http({
+        url: '/top/playlist/highquality',
+        params: {
+            limit,
             cat
         }
     })
@@ -173,5 +184,12 @@ export function GetSongListAPI(id) {
         params: {
             id
         }
+    })
+}
+
+// 签到
+export function SignInAPI() {
+    return http({
+        url: '/daily_signin'
     })
 }

@@ -42,12 +42,15 @@
                                     <span class="custom-title">{{userInfo.userName}}</span>
                                 </template>
                                 <template #right-icon>
-                                    <van-button color="#c2463a"
-                                                round
-                                                class="qdBtn"
-                                                size="mini "
-                                                type="primary">
-                                        签到
+                                    <van-button
+                                            :disabled="isSignIn"
+                                            @click="SignBtn"
+                                            color="#c2463a"
+                                            round
+                                            class="qdBtn"
+                                            size="mini "
+                                            type="primary">
+                                        {{isSignIn?'已签到':'签到'}}
                                     </van-button>
                                 </template>
                             </van-cell>
@@ -63,6 +66,7 @@
                         <div class="bottomContent">
                             <van-cell-group>
                                 <van-cell
+
                                         class="cellItem"
                                         size="large"
                                         :center="true"
@@ -112,7 +116,7 @@
     import homeNav from '../nav/home-nav';
     import drawer from "./drawer";
     import {Divider, Button, Grid, GridItem, Cell, CellGroup, Image as VanImage} from 'vant'
-    import {LoginStatusAPI} from "../../http/all-api";
+    import {LoginStatusAPI, SignInAPI} from "../../http/all-api";
     import {userInfoModel} from "../../../model/userInfo";
     import musicPlay from "./musicPlay";
 
@@ -149,6 +153,7 @@
         },
         data() {
             return {
+                isSignIn: false,
                 cellItem1: [
                     {
                         icon: 'setting-o',
@@ -217,6 +222,18 @@
                     case 1:
                         console.log('打印1');
                 }
+            },
+            SignBtn() {
+                SignInAPI().then(res => {
+                    console.log(res);
+                    this.$toast.success({
+                        message: '签到成功'
+                    });
+                    this.isSignIn = true;
+                }).catch(error => {
+                    console.log('签到失败');
+                    error.loginBtnClick()
+                })
             }
         },
         components: {

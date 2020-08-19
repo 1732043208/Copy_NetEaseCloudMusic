@@ -60,7 +60,6 @@
                     CheckCaptchaAPI(this.$route.query.phone, this.captchaNumber)
                         .then(res => {
                             if (res.data.code === 200) {
-                                // todo 未检测是否成功
                                 // 注册
                                 RegisterAPI(
                                     this.captchaNumber,

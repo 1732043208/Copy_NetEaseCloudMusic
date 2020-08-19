@@ -1,5 +1,5 @@
 <template>
-    <div class="songList">
+    <div v-if="Object.keys(songListData).length !== 0" class="songList">
         <div ref="topNav" class="topNav">
             <van-icon size="24" @click="goBack" color="#fff" name="arrow-left"/>
             <p class="navTitle">歌单</p>
@@ -145,12 +145,21 @@
 
     export default {
         name: "daySongList",
-        created() {
-            this.getSongListData(this.$route.query.id);
+        beforeCreate() {
+            this.$toast.loading({
+                message: '加载中',
+                forbidClick: true,
+                duration: 0
+            });
+        },
+        async created() {
+            await this.getSongListData(this.$route.query.id);
+            this.$toast.clear();
+
         },
         data() {
             return {
-                songListData: null,
+                songListData: {},
                 musicInfo: [],
                 isShowTop: false,
             }
@@ -161,22 +170,23 @@
             }
         },
         methods: {
-            getSongListData(id) {
-                GetSongListAPI(id).then(res => {
+            async getSongListData(id) {
+                await GetSongListAPI(id).then(res => {
                     this.songListData = createSongListInfo(res.data.playlist);
-                    console.log(this.songListData);
+                    // console.log(this.songListData);
                     let allMusicId = this.songListData.musicId.join(',');
                     if (this.songListData.musicId.length !== 0) {
                         GetMusicDetail(allMusicId).then(res => {
                             res.data.songs.forEach(item => {
                                 this.musicInfo.push(createMusicInfo(item));
                             });
-                            console.log(this.musicInfo);
+                            // console.log(this.musicInfo);
                         }).catch(error => {
                             console.log('获取歌单的歌曲详情失败');
                             console.log(error);
                         })
                     }
+                    return res;
                 }).catch(error => {
                     console.log('获取歌单详情失败');
                     console.log(error);

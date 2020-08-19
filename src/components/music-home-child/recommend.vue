@@ -51,12 +51,12 @@
         <yun-cun
                 v-if="Object.keys(yunCun).length>0"
                 :yun-cun="yunCun"></yun-cun>
-<!--        <new-musci-or-disc-->
-<!--                v-if="newMusic.length>0 && newDisc.length>0"-->
-<!--                :new-disc="newDisc"-->
-<!--                :new-music="newMusic">-->
+        <new-musci-or-disc
+                v-if="newMusic.length>0 && newDisc.length>0"
+                :new-disc="newDisc"
+                :new-music="newMusic">
 
-<!--        </new-musci-or-disc>-->
+        </new-musci-or-disc>
         <!--        <live-->
         <!--                v-if="liveInfoList.length>0"-->
         <!--                :live-list="liveInfoList"-->
@@ -69,7 +69,7 @@
 
 <script>
     // 引入vant组件的轮播图
-    import {Swipe, SwipeItem} from 'vant';
+    import {Swipe, SwipeItem, Loading} from 'vant';
     // 引入网络请求方法
     import {GetBannerAPI, GetHomeFindAPI} from "../../http/all-api";
 
@@ -86,45 +86,16 @@
 
     export default {
         name: "recommend",
-        created() {
-            GetHomeFindAPI().then(res => {
-                this.recommendSongList = res.data.data.blocks[0];
-                this.recommendMusic = res.data.data.blocks[1];
-                this.officialSongList = res.data.data.blocks[2];
-                this.yunCun = res.data.data.blocks[3].extInfo;
-                this.songListInfoList.push(...this.recommendSongList.creatives);
-                this.officialSongInfoList.push(...this.officialSongList.creatives);
-                // 新歌新碟
-                // this.newMusic.push(res.data.data.blocks[4].creatives[0], res.data.data.blocks[4].creatives[1]);
-                // this.newDisc.push(res.data.data.blocks[4].creatives[2], res.data.data.blocks[4].creatives[3]);
-
-                // this.liveList = res.data.data.blocks[4];
-                // this.liveInfoList.push(...this.liveList.creatives);
-
-                if (this.recommendSongList.uiElement !== undefined) {
-                    this.topTitle1 = this.recommendSongList.uiElement.subTitle.title;
-                    this.btnMore1 = this.recommendSongList.uiElement.button.text;
-                } else {
-                    return ''
-                }
-                if (this.officialSongList.uiElement !== undefined) {
-                    this.topTitle2 = this.officialSongList.uiElement.subTitle.title;
-                    this.btnMore2 = this.officialSongList.uiElement.button.text;
-                } else {
-                    return ''
-                }
-                // 直播
-                // if (this.liveList.uiElement !== undefined) {
-                //     this.topTitle3 = this.liveList.uiElement.mainTitle.title;
-                //     // this.btnMore3 = this.liveList.uiElement.button.text;
-                // } else {
-                //     return ''
-                // }
-
-            }).catch(error => {
-                console.log('首页-发现出错');
-                console.dir(error);
+        beforeCreate() {
+            this.$toast.loading({
+                message: '加载中',
+                forbidClick: true,
+                duration: 0
             });
+        },
+        async  created() {
+           await this.getHomeData();
+           this.$toast.clear();
         },
         mounted() {
             GetBannerAPI(1).then(res => {
@@ -140,6 +111,7 @@
         },
         data() {
             return {
+                isLoading: true,
                 bannerList: [],
                 // 推荐歌单
                 recommendSongList: [],
@@ -166,8 +138,8 @@
                 topTitle3: '',
                 btnMore3: '',
                 // 新歌，新碟
-                // newMusic: [],
-                // newDisc: []
+                newMusic: [],
+                newDisc: []
 
 
             }
@@ -180,11 +152,53 @@
                 } else {
                     this.$toast('暂无数据');
                 }
+            },
+            async getHomeData() {
+                await GetHomeFindAPI().then(res => {
+                    this.recommendSongList = res.data.data.blocks[0];
+                    this.recommendMusic = res.data.data.blocks[1];
+                    this.officialSongList = res.data.data.blocks[2];
+                    this.yunCun = res.data.data.blocks[3].extInfo;
+                    this.songListInfoList.push(...this.recommendSongList.creatives);
+                    this.officialSongInfoList.push(...this.officialSongList.creatives);
+                    // 新歌新碟
+                    this.newMusic.push(res.data.data.blocks[4].creatives[0], res.data.data.blocks[4].creatives[1]);
+                    this.newDisc.push(res.data.data.blocks[4].creatives[2], res.data.data.blocks[4].creatives[3]);
+
+                    // this.liveList = res.data.data.blocks[4];
+                    // this.liveInfoList.push(...this.liveList.creatives);
+
+                    if (this.recommendSongList.uiElement !== undefined) {
+                        this.topTitle1 = this.recommendSongList.uiElement.subTitle.title;
+                        this.btnMore1 = this.recommendSongList.uiElement.button.text;
+                    } else {
+                        return ''
+                    }
+                    if (this.officialSongList.uiElement !== undefined) {
+                        this.topTitle2 = this.officialSongList.uiElement.subTitle.title;
+                        this.btnMore2 = this.officialSongList.uiElement.button.text;
+                    } else {
+                        return ''
+                    }
+                    // 直播
+                    // if (this.liveList.uiElement !== undefined) {
+                    //     this.topTitle3 = this.liveList.uiElement.mainTitle.title;
+                    //     // this.btnMore3 = this.liveList.uiElement.button.text;
+                    // } else {
+                    //     return ''
+                    // }
+                    this.isLoading = false;
+                    return res;
+                }).catch(error => {
+                    console.log('首页-发现出错');
+                    console.dir(error);
+                });
             }
         },
         components: {
             [Swipe.name]: Swipe,
             [SwipeItem.name]: SwipeItem,
+            [Loading.name]: Loading,
             MusicSort,
             RecommendedSongList,
             Scroll,

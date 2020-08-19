@@ -16,7 +16,6 @@ export class SongListInfo {
 }
 
 export function createSongListInfo(data) {
-    console.log(data);
     return new SongListInfo({
         picUrl: data.coverImgUrl,
         title: data.name,

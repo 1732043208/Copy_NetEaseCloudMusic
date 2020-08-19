@@ -40,7 +40,7 @@
 
 <script>
     // 格式化音乐时间
-    import {realFormatSecond} from '../common/mixin'
+    import {realFormatSecond} from '../common/utils'
     import {Icon, Image as VanImage, Slider} from 'vant';
     import {GetMusicDetail, GetMusicUrlAPI} from "../../http/all-api";
     import AudioCom from "./audioCom";
