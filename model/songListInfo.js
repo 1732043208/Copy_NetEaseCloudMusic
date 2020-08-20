@@ -1,5 +1,6 @@
 // 歌单信息
-export class SongListInfo {
+class SongListInfo {
+    // 图片 标题 描述文案 创作者头像 作者昵称 作者id 播放人数 分享人数 评论人数 歌单里单个音乐的id 收藏人数
     constructor({picUrl, title, subTitle, avatarUrl, avatarName, avatarId, playCount, shareCount, commentCount, musicId, subscribedCount}) {
         this.picUrl = picUrl;
         this.title = title;

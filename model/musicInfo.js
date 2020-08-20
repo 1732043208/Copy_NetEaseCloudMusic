@@ -1,13 +1,16 @@
 
 // 每日歌曲推荐
-export class musicInfo {
+class musicInfo {
     // id:音乐id,name:音乐名字,singer:歌手,album:专辑
-    constructor({id, name, singer, album, picUrl}) {
+    constructor({id, name, singer, album, albumId,picUrl,mvId,singerId}) {
         this.id = id;
         this.name = name;
         this.singer = singer;
         this.album = album;
+        this.albumId = albumId
         this.picUrl = picUrl;
+        this.mvId = mvId;
+        this.singerId = singerId;
     }
 }
 
@@ -18,7 +21,10 @@ export function createMusicInfo(musicData) {
         name: musicData.name,
         singer: filterSinger(musicData.ar),
         album: musicData.al.name,
-        picUrl: musicData.al.picUrl
+        albumId:musicData.al.id,
+        picUrl: musicData.al.picUrl,
+        mvId:musicData.mv,
+        singerId:musicData.ar[0].id
     })
 }
 

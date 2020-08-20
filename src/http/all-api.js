@@ -193,3 +193,13 @@ export function SignInAPI() {
         url: '/daily_signin'
     })
 }
+
+// 专辑详情
+export function GetAlbumAPI(id) {
+    return http({
+        url: '/album',
+        params: {
+            id
+        }
+    })
+}

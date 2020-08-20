@@ -233,7 +233,7 @@
     import {Icon, Tab, Tabs, Image as VanImage, Grid, GridItem} from 'vant';
     import {GetHotPlayList, GetHighqualityAPI} from "../../http/all-api";
     import {createAllPlayInfo} from "../../../model/allPlayInfo";
-    import {debounce} from "../../components/common/utils";
+    import {debounce,unique} from "../../components/common/utils";
 
     export default {
         name: "allPlayList",
@@ -269,11 +269,6 @@
             }
         },
         methods: {
-            unique(arr) { // 根据唯一标识orderId来对数组进行过滤
-                const res = new Map();  //定义常量 res,值为一个Map对象实例
-                //返回arr数组过滤后的结果，结果为一个数组   过滤条件是，如果res中没有某个键，就设置这个键的值为1
-                return arr.filter((arr) => !res.has(arr.id) && res.set(arr.id, 1))
-            },
             imageLoadEnd() {
                 debounce(this.$refs.scroll.refresh, 500);
             },

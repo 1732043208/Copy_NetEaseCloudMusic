@@ -16,6 +16,7 @@ const Recommend = () => import('../components/music-home-child/recommend');
 const DayMusic = () => import('../views/Home/everyDayRecommendDetail/dayMusic');
 const DaySongList = () => import('../views/Home/everyDayRecommendDetail/daySongList')
 const AllPlayList = () => import('../views/Home/allPlayList');
+const Album = () => import('../views/album/album');
 
 const routes = [
     {
@@ -109,6 +110,14 @@ const routes = [
         path: '/allPlayList',
         name: 'allPlayList',
         component: AllPlayList,
+        meta: {
+            isShow: false
+        }
+    },
+    {
+        path: '/album',
+        name: 'album',
+        component: Album,
         meta: {
             isShow: false
         }

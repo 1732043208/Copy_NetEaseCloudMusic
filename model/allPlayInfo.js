@@ -1,5 +1,6 @@
 // 歌单广场
-export class AllPlayInfo {
+class AllPlayInfo {
+    // id歌单id 图片 描述文案 播放人数
     constructor({id, coverImgUrl, description, playCount}) {
         this.id = id;
         this.coverImgUrl = coverImgUrl;

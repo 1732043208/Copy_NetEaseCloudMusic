@@ -51,7 +51,6 @@
                         <template #title>
                             <p class="ov titleText">
                                 {{value.name}}
-
                             </p>
                         </template>
                         <template #label>
@@ -70,13 +69,55 @@
                             </van-image>
                         </template>
                         <template #right-icon>
-                            <van-icon name="ellipsis" class="rightImage"/>
+                            <van-icon @click="musicDetailShow(index)" name="ellipsis" class="rightImage"/>
                         </template>
                     </van-cell>
                 </van-cell-group>
             </div>
-
         </scroll>
+        <van-action-sheet v-model="isShowDetail">
+            <div class="musicDetail">
+                <van-cell-group>
+                    <van-cell
+                            class="mc-cell"
+                            :center="true"
+                            :border="false"
+                            label-class="ov"
+                            title-class="ov titleText">
+                        <template #title>
+                            <p class="ov titleText">
+                                歌曲:{{musicDetail.name}}
+                            </p>
+                        </template>
+                        <template #label>
+                            <p class="ov">
+                                {{musicDetail.singer}}
+                            </p>
+                        </template>
+                        <template #icon>
+                            <van-image
+                                    class="leftImage"
+                                    width="50" height="50"
+                                    radius="5"
+                                    :src="musicDetail.picUrl" alt="">
+                            </van-image>
+                        </template>
+                    </van-cell>
+                    <van-cell
+                            class="cellItem"
+                            size="large"
+                            :center="true"
+                            v-for="(item,index) in cellItem1"
+                            :icon="item.icon"
+                            :value="item.title"
+                            :key="index"
+                            value-class="cellText"
+                            @click.stop="musicDetailClick(index)">
+                    </van-cell>
+                </van-cell-group>
+
+            </div>
+        </van-action-sheet>
     </div>
 </template>
 
@@ -85,7 +126,7 @@
     import musicPlay from "../../../components/common/musicPlay";
     import {GetRecommendSongAPI} from "../../../http/all-api";
     import {createMusicInfo} from "../../../../model/musicInfo";
-    import {Cell, CellGroup, Image as VanImage, Icon} from 'vant';
+    import {Cell, CellGroup, Image as VanImage, Icon, ActionSheet} from 'vant';
 
     export default {
         name: "dayMusic",
@@ -108,13 +149,31 @@
         data() {
             return {
                 musicInfo: [],
-                isShowTop: false
+                musicDetail: {},
+                isShowTop: false,
+                isShowDetail: false,
+                cellItem1: [
+                    {
+                        icon: 'comment-o',
+                        title: '查看评论'
+                    }, {
+                        icon: 'cluster-o',
+                        title: '分享'
+                    }, {
+                        icon: 'user-o',
+                        title: '查看歌手详情'
+                    }, {
+                        icon: 'smile-o',
+                        title: '查看专辑'
+                    }
+                ],
             }
         },
         methods: {
             async getMusicInfo() {
                 await GetRecommendSongAPI().then(res => {
                     const result = res.data.data.dailySongs;
+                    console.log(res.data.data);
                     result.forEach(item => {
                         this.musicInfo.push(createMusicInfo(item));
                     });
@@ -141,6 +200,32 @@
                 this.$refs.topNav.style.background = `rgba(114,114,114,${opacity})`;
                 this.$refs.topNav.style.color = `rgba(255,255,255,${opacity})`;
                 this.isShowTop = position.y <= -153;
+            },
+            musicDetailShow(index) {
+                this.musicDetail = this.musicInfo[index];
+                this.isShowDetail = !this.isShowDetail;
+                console.log(this.musicDetail);
+            },
+            musicDetailClick(index) {
+                this.isShowDetail = !this.isShowDetail;
+                switch (index) {
+                    case 0:
+                        console.log('查看评论');
+                        break;
+                    case 1:
+                        console.log('分享');
+                        break;
+                    case 2:
+                        console.log('查看歌手详情');
+                        break;
+                    case 3:
+                        console.log('查看专辑');
+                        this.$router.push({
+                            path: '/album',
+                            query: {id: this.musicDetail.albumId}
+                        });
+                        break;
+                }
             }
         },
         components: {
@@ -150,6 +235,7 @@
             [CellGroup.name]: CellGroup,
             [VanImage.name]: VanImage,
             [Icon.name]: Icon,
+            [ActionSheet.name]: ActionSheet,
         }
     }
 </script>
@@ -159,6 +245,38 @@
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
+    }
+
+    .comm() {
+        .mc-cell {
+            width: 100vw;
+            margin: 30px 15px 0 0;
+        }
+
+        .leftImage {
+            margin-left: 30px;
+            margin-right: 30px;
+        }
+
+        .rightImage {
+            padding-right: 40px;
+        }
+
+        .titleText {
+            width: 800px;
+            font-weight: 600;
+            font-size: 38px;
+
+            .titleAlias {
+                color: #a7a6a7;
+                font-size: 36px;
+            }
+        }
+
+        .labelTextStyle {
+            width: 500px;
+            font-size: 30px;
+        }
     }
 
     .dayMusic {
@@ -186,37 +304,22 @@
             bottom: 0;
             z-index: 0;
             touch-action: none;
+            .comm();
+        }
 
-            .mc-cell {
-                width: 100vw;
-                margin: 30px 15px 0 0;
+        .musicDetail {
+            padding: 16px 16px 30px;
+            .comm();
+
+            .cellItem {
+                padding: 30px 30px;
             }
 
-            .leftImage {
-                margin-left: 30px;
-                margin-right: 30px;
-            }
-
-            .rightImage {
-                padding-right: 40px;
-            }
-
-            .titleText {
-                width: 800px;
-                font-weight: 600;
+            .cellText {
+                font-weight: bold;
+                padding-left: 20px;
                 font-size: 38px;
-
-                .titleAlias {
-                    color: #a7a6a7;
-                    font-size: 36px;
-                }
             }
-
-            .labelTextStyle {
-                width: 500px;
-                font-size: 30px;
-            }
-
         }
     }
 
