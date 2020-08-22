@@ -12,6 +12,8 @@ export default new Vuex.Store({
         isShowDrawer: false,
         changeIcon: false,
         userInfo: {},
+        currentTimer:0,
+        maxTimer:0,
     },
     mutations: {
         // musicId

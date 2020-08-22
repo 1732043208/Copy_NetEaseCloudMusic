@@ -17,7 +17,7 @@ export function realFormatSecond(second) {
         second = second - hours * 3600;
         let mimute = Math.floor(second / 60);
         second = second - mimute * 60;
-        return hours + ':' + ('0' + mimute).slice(-2) + ':' + ('0' + second).slice(-2)
+        return  ('0' + mimute).slice(-2) + ':' + ('0' + second).slice(-2)
     } else {
         return '00:00'
     }

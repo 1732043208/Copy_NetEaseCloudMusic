@@ -51,19 +51,20 @@
                 this.$store.commit('NotPlaying');
                 this.$store.state.musicCurrentTime = this.$refs.audio.currentTime;
             },
-            // 当音频当前时间改变后，进度条也要改变
+            // 当音频当前时间改变后，进度条也要改变,每秒触发一次
             onTimeupdate(el) {
                 // console.log(el.target.currentTime);
-                // this.$store.state.musicCurrentTime = el.target.currentTime;
+                this.$store.state.currentTimer = el.target.currentTime;
                 // this.audio.currentTime =
                 // this.sliderTime = parseInt(this.audio.currentTime / this.audio.maxTime * 100)
             },
+            // 一个音频文件加入到audio时触发
             onLoadedmetadata(el) {
-                // this.audio.maxTime = parseInt(el.target.duration)
+                this.$store.state.maxTimer = el.target.duration;
             },
             // 拖动进度条，改变当前时间，index是进度条改变时的回调函数的参数0-100之间，需要换算成实际时间
             changeCurrentTime(index) {
-                this.$refs.audio.currentTime = parseInt(index / 100 * this.audio.maxTime)
+                this.$refs.audio.currentTime = index;
             },
             onEnded() {
                 console.log(this.$store.state.changeIcon);
@@ -73,6 +74,12 @@
             },
             setTime() {
                 this.$refs.audio.currentTime = this.$store.getters.getMusicTime;
+            },
+            getCurrentTime() {
+                return this.$refs.audio.currentTime;
+            },
+            maxTime() {
+
             }
         }
     }
