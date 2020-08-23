@@ -21,16 +21,18 @@
                         v-show='changeIcons'
                         name="play-circle-o"
                         size="24px"
-                        color="#c2463a"
+                        color="#bfbfbf"
                         @click.stop="$refs.audio.startPlayOrPause(-1),ChangeIcon()"
                 />
                 <van-icon
                         v-show='!changeIcons'
                         name="pause-circle-o"
                         size="24px"
-                        color="#c2463a"
+                        color="#bfbfbf"
                         @click.stop="$refs.audio.startPlayOrPause(-1),ChangeIcon()"
                 />
+                <img src="../../assets/more.png" height="28" width="28" @click.stop="more"/>
+
             </div>
         </div>
         <transition name="move">
@@ -82,7 +84,7 @@
                         </div>
                         <div class="musicAllBtn">
                             <img src="../../assets/cycle_list.png" height="32" width="32"/>
-                            <img src="../../assets/previous.png" height="32" width="32"/>
+                            <img src="../../assets/previous.png" height="32" width="32" @click="previousMusic"/>
                             <van-icon
                                     v-show='changeIcons'
                                     name="play-circle-o"
@@ -95,25 +97,36 @@
                                     size="32px"
                                     color="#bfbfbf"
                                     @click.stop="$refs.audio.startPlayOrPause(-1),ChangeIcon()"/>
-                            <img src="../../assets/next.png" height="32" width="32"/>
-                            <img src="../../assets/more.png" height="32" width="32"/>
+                            <img src="../../assets/next.png" height="32" width="32" @click="nextMusic"/>
+                            <img src="../../assets/more.png" height="32" width="32" @click="more"/>
                         </div>
-
                     </div>
                 </div>
             </div>
         </transition>
-
+        <van-action-sheet v-model="show" @open="openSheet">
+            <div class="musicList">
+                <van-cell value-class="title1" :value='title1'></van-cell>
+                <van-cell
+                        class='cellItem'
+                        size="large"
+                        :center="true"
+                        v-for="(item,index) in playList"
+                        :value="item.name"
+                        :key="index"
+                        :value-class="{'cellText':true,'selectColor':item.isColor}"
+                        @click.stop="musicDetailClick(item,index)">
+                </van-cell>
+            </div>
+        </van-action-sheet>
     </div>
 </template>
 
 <script>
     // 格式化音乐时间
     import {realFormatSecond} from '../common/utils'
-    import {Icon, Image as VanImage, Slider, Cell} from 'vant';
-    import {GetMusicDetail, GetMusicUrlAPI} from "../../http/all-api";
+    import {Icon, Image as VanImage, Slider, Cell, ActionSheet} from 'vant';
     import AudioCom from "./audioCom";
-    import {createMusicInfo} from "../../../model/musicInfo";
 
     export default {
         name: "musicPlay",
@@ -125,22 +138,22 @@
         },
         mounted() {
             // changeI保存vuex里面的全局播放按钮状态
-            this.getMusicUrl(this.musicId);
-            this.getMusicDetail(this.musicId);
+            this.$store.dispatch('getMusicUrl', this.musicId);
+            this.$store.dispatch('getMusicDetail', this.musicId);
+
+            // this.getMusicDetail(this.musicId);
         },
         data() {
             return {
-                audio: {
-                    currentTime: 0,// 音频当前播放时长
-                    maxTime: 0// 音频最大播放时长
-                },
                 sliderTime: 0,
-                musicInfo: {},
+                // musicInfo: {},
                 isMinOrMax: false, // 展示迷你播放器还是大播放器
                 MusicCurrentTime: 0,
                 currentTime2: 0,
                 changeTime: false,
-                animationShow: 'paused'
+                animationShow: 'running',
+                show: false,
+                selectColor: false
             }
         },
 
@@ -149,8 +162,11 @@
             musicId: {
                 deep: true,
                 handler(nv, ov) {
-                    this.getMusicUrl(nv);
-                    this.getMusicDetail(nv);
+                    console.log('执行嘛');
+                    this.$store.dispatch('getMusicUrl', nv);
+                    this.$store.dispatch('getMusicDetail', nv);
+                    // this.getMusicDetail(nv);
+
                     this.$store.commit('NotPlaying');
                 }
             }
@@ -160,7 +176,6 @@
             // 使用get/set 获取和修改
             changeIcons: {
                 get() {
-                    console.log('执行get');
                     return this.$store.state.changeIcon
                 },
                 set(nv) {
@@ -191,6 +206,33 @@
                 set(nv) {
                     return this.$store.state.maxTimer = nv
                 }
+            },
+            musicInfo: {
+                get() {
+                    return this.$store.state.musicAllDetail;
+                },
+                set(nv) {
+                    return this.$store.state.musicAllDetail = nv;
+                }
+            },
+            playList: {
+                get() {
+                    return this.$store.state.playList;
+                },
+                set(nv) {
+                    return this.$store.state.playList = nv;
+                }
+            },
+            title1() {
+                return '当前播放(' + this.$store.state.playList.length + ')'
+            },
+            musicIndex1: {
+                get() {
+                    return this.$store.state.musicIndex
+                },
+                set(nv) {
+                    return this.$store.state.musicIndex = nv
+                }
             }
         },
         methods: {
@@ -198,32 +240,7 @@
                 this.animationShow = this.$store.state.changeIcon ? 'running' : 'paused'
                 this.$store.commit('showIcon');
             },
-            getMusicUrl(musicId) {
-                GetMusicUrlAPI(musicId).then(res => {
-                    if (res.data.data[0].url !== null) {
-                        this.$store.commit('changeMusicUrl', res.data.data[0].url);
-                        this.$store.commit('NotPlaying');
-                        this.$store.state.changeIcon = false;
-                    } else {
-                        this.$toast('获取音乐播放地址失败');
-                        this.$store.commit('NotPlaying');
-                        this.$store.commit('showIcon');
-                        this.$store.commit('changeMusicUrl', '')
-                    }
-                }).catch(error => {
-                    console.log('获取音乐url失败');
-                    console.log(error);
-                })
-            },
-            getMusicDetail(musicId) {
-                GetMusicDetail(musicId).then(res => {
-                    this.musicInfo = createMusicInfo(res.data.songs[0]);
-                    console.log(this.musicInfo);
-                }).catch(error => {
-                    console.log('获取音乐名字出错');
-                    console.log(error.message);
-                })
-            },
+
             minOrMax() {
                 this.isMinOrMax = !this.isMinOrMax;
             },
@@ -235,8 +252,58 @@
                 this.currentTime2 = time;
                 this.changeTime = false;
                 this.$refs.audio.changeCurrentTime(time);
-            }
+            },
+            nextMusic() {
+                if (this.musicIndex1 < this.$store.state.playList.length - 1) {
+                    this.musicIndex1++;
+                    let nextId = this.$store.state.playList[this.musicIndex1].id;
+                    this.$store.commit('changeMusicId', nextId);
 
+                } else {
+                    console.log('else');
+                    this.musicIndex1 = 0;
+                    let nextId = this.$store.state.playList[this.musicIndex1].id;
+                    this.$store.commit('changeMusicId', nextId);
+                }
+            },
+            previousMusic() {
+                if (this.musicIndex1 > 0) {
+                    this.musicIndex1--;
+                    let nextId = this.$store.state.playList[this.musicIndex1].id;
+                    this.$store.commit('changeMusicId', nextId);
+
+                } else {
+                    console.log('else');
+                    this.musicIndex1 = this.$store.state.playList.length - 1;
+                    let nextId = this.$store.state.playList[this.musicIndex1].id;
+                    this.$store.commit('changeMusicId', nextId);
+                }
+            },
+            more() {
+                this.show = !this.show
+            },
+            musicDetailClick(item, index) {
+                this.isShowDetail = !this.isShowDetail;
+                console.log(item);
+                this.musicIndex1 = index;
+                this.$store.commit('changeMusicId', item.id);
+
+                this.playList.forEach(value => {
+                    value.isColor = false;
+                });
+                item.isColor = true;
+            },
+            // 打开面板查找是否有相同的url，有就显示播放中的颜色
+            openSheet() {
+                // 排它
+                this.playList.forEach(item => {
+                    item.isColor = false;
+                });
+                let index = this.playList.findIndex(value => {
+                    return value.id === parseInt(this.musicId);
+                });
+                this.$store.state.playList[index].isColor = true;
+            }
         },
         components: {
             [Slider.name]: Slider,
@@ -244,6 +311,7 @@
             [VanImage.name]: VanImage,
             AudioCom,
             [Cell.name]: Cell,
+            [ActionSheet.name]: ActionSheet
         },
         filters: {
             // 将整数转化成时分秒
@@ -276,7 +344,7 @@
             padding: 15px 25px;
             display: flex;
             align-items: center;
-            background-color: rgba(255, 255, 255, 0.96);
+            background-color: rgba(255, 255, 255, 0.99);
             // 音乐 歌手名字
             .musicName {
                 flex: 3;
@@ -296,9 +364,11 @@
             .musicIcon {
                 flex: 1;
 
-                .aaa {
-                    background-color: #c2463a;
+                img {
+                    margin-top: 15px;
+                    margin-left: 50px;
                 }
+
             }
         }
 
@@ -317,7 +387,8 @@
             width: 100vw;
             height: 100vh;
             z-index: 999;
-            backdrop-filter: blur(100px);
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(50px);
         }
 
         .nav {
@@ -397,6 +468,32 @@
                 height: 300px;
                 align-items: center;
                 justify-content: space-around;
+            }
+        }
+
+        .musicList {
+            height: 50vh;
+            padding: 16px 16px 30px;
+            //.comm();
+            .title1 {
+                padding: 30px 20px;
+                font-size: 40px;
+                font-weight: bold;
+            }
+
+            .cellItem {
+                color: #c2463a;
+                padding: 30px 30px;
+            }
+
+            .cellText {
+                font-weight: bold;
+                padding-left: 20px;
+                font-size: 38px;
+            }
+
+            .selectColor {
+                color: #c2463a;
             }
         }
     }

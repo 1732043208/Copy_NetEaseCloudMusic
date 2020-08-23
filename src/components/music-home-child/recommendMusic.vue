@@ -97,6 +97,8 @@
                 // 音乐id
                 console.log(musicId);
                 this.$store.commit('changeMusicId', musicId);
+                this.$store.state.musicIndex = this.$store.state.playList.length;
+
                 this.musicCheck(musicId);
             },
         },
