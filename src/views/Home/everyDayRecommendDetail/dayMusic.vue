@@ -6,7 +6,7 @@
             <p class="navTitle">每日推荐</p>
         </div>
         <div v-show="isShowTop" class="musicTop">
-            <div class="leftBox">
+            <div class="leftBox" @click="allPlayBtn">
                 <van-icon size="24" name="play-circle-o"/>
                 <p class="musicTopTitle">全部播放</p>
             </div>
@@ -26,10 +26,10 @@
                 <van-image
                         height="200"
                         cover
-                        src="http://pic.netbian.com/uploads/allimg/200808/000233-1596816153ef00.jpg" alt="">
+                        :src="musicInfo[1].picUrl" alt="">
                 </van-image>
                 <div ref="tabControl" class="musicTop">
-                    <div class="leftBox">
+                    <div class="leftBox" @click="allPlayBtn">
                         <van-icon size="24" name="play-circle-o"/>
                         <p class="musicTopTitle">全部播放</p>
                     </div>
@@ -177,6 +177,7 @@
                     result.forEach(item => {
                         this.musicInfo.push(createMusicInfo(item));
                     });
+                    console.log(this.musicInfo);
                     return res;
                     // this.musicInfo = new musicReModel();
                     // console.log(this.musicInfo);
@@ -197,9 +198,26 @@
             },
             musicListScroll(position) {
                 let opacity = Math.abs(Math.round(position.y) / 100);
-                this.$refs.topNav.style.background = `rgba(114,114,114,${opacity})`;
+                // this.$refs.topNav.style.background = `rgba(0,0,0,${opacity})`;
                 this.$refs.topNav.style.color = `rgba(255,255,255,${opacity})`;
+                if (position.y === 0) {
+                    this.$refs.topNav.style.height = 185 + 'px'
+                } else {
+                    this.$refs.topNav.style.height = 'auto'
+                }
                 this.isShowTop = position.y <= -153;
+            },
+            allPlayBtn() {
+                let allId = [];
+
+                this.musicInfo.forEach(item => {
+                    allId.push(item.id);
+                });
+                this.getMusicId(allId[0]);
+                allId = allId.join(',');
+                console.log(allId);
+                this.$store.dispatch('getMusicUrl', allId);
+                this.$store.dispatch('getMusicDetail', allId);
             },
             musicDetailShow(index) {
                 this.musicDetail = this.musicInfo[index];
@@ -287,10 +305,16 @@
             position: relative;
             z-index: 200;
             padding: 30px;
-            align-items: center;
+            align-items: start;
+            backdrop-filter: blur(10px);
+            background-color: rgba(0, 0, 0, 0.5);
+            height: 465px;
 
             .navTitle {
+                padding-top: 3px;
                 padding-left: 30px;
+                color: #f7f8fa;
+
             }
         }
 

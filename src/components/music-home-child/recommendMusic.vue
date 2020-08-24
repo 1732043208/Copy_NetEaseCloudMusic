@@ -3,7 +3,7 @@
     <div class="recommendMusic">
         <div class="topTitle">
             <h4>{{recommendMusic.uiElement.subTitle.title}}</h4>
-            <btn-more :title="recommendMusic.uiElement.button.text"></btn-more>
+            <btn-more :title="recommendMusic.uiElement.button.text" @click.native="allPlayBtn"></btn-more>
         </div>
         <horizontal-scroll ref="hScroll">
             <div ref="list" class="list">
@@ -82,6 +82,12 @@
                     } else {
                         return ''
                     }
+
+                    // let allId = [];
+                    // console.log(this.recommendMusic);
+                    // this.musicInfo.forEach(item => {
+                    //     allId.push(item.id);
+                    // });
                 }
             },
 
@@ -101,6 +107,19 @@
 
                 this.musicCheck(musicId);
             },
+            allPlayBtn(){
+                let allId = [];
+                console.log(this.recommendMusic);
+                this.recommendMusic.creatives.forEach(value => {
+                    value.resources.forEach(item =>{
+                        allId.push(item.resourceId);
+                    })
+                });
+                this.getMusicId(allId[0]);
+                allId = allId.join(',');
+                this.$store.dispatch('getMusicUrl', allId);
+                this.$store.dispatch('getMusicDetail', allId);
+            }
         },
         components: {
             [Cell.name]: Cell,

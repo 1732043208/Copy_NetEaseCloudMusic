@@ -162,7 +162,6 @@
             musicId: {
                 deep: true,
                 handler(nv, ov) {
-                    console.log('执行嘛');
                     this.$store.dispatch('getMusicUrl', nv);
                     this.$store.dispatch('getMusicDetail', nv);
                     // this.getMusicDetail(nv);

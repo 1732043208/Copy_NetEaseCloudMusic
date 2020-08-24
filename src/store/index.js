@@ -72,31 +72,36 @@ export default new Vuex.Store({
         },
         getMusicDetail(context, musicId) {
             GetMusicDetail(musicId).then(res => {
-                let musicInfo = createMusicInfo(res.data.songs[0]);
-                let musicAllDetail = context.state.musicAllDetail;
-                let test = {};
-                let {album, albumId, id, mvId, name, picUrl, singer, singerId} = musicInfo;
-                musicAllDetail.album = album;
-                musicAllDetail.albumId = albumId;
-                musicAllDetail.id = id;
-                musicAllDetail.mvId = mvId;
-                musicAllDetail.name = name;
-                musicAllDetail.picUrl = picUrl;
-                musicAllDetail.singer = singer;
-                musicAllDetail.singerId = singerId;
-                //
-                test.album = album;
-                test.albumId = albumId;
-                test.musicUrl = musicAllDetail.musicUrl;
-                test.id = id;
-                test.mvId = mvId;
-                test.name = name;
-                test.picUrl = picUrl;
-                test.singer = singer;
-                test.singerId = singerId;
-                test.isColor = false;
-                context.commit('joinPlayList', test);
+                let musicInfo;
+                res.data.songs.forEach(item => {
+                   musicInfo = createMusicInfo(item);
+                   let musicAllDetail = context.state.musicAllDetail;
+                    let test = {};
+                    let {album, albumId, id, mvId, name, picUrl, singer, singerId} = musicInfo;
+                    musicAllDetail.album = album;
+                    musicAllDetail.albumId = albumId;
+                    musicAllDetail.id = id;
+                    musicAllDetail.mvId = mvId;
+                    musicAllDetail.name = name;
+                    musicAllDetail.picUrl = picUrl;
+                    musicAllDetail.singer = singer;
+                    musicAllDetail.singerId = singerId;
+                    //
+                    test.album = album;
+                    test.albumId = albumId;
+                    test.musicUrl = musicAllDetail.musicUrl;
+                    test.id = id;
+                    test.mvId = mvId;
+                    test.name = name;
+                    test.picUrl = picUrl;
+                    test.singer = singer;
+                    test.singerId = singerId;
+                    test.isColor = false;
+                    context.commit('joinPlayList', test);
+                })
                 console.log(context.state.playList);
+
+
             }).catch(error => {
                 console.log('获取音乐名字出错');
                 console.log(error.message);

@@ -304,7 +304,7 @@
                 switch (name) {
                     case 'tj':
                         this.limit = 51;
-                        if (this.tj.length === 0) await this.getAllPlayListData({
+                        if (this.all.length === 0) await this.getAllPlayListData({
                             limit: 51,
                             cat: '全部',
                             dataType: this.all
@@ -453,7 +453,6 @@
             padding: 30px;
             align-items: center;
             font-weight: bold;
-
             .navTitle {
                 padding-left: 30px;
             }
