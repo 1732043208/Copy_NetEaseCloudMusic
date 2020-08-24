@@ -60,7 +60,7 @@ export default new Vuex.Store({
                     context.state.musicAllDetail.musicUrl = res.data.data[0].url;
                     console.log(context.state.musicAllDetail.musicUrl);
                 } else {
-                    this.$toast('获取音乐播放地址失败');
+                    Vue.$toast('获取音乐播放地址失败');
                     context.commit('NotPlaying');
                     context.commit('showIcon');
                     context.commit('changeMusicUrl', '')

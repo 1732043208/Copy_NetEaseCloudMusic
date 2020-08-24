@@ -177,7 +177,6 @@
                     result.forEach(item => {
                         this.musicInfo.push(createMusicInfo(item));
                     });
-                    console.log(this.musicInfo);
                     return res;
                     // this.musicInfo = new musicReModel();
                     // console.log(this.musicInfo);
@@ -215,7 +214,6 @@
                 });
                 this.getMusicId(allId[0]);
                 allId = allId.join(',');
-                console.log(allId);
                 this.$store.dispatch('getMusicUrl', allId);
                 this.$store.dispatch('getMusicDetail', allId);
             },

@@ -112,10 +112,15 @@
                         size="large"
                         :center="true"
                         v-for="(item,index) in playList"
-                        :value="item.name"
                         :key="index"
                         :value-class="{'cellText':true,'selectColor':item.isColor}"
                         @click.stop="musicDetailClick(item,index)">
+                    <template #default>
+                        <p>{{item.name}}<span>—{{item.singer}}</span></p>
+                    </template>
+                    <template #right-icon>
+                        <van-icon name="cross" @click.stop="removeBtn(index,item)"/>
+                    </template>
                 </van-cell>
             </div>
         </van-action-sheet>
@@ -153,7 +158,8 @@
                 changeTime: false,
                 animationShow: 'running',
                 show: false,
-                selectColor: false
+                selectColor: false,
+                nextId: 0,
             }
         },
 
@@ -253,30 +259,29 @@
                 this.$refs.audio.changeCurrentTime(time);
             },
             nextMusic() {
+
                 if (this.musicIndex1 < this.$store.state.playList.length - 1) {
                     this.musicIndex1++;
-                    let nextId = this.$store.state.playList[this.musicIndex1].id;
-                    this.$store.commit('changeMusicId', nextId);
-
+                    this.nextId = this.$store.state.playList[this.musicIndex1].id;
                 } else {
                     console.log('else');
                     this.musicIndex1 = 0;
-                    let nextId = this.$store.state.playList[this.musicIndex1].id;
-                    this.$store.commit('changeMusicId', nextId);
+                    this.nextId = this.$store.state.playList[this.musicIndex1].id;
                 }
+                this.$store.commit('changeMusicId', this.nextId);
+                console.log(this.nextId)
             },
             previousMusic() {
+                let nextId;
                 if (this.musicIndex1 > 0) {
                     this.musicIndex1--;
-                    let nextId = this.$store.state.playList[this.musicIndex1].id;
-                    this.$store.commit('changeMusicId', nextId);
-
+                    this.nextId = this.$store.state.playList[this.musicIndex1].id;
                 } else {
                     console.log('else');
                     this.musicIndex1 = this.$store.state.playList.length - 1;
-                    let nextId = this.$store.state.playList[this.musicIndex1].id;
-                    this.$store.commit('changeMusicId', nextId);
+                    this.nextId = this.$store.state.playList[this.musicIndex1].id;
                 }
+                this.$store.commit('changeMusicId', this.nextId);
             },
             more() {
                 this.show = !this.show
@@ -302,6 +307,20 @@
                     return value.id === parseInt(this.musicId);
                 });
                 this.$store.state.playList[index].isColor = true;
+            },
+            removeBtn(index, item) {
+                this.$delete(this.playList, index);
+                if (this.$store.state.musicId === item.id) {
+                    this.musicIndex1 = -1;
+                    this.nextMusic();
+                    this.playList.forEach(item => {
+                        item.isColor = false;
+                    });
+                    let index = this.playList.findIndex(value => {
+                        return value.id === parseInt(this.nextId);
+                    });
+                    this.$store.state.playList[index].isColor = true;
+                }
             }
         },
         components: {
@@ -489,6 +508,17 @@
                 font-weight: bold;
                 padding-left: 20px;
                 font-size: 38px;
+
+                p {
+                    width: 600px;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                }
+
+                span {
+                    font-size: 30px;
+                }
             }
 
             .selectColor {
