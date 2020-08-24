@@ -77,12 +77,9 @@
                         path:'/allPlayList'
                     })
                 } else if (index === 2) {
-                    GetTopListAPI().then(res => {
-                        // todo 所有榜单
-                        console.log(res);
-                    }).catch(err => {
-                        console.log(err);
-                    })
+                    this.$router.push({
+                        path:'/rank'
+                    });
                 } else if (index === 3) {
                     GetFmAPI().then(res => {
                         // todo 私人FM接口接通
