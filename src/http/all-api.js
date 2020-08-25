@@ -167,7 +167,17 @@ export function GetMusicUrlAPI(musicId) {
     })
 }
 
-// 获取音乐是否又版权
+// 获取歌词
+export function GetMusicLyricAPI(musicId) {
+    return http({
+        url: '/lyric',
+        params: {
+            id: musicId
+        }
+    })
+}
+
+// 获取音乐是否有版权
 export function GetMusicCheck(musicId) {
     return http({
         url: '/check/music',

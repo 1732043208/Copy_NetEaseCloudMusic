@@ -19,7 +19,7 @@ export default new Vuex.Store({
         maxTimer: 0,
         musicAllDetail: {},
         playList: [],
-        musicIndex:0,
+        musicIndex: 0,
     },
     mutations: {
         // musicId
@@ -46,7 +46,7 @@ export default new Vuex.Store({
             state.playList.push(data);
             state.playList = unique(state.playList);
         },
-        changeMusicIndex(state,index){
+        changeMusicIndex(state, index) {
             state.musicIndex = index;
         }
     },
@@ -74,8 +74,8 @@ export default new Vuex.Store({
             GetMusicDetail(musicId).then(res => {
                 let musicInfo;
                 res.data.songs.forEach(item => {
-                   musicInfo = createMusicInfo(item);
-                   let musicAllDetail = context.state.musicAllDetail;
+                    musicInfo = createMusicInfo(item);
+                    let musicAllDetail = context.state.musicAllDetail;
                     let test = {};
                     let {album, albumId, id, mvId, name, picUrl, singer, singerId} = musicInfo;
                     musicAllDetail.album = album;
@@ -99,14 +99,12 @@ export default new Vuex.Store({
                     test.isColor = false;
                     context.commit('joinPlayList', test);
                 })
-                console.log(context.state.playList);
-
-
             }).catch(error => {
                 console.log('获取音乐名字出错');
                 console.log(error.message);
             })
         },
+
     },
     modules: {},
     getters: {}

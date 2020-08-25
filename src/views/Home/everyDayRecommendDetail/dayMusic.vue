@@ -173,7 +173,6 @@
             async getMusicInfo() {
                 await GetRecommendSongAPI().then(res => {
                     const result = res.data.data.dailySongs;
-                    console.log(res.data.data);
                     result.forEach(item => {
                         this.musicInfo.push(createMusicInfo(item));
                     });

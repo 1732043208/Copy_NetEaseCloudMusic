@@ -76,7 +76,7 @@
                 this.$store.state.maxTimer = el.target.duration;
 
             },
-            // 拖动进度条，改变当前时间，index是进度条改变时的回调函数的参数0-100之间，需要换算成实际时间
+            // 拖动进度条，改变当前时间，index是进度条改变时的回调函数的参数，index为当前播放秒数
             changeCurrentTime(index) {
                 this.$refs.audio.currentTime = index;
             },

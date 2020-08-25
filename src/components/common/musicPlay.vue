@@ -5,7 +5,7 @@
                 :audio-src="changeMusicUrls">
 
         </audio-com>
-        <div @click.stop="minOrMax" v-show="!isMinOrMax" class="audio-com-box-min">
+        <div @click.stop="minOrMax" v-if="!isMinOrMax" class="audio-com-box-min">
             <van-image
                     round
                     width="30px"
@@ -38,7 +38,7 @@
         <transition name="move">
             <div
                     ref="bigPlayer"
-                    v-show="isMinOrMax"
+                    v-if="isMinOrMax"
                     :style="{'background-image':`url(${musicInfo.picUrl})`,
                     'animation-play-state':animationShow}"
                     class="audio-com-box-max">
@@ -58,6 +58,8 @@
                         </van-cell>
                     </div>
                     <div class="albumPic isrotate"
+                         v-show="!isShowLrc"
+                         @click="showLrc"
                          :style="{'animation-play-state':animationShow}">
                         <van-image
                                 class="pic"
@@ -66,6 +68,23 @@
                                 height="12rem"
                                 :src="musicInfo.picUrl"
                         />
+                    </div>
+                    <div class="lrcBox"
+                         v-show="isShowLrc"
+                         @click="showLrc">
+                        <scroll
+                                class="contentLrc"
+                                ref="lyricList"
+                                :probe-type="3">
+                            <div class="lyric">
+                                <p v-for="(line,index) in currentLyric.lines"
+                                   ref="lyricLine"
+                                   :key="index"
+                                   :class="{'current':currentLineNum===index}"
+                                   class="text">{{line.txt}}</p>
+
+                            </div>
+                        </scroll>
                     </div>
                     <div class="musicController">
                         <div class="musicSlider">
@@ -140,9 +159,11 @@
 <script>
     // 格式化音乐时间
     import {realFormatSecond} from '../common/utils'
-    import {Icon, Image as VanImage, Slider, Cell, Dialog } from 'vant';
+    import {Icon, Image as VanImage, Slider, Cell, Dialog} from 'vant';
     import AudioCom from "./audioCom";
     import scroll from "../scroll";
+    import Lyric from 'lyric-parser';
+    import {GetMusicLyricAPI} from "../../http/all-api";
 
     export default {
         name: "musicPlay",
@@ -153,11 +174,9 @@
             }
         },
         mounted() {
-            // changeI保存vuex里面的全局播放按钮状态
+            // 请求音乐播放地址，音乐信息，歌词
             this.$store.dispatch('getMusicUrl', this.musicId);
             this.$store.dispatch('getMusicDetail', this.musicId);
-
-            // this.getMusicDetail(this.musicId);
         },
         data() {
             return {
@@ -171,6 +190,10 @@
                 show: false,
                 selectColor: false,
                 nextId: 0,
+                lrc: '',
+                currentLyric: null,
+                currentLineNum: 0,
+                isShowLrc: false,
             }
         },
 
@@ -179,10 +202,25 @@
             musicId: {
                 deep: true,
                 handler(nv, ov) {
+                    this.$toast.loading({
+                        message: '加载中',
+                        forbidClick: true,
+                        duration: 0
+                    });
                     this.$store.dispatch('getMusicUrl', nv);
                     this.$store.dispatch('getMusicDetail', nv);
-                    // this.getMusicDetail(nv);
+                    if (this.currentLyric) {
+                        this.currentLyric.stop();
+                        this.currentLyric = null;
+                    }
+                    this.$nextTick(() => {
+                        this.Lyric(nv);
+                        setTimeout(() => {
+                            this.$toast.clear();
+                            this.currentLyric.play();
+                        }, 1000)
 
+                    });
                     this.$store.commit('NotPlaying');
                 }
             }
@@ -249,16 +287,26 @@
                 set(nv) {
                     return this.$store.state.musicIndex = nv
                 }
-            }
+            },
+            playing1: {
+                get() {
+                    return this.$store.state.isPlay
+                },
+                set(nv) {
+                    return this.$store.state.isPlay = nv
+                }
+            },
         },
         methods: {
             ChangeIcon() {
                 this.animationShow = this.$store.state.changeIcon ? 'running' : 'paused'
                 this.$store.commit('showIcon');
+                this.currentLyric.togglePlay();
             },
-
             minOrMax() {
                 this.isMinOrMax = !this.isMinOrMax;
+                this.Lyric(this.musicId);
+
             },
             // 拖动过程中，不改变滑块的值，才不会在拖动时滑块闪烁
             onChanging() {
@@ -268,6 +316,7 @@
                 this.currentTime2 = time;
                 this.changeTime = false;
                 this.$refs.audio.changeCurrentTime(time);
+                this.currentLyric.seek(this.$refs.audio.getCurrentTime() * 1000);
             },
             nextMusic() {
                 if (this.musicIndex1 < this.$store.state.playList.length - 1) {
@@ -279,6 +328,7 @@
                     this.nextId = this.$store.state.playList[this.musicIndex1].id;
                 }
                 this.$store.commit('changeMusicId', this.nextId);
+
                 console.log(this.nextId)
             },
             previousMusic() {
@@ -332,6 +382,31 @@
                     });
                     this.$store.state.playList[index].isColor = true;
                 }
+            },
+            Lyric(id) {
+                GetMusicLyricAPI(id).then(res => {
+                    this.lrc = res.data.lrc.lyric;
+                    this.$nextTick(() => {
+                        this.currentLyric = new Lyric(this.lrc, this.handleLyric);
+                    });
+                }).catch(error => {
+                    console.log('获取歌词失败');
+                    console.log(error);
+                })
+            },
+            handleLyric({lineNum, txt}) {
+                this.currentLineNum = lineNum;
+                // 若当前行大于5,开始滚动,以保歌词显示于中间位置
+                if (lineNum > 1) {
+                    let lineEl = this.$refs.lyricLine[lineNum - 1];
+                    // 过了第一句歌词开始滚动歌词
+                    this.$refs.lyricList.scrollToElement(lineEl, 1000)
+                } else {
+                    this.$refs.lyricList.scrollTo(0, 0, 0)
+                }
+            },
+            showLrc() {
+                this.isShowLrc = !this.isShowLrc;
             }
         },
         components: {
@@ -340,7 +415,8 @@
             [Icon.name]: Icon,
             [VanImage.name]: VanImage,
             AudioCom,
-            [Cell.name]: Cell,},
+            [Cell.name]: Cell,
+        },
         filters: {
             // 将整数转化成时分秒
             formatSecond(second = 0) {
@@ -438,6 +514,42 @@
             z-index: 999;
             background-color: rgba(0, 0, 0, 0.5);
             backdrop-filter: blur(50px);
+
+            .lrcBox {
+
+                text-align: center;
+
+                .contentLrc {
+                    width: 100vw;
+                    height: 65vh;
+                    overflow: hidden;
+                    position: absolute;
+                    top: 250px;
+                    left: 0;
+                    bottom: 0;
+
+                    .lyric {
+
+                        color: white;
+
+                        .text {
+                            font-size: 40px;
+                            padding-top: 70px;
+                        }
+
+                        .text:first-child {
+                            padding-top: 500px;
+                        }
+
+                        .current {
+                            transition: font-size 0.5s;
+                            font-size: 50px;
+                            color: #c2463a;
+
+                        }
+                    }
+                }
+            }
         }
 
         .nav {
@@ -521,7 +633,6 @@
         }
 
 
-
         .moreBox {
             position: relative;
             z-index: 2048;
@@ -531,6 +642,7 @@
                 height: 100vh;
                 background-color: rgba(0, 0, 0, 0.6);
             }
+
             .musicList {
                 position: absolute;
                 bottom: 0;

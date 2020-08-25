@@ -65,9 +65,8 @@
             })
         },
         methods: {
-            scrollTo(x, y, time = 300) {
-                // 如果this.scroll为空，则不执行后面的代码
-                this.scroll && this.scroll.scrollTo(x, y, time)
+            scrollTo() {
+                this.scroll && this.scroll.scrollTo.apply(this.scroll, arguments)
             },
             // 实现多次上拉加载更多
             finishPullUp() {
@@ -76,7 +75,11 @@
             },
             refresh() {
                 this.scroll && this.scroll.refresh();
+            },
+            scrollToElement() {
+                this.scroll && this.scroll.scrollToElement.apply(this.scroll, arguments)
             }
+
         }
     }
 </script>
