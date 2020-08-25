@@ -104,34 +104,45 @@
                 </div>
             </div>
         </transition>
-        <van-action-sheet v-model="show" @open="openSheet">
-            <div class="musicList">
-                <van-cell value-class="title1" :value='title1'></van-cell>
-                <van-cell
-                        class='cellItem'
-                        size="large"
-                        :center="true"
-                        v-for="(item,index) in playList"
-                        :key="index"
-                        :value-class="{'cellText':true,'selectColor':item.isColor}"
-                        @click.stop="musicDetailClick(item,index)">
-                    <template #default>
-                        <p>{{item.name}}<span>—{{item.singer}}</span></p>
-                    </template>
-                    <template #right-icon>
-                        <van-icon name="cross" @click.stop="removeBtn(index,item)"/>
-                    </template>
-                </van-cell>
+        <transition name="move2">
+            <div class="moreBox" v-show="show">
+                <div class="musicList">
+                    <van-cell value-class="title1" :value='title1'></van-cell>
+                    <scroll
+                            class="content"
+                            ref="scroll"
+                            :probe-type="3">
+                        <div>
+                            <van-cell
+                                    class='cellItem'
+                                    size="large"
+                                    :center="true"
+                                    v-for="(item,index) in playList"
+                                    :key="index"
+                                    :value-class="{'cellText':true,'selectColor':item.isColor}"
+                                    @click="musicDetailClick(item,index)">
+                                <template #default>
+                                    <p>{{item.name}}<span>—{{item.singer}}</span></p>
+                                </template>
+                                <template #right-icon>
+                                    <van-icon name="cross" @click.stop="removeBtn(index,item)"/>
+                                </template>
+                            </van-cell>
+                        </div>
+                    </scroll>
+                </div>
+                <div class="mask" @click.stop="more"></div>
             </div>
-        </van-action-sheet>
+        </transition>
     </div>
 </template>
 
 <script>
     // 格式化音乐时间
     import {realFormatSecond} from '../common/utils'
-    import {Icon, Image as VanImage, Slider, Cell, ActionSheet} from 'vant';
+    import {Icon, Image as VanImage, Slider, Cell, Dialog } from 'vant';
     import AudioCom from "./audioCom";
+    import scroll from "../scroll";
 
     export default {
         name: "musicPlay",
@@ -259,7 +270,6 @@
                 this.$refs.audio.changeCurrentTime(time);
             },
             nextMusic() {
-
                 if (this.musicIndex1 < this.$store.state.playList.length - 1) {
                     this.musicIndex1++;
                     this.nextId = this.$store.state.playList[this.musicIndex1].id;
@@ -284,7 +294,8 @@
                 this.$store.commit('changeMusicId', this.nextId);
             },
             more() {
-                this.show = !this.show
+                this.show = !this.show;
+                this.openSheet();
             },
             musicDetailClick(item, index) {
                 this.isShowDetail = !this.isShowDetail;
@@ -324,13 +335,12 @@
             }
         },
         components: {
+            scroll,
             [Slider.name]: Slider,
             [Icon.name]: Icon,
             [VanImage.name]: VanImage,
             AudioCom,
-            [Cell.name]: Cell,
-            [ActionSheet.name]: ActionSheet
-        },
+            [Cell.name]: Cell,},
         filters: {
             // 将整数转化成时分秒
             formatSecond(second = 0) {
@@ -349,6 +359,16 @@
             transform: rotate(360deg);
         }
     }
+
+    .move2-enter-active, .move2-leave-active {
+        transition: all 0.7s;
+    }
+
+    /* 显示前或隐藏后的效果 */
+    .move2-enter, .move2-leave-to {
+        transform: translateY(200%);
+    }
+
 
     .musicPlay {
         position: absolute;
@@ -369,6 +389,13 @@
                 padding-left: 25px;
                 font-size: 36px;
                 font-weight: 600;
+
+                p {
+                    width: 600px;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                }
 
                 .tip {
                     margin-top: 15px;
@@ -391,7 +418,11 @@
         }
 
         .audio-com-box-max {
-            position: relative;
+            position: absolute;
+            /*top: 0;*/
+            left: 0;
+            bottom: 0;
+            z-index: 2047;
             width: 100vw;
             height: 100vh;
             align-items: center;
@@ -489,42 +520,72 @@
             }
         }
 
-        .musicList {
-            height: 50vh;
-            padding: 16px 16px 30px;
-            //.comm();
-            .title1 {
-                padding: 30px 20px;
-                font-size: 40px;
-                font-weight: bold;
+
+
+        .moreBox {
+            position: relative;
+            z-index: 2048;
+
+            .mask {
+                width: 100vw;
+                height: 100vh;
+                background-color: rgba(0, 0, 0, 0.6);
             }
+            .musicList {
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                height: 50vh;
+                padding: 16px 16px 30px;
+                background-color: #fff;
+                border-top-left-radius: 50px;
+                border-top-right-radius: 50px;
 
-            .cellItem {
-                color: #c2463a;
-                padding: 30px 30px;
-            }
+                .title1 {
+                    padding: 30px 20px;
+                    font-size: 40px;
+                    font-weight: bold;
+                }
 
-            .cellText {
-                font-weight: bold;
-                padding-left: 20px;
-                font-size: 38px;
-
-                p {
-                    width: 600px;
+                .content {
+                    width: 100vw;
                     overflow: hidden;
-                    text-overflow: ellipsis;
-                    white-space: nowrap;
+                    position: absolute;
+                    top: 150px;
+                    left: 0;
+                    bottom: 0;
                 }
 
-                span {
-                    font-size: 30px;
+                .cellItem {
+                    color: #c2463a;
+                    padding: 30px 30px;
                 }
-            }
 
-            .selectColor {
-                color: #c2463a;
+                .cellText {
+                    font-weight: bold;
+                    padding-left: 20px;
+                    font-size: 38px;
+
+                    p {
+                        width: 600px;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        white-space: nowrap;
+                    }
+
+                    span {
+                        font-size: 30px;
+                    }
+                }
+
+                .selectColor {
+                    color: #c2463a;
+                }
             }
         }
+
+
     }
 
     .move-enter-active, .move-leave-active {
@@ -535,5 +596,6 @@
     .move-enter, .move-leave-to {
         transform: translateY(200%);
     }
+
 
 </style>

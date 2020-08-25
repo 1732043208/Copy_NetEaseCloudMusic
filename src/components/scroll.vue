@@ -82,4 +82,11 @@
 </script>
 
 <style scoped>
+    .wrapper {
+        width: 100%;
+        /*height: 0;*/
+        overflow: hidden;
+        white-space: nowrap; /*当子元素超过父元素宽度的时候，不会折行*/
+
+    }
 </style>
