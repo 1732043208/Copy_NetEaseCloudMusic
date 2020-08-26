@@ -108,14 +108,14 @@ export function GetRecommendSongAPI() {
 }
 
 // 每日推荐歌单
-export function GetRecommendSongListAPI() {
-    return http({
-        url: '/personalized',
-        params: {
-            limit: '6'
-        }
-    })
-}
+// export function GetRecommendSongListAPI() {
+//     return http({
+//         url: '/personalized',
+//         params: {
+//             limit: '6'
+//         }
+//     })
+// }
 
 // 热门歌单
 export function GetHotPlayList({limit = 51, order = 'hot', cat = '全部'}) {
@@ -173,6 +173,17 @@ export function GetMusicLyricAPI(musicId) {
         url: '/lyric',
         params: {
             id: musicId
+        }
+    })
+}
+
+// 获取歌曲评论
+export function GetMusicCommentAPI(id, {limit = 20}) {
+    return http({
+        url: '/comment/music',
+        params: {
+            id,
+            limit
         }
     })
 }

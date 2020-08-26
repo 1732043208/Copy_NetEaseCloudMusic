@@ -12,12 +12,13 @@ const PhoneLogin = () => import('../views/login/phone-login');
 const Captcha = () => import('../views/login/captcha');
 const MusicMine = () => import('../views/Mine/musicMine');
 const MusicMV = () => import('../views/mv/musicMv');
-const Recommend = () => import('../components/music-home-child/recommend');
+// const Recommend = () => import('../components/music-home-child/recommend');
 const DayMusic = () => import('../views/Home/everyDayRecommendDetail/dayMusic');
 const DaySongList = () => import('../views/Home/everyDayRecommendDetail/daySongList')
 const AllPlayList = () => import('../views/Home/allPlayList');
 const Album = () => import('../views/album/album');
 const Rank = () => import('../views/Home/rank');
+const CommentMusic = () => import('../views/musicComment/commentMusic');
 
 const routes = [
     {
@@ -127,6 +128,14 @@ const routes = [
         path: '/rank',
         name: 'rank',
         component: Rank,
+        meta: {
+            isShow: false
+        }
+    },
+    {
+        path: '/commentMusic',
+        name: 'commentMusic',
+        component: CommentMusic,
         meta: {
             isShow: false
         }

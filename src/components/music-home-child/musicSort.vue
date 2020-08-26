@@ -40,7 +40,7 @@
 
     import {Image as VanImage} from 'vant';
     // 引入网络请求方法
-    import {GetHomeIconAPI, GetFmAPI, GetRecommendSongAPI, GetHotPlayList, GetTopListAPI} from "../../http/all-api";
+    import {GetHomeIconAPI, GetFmAPI} from "../../http/all-api";
 
     import horizontalScroll from "../horizontalScroll";
 

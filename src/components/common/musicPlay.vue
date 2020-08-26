@@ -5,7 +5,7 @@
                 :audio-src="changeMusicUrls">
 
         </audio-com>
-        <div @click.stop="minOrMax" v-if="!isMinOrMax" class="audio-com-box-min">
+        <div @click.stop="minOrMax" v-show="!isMinOrMax" class="audio-com-box-min">
             <van-image
                     round
                     width="30px"
@@ -38,7 +38,7 @@
         <transition name="move">
             <div
                     ref="bigPlayer"
-                    v-if="isMinOrMax"
+                    v-show="isMinOrMax"
                     :style="{'background-image':`url(${musicInfo.picUrl})`,
                     'animation-play-state':animationShow}"
                     class="audio-com-box-max">
@@ -69,24 +69,37 @@
                                 :src="musicInfo.picUrl"
                         />
                     </div>
-                    <div class="lrcBox"
-                         v-show="isShowLrc"
-                         @click="showLrc">
+                    <div
+                            class="lrcBox"
+                            v-show="isShowLrc"
+                            @click="showLrc">
                         <scroll
+                                v-if="JSON.stringify(currentLyric)!=='{}'"
                                 class="contentLrc"
                                 ref="lyricList"
                                 :probe-type="3">
                             <div class="lyric">
-                                <p v-for="(line,index) in currentLyric.lines"
-                                   ref="lyricLine"
-                                   :key="index"
-                                   :class="{'current':currentLineNum===index}"
-                                   class="text">{{line.txt}}</p>
+                                <p
+                                        v-for="(line,index) in currentLyric.lines"
+                                        ref="lyricLine"
+                                        :key="index"
+                                        :class="{'current':currentLineNum===index}"
+                                        class="text">{{line.txt}}</p>
 
                             </div>
                         </scroll>
                     </div>
                     <div class="musicController">
+                        <div class="musicTopBtn">
+                            <van-icon
+                                    name="comment-o"
+                                    size="32px"
+                                    color="#bfbfbf"
+                                    @click="commentBtn"
+                            />
+                            <!--                            // !!!!!!/-->
+                            <van-icon name="like-o" size="32px" color="#bfbfbf"/>
+                        </div>
                         <div class="musicSlider">
                             <p class="currentTime">{{getCurrentTime|formatSecond}}</p>
                             <van-slider
@@ -177,6 +190,7 @@
             // 请求音乐播放地址，音乐信息，歌词
             this.$store.dispatch('getMusicUrl', this.musicId);
             this.$store.dispatch('getMusicDetail', this.musicId);
+            this.Lyric(this.musicId);
         },
         data() {
             return {
@@ -191,7 +205,7 @@
                 selectColor: false,
                 nextId: 0,
                 lrc: '',
-                currentLyric: null,
+                currentLyric: {},
                 currentLineNum: 0,
                 isShowLrc: false,
             }
@@ -202,6 +216,7 @@
             musicId: {
                 deep: true,
                 handler(nv, ov) {
+                    console.log(ov + '监听' + nv);
                     this.$toast.loading({
                         message: '加载中',
                         forbidClick: true,
@@ -209,7 +224,7 @@
                     });
                     this.$store.dispatch('getMusicUrl', nv);
                     this.$store.dispatch('getMusicDetail', nv);
-                    if (this.currentLyric) {
+                    if (JSON.stringify(this.currentLyric) !== '{}') {
                         this.currentLyric.stop();
                         this.currentLyric = null;
                     }
@@ -222,6 +237,7 @@
 
                     });
                     this.$store.commit('NotPlaying');
+
                 }
             }
         },
@@ -301,12 +317,28 @@
             ChangeIcon() {
                 this.animationShow = this.$store.state.changeIcon ? 'running' : 'paused'
                 this.$store.commit('showIcon');
-                this.currentLyric.togglePlay();
+                if (this.currentLyric) this.currentLyric.togglePlay();
             },
             minOrMax() {
+                this.isShowLrc = false;
                 this.isMinOrMax = !this.isMinOrMax;
-                this.Lyric(this.musicId);
+                if (this.isMinOrMax && Object.keys(this.currentLyric).length !== 0) {
+                    this.currentLyric.seek(this.$refs.audio.getCurrentTime() * 1000);
+                }
 
+            },
+            commentBtn() {
+                this.isMinOrMax = !this.isMinOrMax;
+
+                console.log(this.musicInfo);
+                this.$router.push({
+                    path: '/commentMusic',
+                    query: {
+                        musicName: this.musicInfo.name,
+                        singer: this.musicInfo.singer,
+                        musicPic: this.musicInfo.picUrl
+                    }
+                })
             },
             // 拖动过程中，不改变滑块的值，才不会在拖动时滑块闪烁
             onChanging() {
@@ -319,12 +351,13 @@
                 this.currentLyric.seek(this.$refs.audio.getCurrentTime() * 1000);
             },
             nextMusic() {
-                if (this.musicIndex1 < this.$store.state.playList.length - 1) {
-                    this.musicIndex1++;
+                if (this.musicIndex1 <= this.$store.state.playList.length - 1) {
                     this.nextId = this.$store.state.playList[this.musicIndex1].id;
+                    this.$store.commit('changeMusicIndex', this.musicIndex1 + 1)
                 } else {
-                    console.log('else');
-                    this.musicIndex1 = 0;
+                    console.log('else newtMusic');
+                    // this.musicIndex1 = 0;
+                    this.$store.commit('changeMusicIndex', 0);
                     this.nextId = this.$store.state.playList[this.musicIndex1].id;
                 }
                 this.$store.commit('changeMusicId', this.nextId);
@@ -350,8 +383,8 @@
             musicDetailClick(item, index) {
                 this.isShowDetail = !this.isShowDetail;
                 console.log(item);
-                this.musicIndex1 = index;
                 this.$store.commit('changeMusicId', item.id);
+                this.$store.commit('changeMusicIndex', index + 1);
 
                 this.playList.forEach(value => {
                     value.isColor = false;
@@ -386,8 +419,10 @@
             Lyric(id) {
                 GetMusicLyricAPI(id).then(res => {
                     this.lrc = res.data.lrc.lyric;
+                    console.log(res.data.lrc.lyric);
                     this.$nextTick(() => {
                         this.currentLyric = new Lyric(this.lrc, this.handleLyric);
+                        console.log(this.currentLyric);
                     });
                 }).catch(error => {
                     console.log('获取歌词失败');
@@ -402,11 +437,18 @@
                     // 过了第一句歌词开始滚动歌词
                     this.$refs.lyricList.scrollToElement(lineEl, 1000)
                 } else {
-                    this.$refs.lyricList.scrollTo(0, 0, 0)
+                    this.$refs.lyricList.scrollTo(0, 0, 1000)
                 }
             },
             showLrc() {
                 this.isShowLrc = !this.isShowLrc;
+                if (this.isShowLrc && this.currentLyric) {
+                    console.log(this.$refs.audio.getCurrentTime());
+                    this.currentLyric.play();
+                    this.currentLyric.seek(this.$refs.audio.getCurrentTime() * 1000);
+
+                }
+
             }
         },
         components: {
@@ -521,7 +563,7 @@
 
                 .contentLrc {
                     width: 100vw;
-                    height: 65vh;
+                    height: 60vh;
                     overflow: hidden;
                     position: absolute;
                     top: 250px;
@@ -542,7 +584,7 @@
                         }
 
                         .current {
-                            transition: font-size 0.5s;
+                            /*transition: font-size 0.5s;*/
                             font-size: 50px;
                             color: #c2463a;
 
@@ -596,6 +638,15 @@
         .musicController {
             position: absolute;
             bottom: 0;
+
+            .musicTopBtn {
+                margin-bottom: 20px;
+                text-align: center;
+
+                i {
+                    margin: 30px;
+                }
+            }
 
             .musicSlider {
                 display: flex;

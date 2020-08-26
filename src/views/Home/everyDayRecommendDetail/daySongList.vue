@@ -28,7 +28,9 @@
                 @scroll="musicListScroll">
 
             <div id="content">
-                <div class="bg"></div>
+                <div class="bg"
+                     :style="{'background-image': `url(${songListData.picUrl})`}">
+                </div>
                 <div>
                     <div class="songListInfo">
                         <div>
@@ -271,17 +273,23 @@
                 .bg {
                     width: 100vw;
                     height: 700px;
-                    background: url("http://pic.netbian.com/uploads/allimg/200601/001356-1590941636dd5e.jpg") no-repeat;
-                    filter: blur(20px);
+                    background-repeat: no-repeat;
+                    background-size: 100% 100%;
                 }
 
                 .songListInfo {
                     width: 90vw;
+                    height: 600px;
                     display: flex;
                     position: absolute;
-                    top: 200px;
-                    left: 30px;
+                    padding-top: 150px;
+                    padding-left: 30px;
+                    padding-right: 75px;
+                    top: 0;
+                    left: 0;
                     justify-content: space-around;
+                    backdrop-filter: blur(50px);
+                    background-color: rgba(0, 0, 0, 0.3);
                 }
 
                 .orderInfo {
@@ -296,7 +304,7 @@
                     .musicSort-item {
                         text-align: center;
                         margin: 0 15px;
-                        font-size: 30px;
+                        font-size: 36px;
                     }
 
                 }
@@ -313,8 +321,8 @@
 
                 .playCount {
                     position: absolute;
-                    top: 8px;
-                    right: 620px;
+                    top: 160px;
+                    left: 270px;
                     z-index: 200;
                     font-size: 30px;
                     color: #eeeeee;

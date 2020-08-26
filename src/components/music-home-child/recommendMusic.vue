@@ -90,7 +90,11 @@
                     // });
                 }
             },
-
+            getLength: {
+                get() {
+                    return this.$store.state.playList.length + 1
+                }
+            }
 
         },
         data() {
@@ -103,15 +107,15 @@
                 // 音乐id
                 console.log(musicId);
                 this.$store.commit('changeMusicId', musicId);
-                this.$store.state.musicIndex = this.$store.state.playList.length;
-
+                // this.$store.state.musicIndex = this.$store.state.playList.length;
+                this.$store.commit('changeMusicIndex', this.getLength);
                 this.musicCheck(musicId);
             },
-            allPlayBtn(){
+            allPlayBtn() {
                 let allId = [];
                 console.log(this.recommendMusic);
                 this.recommendMusic.creatives.forEach(value => {
-                    value.resources.forEach(item =>{
+                    value.resources.forEach(item => {
                         allId.push(item.resourceId);
                     })
                 });

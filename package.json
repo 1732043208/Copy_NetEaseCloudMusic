@@ -11,7 +11,7 @@
     "core-js": "^3.6.5",
     "js-md5": "^0.7.3",
     "less-loader": "^6.2.0",
-    "lyric-parser": "^1.0.1",
+    "lyric-parser": "git+https://github.com/Palereed/lyric-parser.git",
     "vant": "^2.9.4",
     "vue": "^2.6.11",
     "vue-aplayer": "^1.6.1",

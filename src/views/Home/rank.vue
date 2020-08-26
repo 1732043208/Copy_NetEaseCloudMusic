@@ -1,9 +1,6 @@
 <template>
     <div class="rank">
-        <div ref="topNav" class="topNav">
-            <van-icon size="22" @click="goBack" color="black" name="arrow-left"/>
-            <p class="navTitle">排行榜</p>
-        </div>
+       <comm-nav title="排行榜"></comm-nav>
         <scroll
                 class="content"
                 ref="scroll"
@@ -57,17 +54,26 @@
 
 <script>
     import scroll from "../../components/scroll";
+    import CommNav from "../../components/nav/commNav";
     import {GetTopListAPI} from "../../http/all-api";
     import {createRankInfo} from "../../../model/rankInfo";
     import {Grid, GridItem, Image as VanImage, Icon, ActionSheet} from 'vant';
 
     export default {
         name: "rank",
+        beforeCreate() {
+            this.$toast.loading({
+                message: '加载中',
+                forbidClick: true,
+                duration: 0
+            });
+        },
         created() {
             GetTopListAPI().then(res => {
                 let list = res.data.list;
                 list.forEach(item => {
                     this.rankInfo.push(createRankInfo(item))
+                    this.$toast.clear();
                 });
             }).catch(err => {
                 console.log(err);
@@ -98,6 +104,7 @@
         },
         components: {
             scroll,
+            CommNav,
             [Grid.name]: Grid,
             [GridItem.name]: GridItem,
             [VanImage.name]: VanImage,
@@ -110,21 +117,6 @@
 <style scoped lang="less">
     .rank {
         width: 100vw;
-
-        .topNav {
-            display: flex;
-            padding: 30px;
-            align-items: center;
-            background-color: white;
-
-            .navTitle {
-                padding-left: 32px;
-                letter-spacing: 3px;
-                font-weight: bold;
-                color: black;
-
-            }
-        }
 
         .content {
             width: 100vw;

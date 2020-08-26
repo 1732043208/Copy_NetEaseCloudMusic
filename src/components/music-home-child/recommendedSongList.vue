@@ -43,8 +43,6 @@
     //引入vant组件 Grid宫格布局
     import {Image as VanImage, Icon} from 'vant';
 
-    //  网络请求方法
-    import {GetHotPlayList} from "../../http/all-api";
 
     export default {
         name: "recommendedSongList",

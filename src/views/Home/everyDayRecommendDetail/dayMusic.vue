@@ -1,6 +1,6 @@
 <!--每日歌曲推荐-->
 <template>
-    <div class="dayMusic">
+    <div class="dayMusic" v-if="musicInfo.length!==0">
         <div ref="topNav" class="topNav">
             <van-icon size="24" @click="goBack" color="#fff" name="arrow-left"/>
             <p class="navTitle">每日推荐</p>
@@ -69,7 +69,7 @@
                             </van-image>
                         </template>
                         <template #right-icon>
-                            <van-icon @click="musicDetailShow(index)" name="ellipsis" class="rightImage"/>
+                            <van-icon @click.stop="musicDetailShow(index)" name="ellipsis" class="rightImage"/>
                         </template>
                     </van-cell>
                 </van-cell-group>

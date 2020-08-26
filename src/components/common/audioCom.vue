@@ -14,7 +14,6 @@
 </template>
 
 <script>
-    import {GetMusicUrlAPI} from "../../http/all-api";
 
     export default {
         name: "audioCom",
@@ -42,7 +41,7 @@
                 this.$store.state.isPlay ? this.pause() : this.play();
             },
             // 播放音频
-            play(el) {
+            play() {
                 console.log('执行 play');
                 this.$refs.audio.play();
                 console.dir(this.$refs.audio);
@@ -85,36 +84,48 @@
                 console.log(this.$store.state.changeIcon);
                 this.$store.commit('showIcon');
                 console.log('音乐播放完了');
-                if (this.musicIndex1 < this.$store.state.playList.length - 1) {
-                    this.musicIndex1++;
-                    console.log(this.musicIndex1);
-                    let nextId = this.$store.state.playList[this.musicIndex1].id;
-                    console.log(nextId);
-                    this.$store.commit('changeMusicId', nextId);
-                    this.$store.dispatch('getMusicUrl', nextId);
-                    this.$store.dispatch('getMusicDetail', nextId);
-
-                    // this.getMusicDetail(nv);
-
-                    this.$store.commit('NotPlaying');
-
-                } else {
-                    console.log('else');
-                    this.musicIndex1 = 0;
-                    let nextId = this.$store.state.playList[this.musicIndex1].id;
-                    this.$store.commit('changeMusicId', nextId);
-                    this.$store.dispatch('getMusicUrl', nextId);
-                    this.$store.dispatch('getMusicDetail', nextId);
-                }
-
+                this.listLoop();
 
             },
             getCurrentTime() {
                 return this.$refs.audio.currentTime;
             },
-            maxTime() {
+            // 列表循环
+            listLoop() {
+                console.log('哈哈哈');
+                console.log(this.musicIndex1);
+                console.log('-------------');
+                console.log(this.$store.state.playList.length);
+                if (this.$store.state.playList.length === 1) {
+                    this.$refs.audio.currentTime = 0;
+                    this.play();
+                    this.$store.commit('IsPlaying');
+                    this.$store.commit('showIcon');
+                    return ;
 
+                }
+                if (this.musicIndex1 < this.$store.state.playList.length) {
+                    console.log('true listLoopMusic');
+                    console.log(this.musicIndex1);
+                    let nextId = this.$store.state.playList[this.musicIndex1].id;
+                    this.$store.commit('changeMusicId', nextId);
+                    this.$store.dispatch('getMusicUrl', nextId);
+                    this.$store.dispatch('getMusicDetail', nextId);
+                    this.musicIndex1++;
+                    // this.getMusicDetail(nv);
+
+                    this.$store.commit('NotPlaying');
+
+                } else {
+                    console.log('else listLoopMusic');
+                    // this.musicIndex1 = 0;
+                    this.$store.commit('changeMusicIndex', 1);
+                    let nextId = this.$store.state.playList[0].id;
+                    this.$store.commit('changeMusicId', nextId);
+
+                }
             }
+
         }
     }
 </script>

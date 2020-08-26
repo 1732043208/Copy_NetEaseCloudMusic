@@ -58,7 +58,6 @@ export default new Vuex.Store({
                     context.commit('NotPlaying');
                     context.state.changeIcon = false;
                     context.state.musicAllDetail.musicUrl = res.data.data[0].url;
-                    console.log(context.state.musicAllDetail.musicUrl);
                 } else {
                     Vue.$toast('获取音乐播放地址失败');
                     context.commit('NotPlaying');
