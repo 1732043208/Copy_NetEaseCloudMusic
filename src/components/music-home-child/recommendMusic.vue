@@ -121,6 +121,7 @@
                 });
                 this.getMusicId(allId[0]);
                 allId = allId.join(',');
+                this.$store.state.musicIndex = 0;
                 this.$store.dispatch('getMusicUrl', allId);
                 this.$store.dispatch('getMusicDetail', allId);
             }

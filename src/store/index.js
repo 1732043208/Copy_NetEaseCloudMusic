@@ -3,7 +3,9 @@ import Vuex from 'vuex'
 import {GetMusicDetail, GetMusicUrlAPI} from "../http/all-api";
 import {createMusicInfo} from "../../model/musicInfo";
 import {unique} from "../components/common/utils";
+import {Toast} from 'vant'
 
+Vue.use(Toast);
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -20,6 +22,7 @@ export default new Vuex.Store({
         musicAllDetail: {},
         playList: [],
         musicIndex: 0,
+        commentCount: 0,
     },
     mutations: {
         // musicId
@@ -48,6 +51,9 @@ export default new Vuex.Store({
         },
         changeMusicIndex(state, index) {
             state.musicIndex = index;
+        },
+        changeCommentCount(state, count) {
+            state.commentCount = count;
         }
     },
     actions: {
@@ -59,12 +65,13 @@ export default new Vuex.Store({
                     context.state.changeIcon = false;
                     context.state.musicAllDetail.musicUrl = res.data.data[0].url;
                 } else {
-                    Vue.$toast('获取音乐播放地址失败');
-                    context.commit('NotPlaying');
+                    Toast('获取音乐播放地址失败');                    context.commit('NotPlaying');
                     context.commit('showIcon');
                     context.commit('changeMusicUrl', '')
                 }
             }).catch(error => {
+                console.dir(Vue);
+                Toast('获取音乐播放地址失败');
                 console.log('获取音乐url失败');
                 console.log(error);
             })

@@ -84,46 +84,67 @@
                 console.log(this.$store.state.changeIcon);
                 this.$store.commit('showIcon');
                 console.log('音乐播放完了');
-                this.listLoop();
+                switch (this.$parent.playType) {
+                    case 1:
+                        console.log('执行列表循环');
+                        this.listLoop();
+                        break;
+                    case 2:
+                        console.log('执行随机播放');
+                        this.randomPlay();
+                        break;
+                    case 3:
+                        console.log('单曲');
+                        this.loop();
+                        break;
 
+                }
             },
             getCurrentTime() {
                 return this.$refs.audio.currentTime;
             },
+            // 单曲循环
+            loop() {
+                this.$refs.audio.currentTime = 0;
+                this.play();
+                this.$store.commit('IsPlaying');
+                this.$store.commit('showIcon');
+            },
             // 列表循环
             listLoop() {
-                console.log('哈哈哈');
-                console.log(this.musicIndex1);
-                console.log('-------------');
-                console.log(this.$store.state.playList.length);
                 if (this.$store.state.playList.length === 1) {
-                    this.$refs.audio.currentTime = 0;
-                    this.play();
-                    this.$store.commit('IsPlaying');
-                    this.$store.commit('showIcon');
-                    return ;
-
+                    this.loop();
+                    return;
                 }
                 if (this.musicIndex1 < this.$store.state.playList.length) {
                     console.log('true listLoopMusic');
-                    console.log(this.musicIndex1);
+                    this.musicIndex1++;
+                    if (this.musicIndex1>=this.$store.state.playList.length){
+                        console.log('执行了这里');
+                        console.log(this.musicIndex1);
+                        this.musicIndex1 = 0;
+                    }
                     let nextId = this.$store.state.playList[this.musicIndex1].id;
                     this.$store.commit('changeMusicId', nextId);
                     this.$store.dispatch('getMusicUrl', nextId);
                     this.$store.dispatch('getMusicDetail', nextId);
-                    this.musicIndex1++;
-                    // this.getMusicDetail(nv);
 
                     this.$store.commit('NotPlaying');
-
-                } else {
-                    console.log('else listLoopMusic');
-                    // this.musicIndex1 = 0;
-                    this.$store.commit('changeMusicIndex', 1);
-                    let nextId = this.$store.state.playList[0].id;
-                    this.$store.commit('changeMusicId', nextId);
+                    this.$store.commit('IsPlaying');
+                    this.$store.commit('showIcon');
 
                 }
+            },
+            // 随机播放
+            randomPlay() {
+                let index = Math.floor(Math.random() * this.$store.state.playList.length - 1);
+                this.musicIndex1 = index;
+                let nextId = this.$store.state.playList[index].id;
+                this.$store.commit('changeMusicId', nextId);
+                this.$store.dispatch('getMusicUrl', nextId);
+                this.$store.dispatch('getMusicDetail', nextId);
+                this.$store.commit('IsPlaying');
+                this.$store.commit('showIcon');
             }
 
         }

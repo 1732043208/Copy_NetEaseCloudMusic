@@ -144,6 +144,11 @@
         computed: {
             isMusicPlay() {
                 return this.$store.state.musicId !== null
+            },
+            getLength: {
+                get() {
+                    return this.$store.state.playList.length + 1
+                }
             }
         },
         data() {
@@ -190,6 +195,8 @@
                 this.musicCheck(musicId);
                 this.$refs.scroll.$el.style.height = 92 + '%';
                 this.$refs.scroll.refresh();
+                this.$store.commit('changeMusicIndex', this.getLength);
+
             },
             goBack() {
                 this.$router.go(-1);
@@ -213,6 +220,7 @@
                 });
                 this.getMusicId(allId[0]);
                 allId = allId.join(',');
+                this.$store.state.musicIndex = 0;
                 this.$store.dispatch('getMusicUrl', allId);
                 this.$store.dispatch('getMusicDetail', allId);
             },
@@ -302,7 +310,7 @@
             position: relative;
             z-index: 200;
             padding: 30px;
-            align-items: start;
+            align-items: flex-start;
             backdrop-filter: blur(10px);
             background-color: rgba(0, 0, 0, 0.5);
             height: 465px;

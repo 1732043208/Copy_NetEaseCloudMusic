@@ -74,24 +74,36 @@
                             v-show="isShowLrc"
                             @click="showLrc">
                         <scroll
-                                v-if="JSON.stringify(currentLyric)!=='{}'"
+
                                 class="contentLrc"
                                 ref="lyricList"
                                 :probe-type="3">
-                            <div class="lyric">
+                            <div v-if="JSON.stringify(currentLyric)!=='{}'"
+                                 class="lyric">
                                 <p
-                                        v-for="(line,index) in currentLyric.lines"
+                                        v-for="(line,index) in lines"
                                         ref="lyricLine"
                                         :key="index"
                                         :class="{'current':currentLineNum===index}"
                                         class="text">{{line.txt}}</p>
 
                             </div>
+                            <div v-else
+                                 class="lyric">
+                                <p
+                                        v-for="(line,index) in lines"
+                                        ref="lyricLine"
+                                        :key="index"
+                                        class="text">{{line.txt}}</p>
+
+                            </div>
+
                         </scroll>
                     </div>
                     <div class="musicController">
                         <div class="musicTopBtn">
                             <van-icon
+                                    :badge="commentCount===0?'99+':commentCount"
                                     name="comment-o"
                                     size="32px"
                                     color="#bfbfbf"
@@ -115,8 +127,15 @@
                             <p class="maxTime">{{getMaxTime|formatSecond}}</p>
                         </div>
                         <div class="musicAllBtn">
-                            <img src="../../assets/cycle_list.png" height="32" width="32"/>
+                            <img v-show="playType===1" @click="changePlayType" src="../../assets/cycle_list.png"
+                                 height="32" width="32"/>
+                            <img v-show="playType===2" @click="changePlayType" src="../../assets/random.png" height="32"
+                                 width="32"/>
+                            <img v-show="playType===3" @click="changePlayType" src="../../assets/loop.png" height="32"
+                                 width="32"/>
+
                             <img src="../../assets/previous.png" height="32" width="32" @click="previousMusic"/>
+
                             <van-icon
                                     v-show='changeIcons'
                                     name="play-circle-o"
@@ -172,7 +191,7 @@
 <script>
     // 格式化音乐时间
     import {realFormatSecond} from '../common/utils'
-    import {Icon, Image as VanImage, Slider, Cell, Dialog} from 'vant';
+    import {Icon, Image as VanImage, Slider, Cell} from 'vant';
     import AudioCom from "./audioCom";
     import scroll from "../scroll";
     import Lyric from 'lyric-parser';
@@ -208,6 +227,8 @@
                 currentLyric: {},
                 currentLineNum: 0,
                 isShowLrc: false,
+                playType: 1,
+                lines: []
             }
         },
 
@@ -224,17 +245,17 @@
                     });
                     this.$store.dispatch('getMusicUrl', nv);
                     this.$store.dispatch('getMusicDetail', nv);
-                    if (JSON.stringify(this.currentLyric) !== '{}') {
+                    if (Object.keys(this.currentLyric).length !== 0) {
                         this.currentLyric.stop();
                         this.currentLyric = null;
+                        this.lines = [];
                     }
+                    this.Lyric(nv);
                     this.$nextTick(() => {
-                        this.Lyric(nv);
                         setTimeout(() => {
                             this.$toast.clear();
-                            this.currentLyric.play();
+                            if (Object.keys(this.currentLyric).length !== 0) this.currentLyric.play();
                         }, 1000)
-
                     });
                     this.$store.commit('NotPlaying');
 
@@ -312,6 +333,15 @@
                     return this.$store.state.isPlay = nv
                 }
             },
+            commentCount: {
+                get() {
+                    if (this.$store.state.commentCount >= 999) return '99+';
+                    return this.$store.state.commentCount
+                },
+                set(nv) {
+                    return this.$store.state.commentCount = nv
+                }
+            },
         },
         methods: {
             ChangeIcon() {
@@ -327,16 +357,18 @@
                 }
 
             },
+            changePlayType() {
+                this.playType = this.playType + 1 > 3 ? 1 : this.playType + 1;
+            },
             commentBtn() {
                 this.isMinOrMax = !this.isMinOrMax;
-
-                console.log(this.musicInfo);
                 this.$router.push({
                     path: '/commentMusic',
                     query: {
                         musicName: this.musicInfo.name,
                         singer: this.musicInfo.singer,
-                        musicPic: this.musicInfo.picUrl
+                        musicPic: this.musicInfo.picUrl,
+                        id: this.musicId
                     }
                 })
             },
@@ -348,25 +380,29 @@
                 this.currentTime2 = time;
                 this.changeTime = false;
                 this.$refs.audio.changeCurrentTime(time);
-                this.currentLyric.seek(this.$refs.audio.getCurrentTime() * 1000);
+                if (Object.keys(this.currentLyric).length !== 0) this.currentLyric.seek(this.$refs.audio.getCurrentTime() * 1000);
             },
             nextMusic() {
-                if (this.musicIndex1 <= this.$store.state.playList.length - 1) {
-                    this.nextId = this.$store.state.playList[this.musicIndex1].id;
-                    this.$store.commit('changeMusicIndex', this.musicIndex1 + 1)
-                } else {
-                    console.log('else newtMusic');
-                    // this.musicIndex1 = 0;
-                    this.$store.commit('changeMusicIndex', 0);
-                    this.nextId = this.$store.state.playList[this.musicIndex1].id;
-                }
-                this.$store.commit('changeMusicId', this.nextId);
+                switch (this.playType) {
+                    case 1:
+                        console.log('执行列表循环下一首');
+                        this.$refs.audio.listLoop();
+                        break;
+                    case 2:
+                        console.log('执行随机播放下一首');
+                        this.$refs.audio.randomPlay();
+                        break;
+                    case 3:
+                        console.log('单曲下一首');
+                        this.$refs.audio.listLoop();
+                        break;
 
-                console.log(this.nextId)
+                }
             },
             previousMusic() {
-                let nextId;
                 if (this.musicIndex1 > 0) {
+                    console.log('previousMusic true');
+                    console.log(this.musicIndex1);
                     this.musicIndex1--;
                     this.nextId = this.$store.state.playList[this.musicIndex1].id;
                 } else {
@@ -382,9 +418,8 @@
             },
             musicDetailClick(item, index) {
                 this.isShowDetail = !this.isShowDetail;
-                console.log(item);
                 this.$store.commit('changeMusicId', item.id);
-                this.$store.commit('changeMusicIndex', index + 1);
+                this.$store.commit('changeMusicIndex', index);
 
                 this.playList.forEach(value => {
                     value.isColor = false;
@@ -405,25 +440,34 @@
             removeBtn(index, item) {
                 this.$delete(this.playList, index);
                 if (this.$store.state.musicId === item.id) {
-                    this.musicIndex1 = -1;
+                    this.$store.commit('changeMusicIndex', index - 1);
                     this.nextMusic();
                     this.playList.forEach(item => {
                         item.isColor = false;
                     });
-                    let index = this.playList.findIndex(value => {
-                        return value.id === parseInt(this.nextId);
-                    });
-                    this.$store.state.playList[index].isColor = true;
+                    setTimeout(() => {
+                        let index1 = this.playList.findIndex(value => {
+                            return value.id === parseInt(this.musicId);
+                        });
+                        this.$store.state.playList[index1].isColor = true;
+                    }, 1000)
+
+
                 }
             },
             Lyric(id) {
                 GetMusicLyricAPI(id).then(res => {
-                    this.lrc = res.data.lrc.lyric;
-                    console.log(res.data.lrc.lyric);
-                    this.$nextTick(() => {
+                    if (res.data.lrc !== undefined) {
+                        this.lrc = res.data.lrc.lyric;
                         this.currentLyric = new Lyric(this.lrc, this.handleLyric);
-                        console.log(this.currentLyric);
-                    });
+                        this.lines.push(...this.currentLyric.lines);
+                    } else {
+                        this.lines.push({
+                            time: 0,
+                            txt: '暂无歌词'
+                        });
+                    }
+
                 }).catch(error => {
                     console.log('获取歌词失败');
                     console.log(error);
@@ -442,7 +486,7 @@
             },
             showLrc() {
                 this.isShowLrc = !this.isShowLrc;
-                if (this.isShowLrc && this.currentLyric) {
+                if (this.isShowLrc && Object.keys(this.currentLyric).length !== 0) {
                     console.log(this.$refs.audio.getCurrentTime());
                     this.currentLyric.play();
                     this.currentLyric.seek(this.$refs.audio.getCurrentTime() * 1000);
