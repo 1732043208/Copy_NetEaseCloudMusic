@@ -19,6 +19,7 @@
                 ref="scroll"
                 :probe-type="3"
                 :pull-up-load="true"
+                @pullingUp="pullingUp"
                 @scroll="commentScroll">
             <div>
                 <div class="topBox">
@@ -36,7 +37,7 @@
                         </template>
                         <template #label>
                             <p>
-                                {{singer}}
+                                歌手：{{singer}}
                             </p>
                         </template>
                         <template #icon>
@@ -66,87 +67,101 @@
                     </van-cell>
                 </div>
                 <div v-show="!isHot" class="hot">
-                    <div
-                            v-for="(item,index) in hotComment"
-                            :key="index">
-                        <van-cell
-                                :border="false"
-                                center
-                                title-class="titleText"
-                                value-class="likeCountText"
-                                label-class="timeText">
-                            <template #title>
-                                <p>{{item.nickname}}</p>
-                            </template>
-                            <template #label>
-                                <p>{{item.time|formatDate}}</p>
-                            </template>
-                            <template #icon>
-                                <van-image
-                                        class="avatarPic"
-                                        round
-                                        width="2.3rem"
-                                        height="2.3rem"
-                                        :src="item.avatarUrl">
-                                </van-image>
-                            </template>
-                            <template #default>
-                                <div class="valueText">
-                                    <p>{{likeCount(item.likedCount)}}</p>
-                                    <van-icon size="20" name="good-job-o"/>
+                    <van-skeleton
+                            title avatar
+                            :row="3"
+                            :loading="loading">
+                        <div>
+                            <div
+                                    v-for="(item,index) in hotComment"
+                                    :key="index">
+                                <van-cell
+                                        :border="false"
+                                        center
+                                        title-class="titleText"
+                                        value-class="likeCountText"
+                                        label-class="timeText">
+                                    <template #title>
+                                        <p>{{item.nickname}}</p>
+                                    </template>
+                                    <template #label>
+                                        <p>{{item.time|formatDate}}</p>
+                                    </template>
+                                    <template #icon>
+                                        <van-image
+                                                class="avatarPic"
+                                                round
+                                                width="2.3rem"
+                                                height="2.3rem"
+                                                :src="item.avatarUrl">
+                                        </van-image>
+                                    </template>
+                                    <template #default>
+                                        <div class="valueText">
+                                            <p>{{likeCount(item.likedCount)}}</p>
+                                            <van-icon size="20" name="good-job-o"/>
+                                        </div>
+                                    </template>
+                                </van-cell>
+                                <div class="contentText">
+                                    <p>{{item.content}}</p>
                                 </div>
-                            </template>
-                        </van-cell>
-                        <div class="contentText">
-                            <p>{{item.content}}</p>
+                                <van-divider></van-divider>
+                            </div>
                         </div>
-                        <van-divider></van-divider>
-                    </div>
+                    </van-skeleton>
 
 
                 </div>
                 <div v-show="isHot" class="new">
-                    <div
-                            v-for="(item,index) in newComment"
-                            :key="index">
-                        <van-cell
-                                :border="false"
-                                center
-                                title-class="titleText"
-                                value-class="likeCountText"
-                                label-class="timeText">
-                            <template #title>
-                                <p>{{item.nickname}}</p>
-                            </template>
-                            <template #label>
-                                <p>{{item.time|formatDate}}</p>
-                            </template>
-                            <template #icon>
-                                <van-image
-                                        class="avatarPic"
-                                        round
-                                        width="2.3rem"
-                                        height="2.3rem"
-                                        :src="item.avatarUrl">
-                                </van-image>
-                            </template>
-                            <template #default>
-                                <div class="valueText">
-                                    <p>{{likeCount(item.likedCount)}}</p>
-                                    <van-icon size="20" name="good-job-o"/>
+                    <van-skeleton
+                            title avatar
+                            :row="3"
+                            :loading="loading">
+                        <div>
+                            <div
+                                    v-for="(item,index) in newComment"
+                                    :key="index">
+                                <van-cell
+                                        :border="false"
+                                        center
+                                        title-class="titleText"
+                                        value-class="likeCountText"
+                                        label-class="timeText">
+                                    <template #title>
+                                        <p>{{item.nickname}}</p>
+                                    </template>
+                                    <template #label>
+                                        <p>{{item.time|formatDate}}</p>
+                                    </template>
+                                    <template #icon>
+                                        <van-image
+                                                class="avatarPic"
+                                                round
+                                                width="2.3rem"
+                                                height="2.3rem"
+                                                :src="item.avatarUrl">
+                                        </van-image>
+                                    </template>
+                                    <template #default>
+                                        <div class="valueText">
+                                            <p>{{likeCount(item.likedCount)}}</p>
+                                            <van-icon size="20" name="good-job-o"/>
+                                        </div>
+                                    </template>
+                                </van-cell>
+                                <div class="contentText">
+                                    <p>{{item.content}}</p>
                                 </div>
-                            </template>
-                        </van-cell>
-                        <div class="contentText">
-                            <p>{{item.content}}</p>
+                                <van-divider></van-divider>
+                            </div>
                         </div>
-                        <van-divider></van-divider>
-                    </div>
-
+                    </van-skeleton>
 
                 </div>
             </div>
         </scroll>
+
 
     </div>
 </template>
@@ -154,7 +169,7 @@
 <script>
     import CommNav from "../../components/nav/commNav";
     import Scroll from "../../components/scroll";
-    import {Cell, CellGroup, Icon, Image as VanImage, Divider} from "vant";
+    import {Cell, CellGroup, Icon, Image as VanImage, Divider, Skeleton} from "vant";
     import {GetMusicCommentAPI} from "../../http/all-api";
     import {createCommentHotInfo} from "../../../model/commentInfo";
     import {formatDate} from "../../components/common/utils";
@@ -162,7 +177,7 @@
     export default {
         name: "commentMusic",
         created() {
-            this.getCommentData(this.musicId)
+            this.getCommentData(this.musicId, this.limit)
         },
         computed: {
             musicId() {
@@ -193,21 +208,26 @@
                 hotComment: [],
                 newComment: [],
                 showTop: false,
+                loading: true,
+                limit: 20
             }
         },
         methods: {
-            getCommentData(id) {
-                GetMusicCommentAPI(id, {limit: 20}).then(res => {
+            getCommentData(id, limit) {
+                GetMusicCommentAPI(id, {limit: limit}).then(res => {
                     this.total = res.data.total;
                     let resultHot = res.data.hotComments;
                     let resultNew = res.data.comments;
-                    resultHot.forEach(item => {
+                    this.$store.commit('changeCommentCount', this.total);
+                    if (!this.isHot) resultHot.forEach(item => {
                         this.hotComment.push(createCommentHotInfo(item))
                     });
-                    this.$store.commit('changeCommentCount', this.total);
-                    resultNew.forEach(item => {
+
+                    if (this.isHot) resultNew.forEach(item => {
                         this.newComment.push(createCommentHotInfo(item))
                     });
+                    this.$refs.scroll.refresh();
+                    this.loading = false;
                     console.log(this.hotComment);
                 })
             },
@@ -220,8 +240,20 @@
                 return num;
             },
             commentScroll(position) {
-                console.log(position);
                 this.showTop = position.y < -123;
+            },
+            async pullingUp() {
+                this.limit += 20;
+                this.$toast.loading({
+                    message: '加载中',
+                    forbidClick: true,
+                    duration: 0
+                });
+                await this.getCommentData(this.musicId, this.limit);
+                this.$toast.clear();
+                setTimeout(() => {
+                    this.$refs.scroll.finishPullUp();
+                }, 1000)
             }
         },
         components: {
@@ -232,6 +264,7 @@
             [VanImage.name]: VanImage,
             [Icon.name]: Icon,
             [Divider.name]: Divider,
+            [Skeleton.name]: Skeleton
         },
         filters: {
             formatDate(time) {

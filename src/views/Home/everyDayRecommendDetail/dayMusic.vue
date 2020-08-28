@@ -182,8 +182,6 @@
                         this.musicInfo.push(createMusicInfo(item));
                     });
                     return res;
-                    // this.musicInfo = new musicReModel();
-                    // console.log(this.musicInfo);
                 }).catch(err => {
                     console.log(err);
                 })
@@ -233,7 +231,15 @@
                 this.isShowDetail = !this.isShowDetail;
                 switch (index) {
                     case 0:
-                        console.log('查看评论');
+                        this.$router.push({
+                            path: '/commentMusic',
+                            query: {
+                                musicName: this.musicDetail.name,
+                                singer: this.musicDetail.singer,
+                                musicPic: this.musicDetail.picUrl,
+                                id: this.musicDetail.id
+                            }
+                        });
                         break;
                     case 1:
                         console.log('分享');
