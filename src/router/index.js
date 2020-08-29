@@ -36,13 +36,6 @@ const routes = [
         meta: {
             isShow: true
         },
-        // children:[
-        //     {
-        //         path:'recommend',
-        //         name:'recommend',
-        //         component:Recommend
-        //     }
-        // ]
     },
     {
         path: '/music-mv',

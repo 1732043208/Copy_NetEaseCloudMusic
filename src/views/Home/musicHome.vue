@@ -1,7 +1,7 @@
 <template>
     <div class="home">
         <tab-control
-                :title="['推荐','朋友','电台']"
+                :title="['推荐','视频','电台']"
                 @tabClick="tabClick"
                 ref="tabControl1"
                 v-show="isShowTabControl"
@@ -13,7 +13,8 @@
                 :probe-type="3"
                 :pull-up-load="true">
             <div>
-                <recommend v-show="this.currentType==='recommend'"></recommend>
+                <recommend v-if="this.currentType==='recommend'"></recommend>
+            <video-home v-if="this.currentType==='friend'"></video-home>
             </div>
 
         </scroll>
@@ -26,17 +27,14 @@
     import TabControl from "../../components/music-home-child/tabControl";
     import Scroll from "../../components/scroll";
     import Recommend from "../../components/music-home-child/recommend";
-    import MusicPlay from "../../components/common/musicPlay";
-
+    import VideoHome from "./videoHome";
     export default {
         name: 'Home',
         data() {
             return {
                 active: 0,
                 isShowTabControl: true,
-                currentType: 'recommend',
-                // 音乐Id
-
+                currentType: 'friend',
             }
         },
         methods: {
@@ -54,14 +52,14 @@
                 }
             },
         },
-        components: {TabControl, Scroll, Recommend, MusicPlay},
+        components: {TabControl, Scroll, Recommend, VideoHome},
     }
 </script>
 <style scoped lang="less">
     .content {
         overflow: hidden;
         position: absolute;
-        top: 220px;
+        top: 250px;
         bottom: 0;
         left: 0;
         right: 0;

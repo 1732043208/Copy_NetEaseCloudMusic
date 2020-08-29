@@ -246,6 +246,7 @@
                         break;
                     case 2:
                         console.log('查看歌手详情');
+                        console.log(this.musicDetail.singerId);
                         break;
                     case 3:
                         console.log('查看专辑');

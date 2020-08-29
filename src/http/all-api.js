@@ -224,3 +224,10 @@ export function GetAlbumAPI(id) {
         }
     })
 }
+
+// 推荐视频
+export function GetVideoAPI() {
+    return http({
+        url: '/video/timeline/recommend'
+    })
+}
