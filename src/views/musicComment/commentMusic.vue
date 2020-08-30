@@ -61,8 +61,8 @@
                             title-class="titleText"
                             value-class="commentTypeText">
                         <template #default>
-                            <p :class="{'current':!isHot}" @click="isHot = false">最热</p>
-                            <p :class="{'current':isHot}" @click="isHot = true">最新</p>
+                            <p :class="{'current':!isHot}" @click="hotClick">最热</p>
+                            <p :class="{'current':isHot}" @click="newClick">最新</p>
                         </template>
                     </van-cell>
                 </div>
@@ -97,7 +97,7 @@
                                         </van-image>
                                     </template>
                                     <template #default>
-                                        <div class="valueText">
+                                        <div class="valueText" :class="{'like':item.isLike}" @click="goodClick(index)">
                                             <p>{{likeCount(item.likedCount)}}</p>
                                             <van-icon size="20" name="good-job-o"/>
                                         </div>
@@ -144,7 +144,7 @@
                                         </van-image>
                                     </template>
                                     <template #default>
-                                        <div class="valueText">
+                                        <div class="valueText" :class="{'like':item.isLike}" @click="goodClick(index)">
                                             <p>{{likeCount(item.likedCount)}}</p>
                                             <van-icon size="20" name="good-job-o"/>
                                         </div>
@@ -170,14 +170,14 @@
     import CommNav from "../../components/nav/commNav";
     import Scroll from "../../components/scroll";
     import {Cell, CellGroup, Icon, Image as VanImage, Divider, Skeleton} from "vant";
-    import {GetMusicCommentAPI} from "../../http/all-api";
+    import {GetMusicCommentAPI, GetLikeAPI} from "../../http/all-api";
     import {createCommentHotInfo} from "../../../model/commentInfo";
-    import {formatDate} from "../../components/common/utils";
+    import {formatDate, unique} from "../../components/common/utils";
 
     export default {
         name: "commentMusic",
         created() {
-            this.getCommentData(this.musicId, this.limit)
+            this.getCommentData(this.musicId, this.hotLimit)
         },
         computed: {
             musicId() {
@@ -209,26 +209,30 @@
                 newComment: [],
                 showTop: false,
                 loading: true,
-                limit: 20
+                hotLimit: 15,
+                newLimit: 20,
             }
         },
         methods: {
             getCommentData(id, limit) {
                 GetMusicCommentAPI(id, {limit: limit}).then(res => {
                     this.total = res.data.total;
+                    console.log(res.data.hotComments);
                     let resultHot = res.data.hotComments;
                     let resultNew = res.data.comments;
                     this.$store.commit('changeCommentCount', this.total);
                     if (!this.isHot) resultHot.forEach(item => {
                         this.hotComment.push(createCommentHotInfo(item))
                     });
-
-                    if (this.isHot) resultNew.forEach(item => {
-                        this.newComment.push(createCommentHotInfo(item))
-                    });
+                    console.log(this.isHot);
+                    if (this.isHot) {
+                        resultNew.forEach(item => {
+                            this.newComment.push(createCommentHotInfo(item))
+                        });
+                        if (this.newComment.length !== 0) this.newComment = unique(this.newComment);
+                    }
                     this.$refs.scroll.refresh();
                     this.loading = false;
-                    console.log(this.hotComment);
                 })
             },
             playCount(num) {
@@ -243,29 +247,90 @@
                 this.showTop = position.y < -123;
             },
             async pullingUp() {
-                this.limit += 20;
-                this.$toast.loading({
-                    message: '加载中',
-                    forbidClick: true,
-                    duration: 0
-                });
-                await this.getCommentData(this.musicId, this.limit);
-                this.$toast.clear();
-                setTimeout(() => {
+                if (this.isHot) {
+                    this.newLimit += 20;
+                    this.$toast.loading({
+                        message: '加载中',
+                        forbidClick: true,
+                        duration: 0
+                    });
+                    await this.getCommentData(this.musicId, this.newLimit);
+                    this.$toast.clear();
+                    setTimeout(() => {
+                        this.$refs.scroll.finishPullUp();
+                    }, 1000);
+                } else {
+                    this.$toast({
+                        message: '没有更多热门评论',
+
+                    });
                     this.$refs.scroll.finishPullUp();
-                }, 1000)
+                }
+
+            },
+            hotClick() {
+                this.isHot = false;
+            },
+            newClick() {
+                this.isHot = true;
+                console.log(this.newComment.length);
+                if (this.newComment.length < 20) {
+                    console.log('真就');
+                    this.getCommentData(this.musicId, this.newLimit)
+                }
+            },
+            goodClick(index) {
+                let cid = this.isHot ? this.newComment[index].id : this.hotComment[index].id;
+                let t;
+                let typeC;
+                if (this.isHot) {
+                    if (this.newComment[index].isLike) {
+                        // 取消点赞
+                        t = 0
+                    } else {
+                        // 未点赞
+                        t = 1
+                    }
+                    typeC = this.newComment[index];
+                } else {
+                    if (this.hotComment[index].isLike) {
+                        // 取消点赞
+                        t = 0
+                    } else {
+                        // 未点赞
+                        t = 1
+                    }
+                    typeC = this.hotComment[index];
+
+                }
+                GetLikeAPI({id: this.musicId, cid: cid, t: t, type: 0}).then(res => {
+                    t === 1 ? typeC.isLike = true : typeC.isLike = false;
+                    console.log(typeC);
+                    console.log('点赞成功');
+                }).catch(error => {
+                    console.log('点赞失败');
+                    console.log(error)
+                })
             }
-        },
+        }
+        ,
         components: {
             CommNav,
             Scroll,
-            [Cell.name]: Cell,
-            [CellGroup.name]: CellGroup,
-            [VanImage.name]: VanImage,
-            [Icon.name]: Icon,
-            [Divider.name]: Divider,
-            [Skeleton.name]: Skeleton
-        },
+            [Cell.name]:
+            Cell,
+            [CellGroup.name]:
+            CellGroup,
+            [VanImage.name]:
+            VanImage,
+            [Icon.name]:
+            Icon,
+            [Divider.name]:
+            Divider,
+            [Skeleton.name]:
+            Skeleton
+        }
+        ,
         filters: {
             formatDate(time) {
                 let date = new Date(time);
@@ -322,7 +387,9 @@
             justify-content: flex-end;
             padding-right: 15px;
         }
-
+        .like {
+            color: #c2463a;
+        }
         .contentText {
             white-space: pre-wrap;
             padding: 0 50px 20px 150px;

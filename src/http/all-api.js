@@ -231,3 +231,27 @@ export function GetVideoAPI() {
         url: '/video/timeline/recommend'
     })
 }
+
+// 给资源点赞
+export function GetLikeAPI({id, cid, t, type}) {
+    return http({
+        url: '/comment/like',
+        params: {
+            id,
+            cid,
+            t,
+            type
+        }
+    })
+}
+
+export function GetResourceLikeAPI({type, t, id}) {
+    return http({
+        url: "/resource/like",
+        params: {
+            type,
+            id,
+            t
+        }
+    })
+}

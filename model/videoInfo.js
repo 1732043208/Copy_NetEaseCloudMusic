@@ -12,7 +12,7 @@ class VideoInfo {
         this.nickname = nickname;
         this.userId = userId;
         this.praisedCount = praisedCount;
-
+        this.isLike = false;
     }
 
 }

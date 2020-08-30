@@ -17,7 +17,7 @@
                             class="myCell"
                             center
                             :title="videoList[index].nickname"
-                    value-class="valueText">
+                            value-class="valueText">
                         <template #icon>
                             <van-image
                                     class="avatarPic"
@@ -29,7 +29,11 @@
                             </van-image>
                         </template>
                         <template #default>
-                            <p>点赞({{videoList[index].praisedCount}})</p>
+                            <p @click="goodClick(index)" :class="{'like':item.isLike}">
+                                {{item.isLike?`已点赞(${playCount(videoList[index].praisedCount)})`
+                                : `点赞(${playCount(videoList[index].praisedCount)})`}}
+
+                            </p>
                             <p>评论({{videoList[index].commentCount}})</p>
                         </template>
                     </van-cell>
@@ -40,7 +44,7 @@
 </template>
 
 <script>
-    import {GetVideoAPI} from "../../http/all-api";
+    import {GetResourceLikeAPI, GetVideoAPI} from "../../http/all-api";
     import {createVideo} from "../../../model/videoInfo";
     import {Cell, Image as VanImage} from "vant";
 
@@ -93,13 +97,50 @@
             },
             onVideoPlay() {
                 console.log('播放了');
-            }
+            },
+            goodClick(index) {
+                let vid = this.videoList[index].vid;
+                let t;
+                let typeC = this.videoList[index];
+                console.log(vid);
+                if (this.videoList[index].isLike) {
+                    // 取消点赞
+                    t = 0
+                } else {
+                    // 点赞
+                    t = 1
+                }
+                GetResourceLikeAPI({id: vid, t: t, type: 5}).then(res => {
+                    console.log(res);
+                    if (t === 1) {
+                        this.videoList[index].praisedCount++;
+                        typeC.isLike = true
+                    } else {
+                        typeC.isLike = false;
+                        this.videoList[index].praisedCount--
+
+                    }
+                    console.log(typeC);
+                    console.log('点赞成功');
+                }).catch(error => {
+                    console.log('点赞失败');
+                    console.log(error)
+                })
+            },
+            playCount(num) {
+                let numInt = parseInt(num);
+                if (numInt >= 100000000) {
+                    numInt = Math.round(numInt / 10000000) / 10 + '亿'
+                } else if (numInt >= 10000) {
+                    numInt = Math.round(numInt / 1000) / 10 + '万'
+                }
+                return numInt;
+            },
         },
         components: {
             [Cell.name]: Cell,
             [VanImage.name]: VanImage,
         },
-
     }
 </script>
 
@@ -148,9 +189,14 @@
                     .avatarPic {
                         padding-right: 15px;
                     }
-                    .valueText{
+
+                    .valueText {
                         display: flex;
                         justify-content: space-around;
+                    }
+
+                    .like {
+                        color: #c2463a;
                     }
                 }
 
