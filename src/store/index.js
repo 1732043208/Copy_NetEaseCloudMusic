@@ -23,6 +23,7 @@ export default new Vuex.Store({
         playList: [],
         musicIndex: 0,
         commentCount: 0,
+        audioEl:null,
     },
     mutations: {
         // musicId
@@ -54,6 +55,9 @@ export default new Vuex.Store({
         },
         changeCommentCount(state, count) {
             state.commentCount = count;
+        },
+        changeAudioEl(state,el){
+            state.audioEl = el;
         }
     },
     actions: {

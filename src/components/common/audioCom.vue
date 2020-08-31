@@ -44,7 +44,6 @@
             play() {
                 console.log('执行 play');
                 this.$refs.audio.play();
-                console.dir(this.$refs.audio);
             },
             // 暂停音频
             pause() {
@@ -54,7 +53,8 @@
             },
             onPlay() {
                 console.log('执行 onPlay');
-                this.$store.commit('IsPlaying')
+                this.$store.commit('IsPlaying');
+                this.$store.commit('changeAudioEl', this.$refs.audio)
             },
             onPause() {
                 console.log('执行 onPause');
@@ -119,7 +119,7 @@
                 if (this.musicIndex1 < this.$store.state.playList.length) {
                     console.log('true listLoopMusic');
                     this.musicIndex1++;
-                    if (this.musicIndex1>=this.$store.state.playList.length){
+                    if (this.musicIndex1 >= this.$store.state.playList.length) {
                         console.log('执行了这里');
                         console.log(this.musicIndex1);
                         this.musicIndex1 = 0;

@@ -232,7 +232,7 @@ export function GetVideoAPI() {
     })
 }
 
-// 给资源点赞
+// 给资源的评论点赞
 export function GetLikeAPI({id, cid, t, type}) {
     return http({
         url: '/comment/like',
@@ -245,6 +245,7 @@ export function GetLikeAPI({id, cid, t, type}) {
     })
 }
 
+// 资源点赞
 export function GetResourceLikeAPI({type, t, id}) {
     return http({
         url: "/resource/like",
@@ -252,6 +253,46 @@ export function GetResourceLikeAPI({type, t, id}) {
             type,
             id,
             t
+        }
+    })
+}
+
+// 视频详情
+export function GetVideoDetailAPI(id) {
+    return http({
+        url: '/video/detail',
+        params: {
+            id
+        }
+    })
+}
+
+// 相关视频推荐
+export function GetVideoRelatedAPI(id) {
+    return http({
+        url: '/related/allvideo',
+        params: {
+            id
+        }
+    })
+}
+
+// 视频播放地址
+export function GetVideoUrlAPI(id) {
+    return http({
+        url: '/video/url',
+        params: {
+            id
+        }
+    })
+}
+
+// 视频评论
+export function GetVideoCommentAPI({id, limit = 20}) {
+    return http({
+        url: '/comment/video',
+        params: {
+            id, limit
         }
     })
 }

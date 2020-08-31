@@ -195,7 +195,7 @@
             totalCount() {
                 return this.playCount(this.total)
             },
-            likeCount(time) {
+            likeCount() {
                 return function (time) {
                     return this.playCount(time)
                 }
@@ -362,7 +362,7 @@
             font-size: 40px;
             letter-spacing: 2px;
         }
-        .ov() {
+        .ov {
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;

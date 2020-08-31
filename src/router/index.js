@@ -19,6 +19,7 @@ const AllPlayList = () => import('../views/Home/allPlayList');
 const Album = () => import('../views/album/album');
 const Rank = () => import('../views/Home/rank');
 const CommentMusic = () => import('../views/musicComment/commentMusic');
+const VideoDetail = () => import('../views/video/video-detail')
 
 const routes = [
     {
@@ -129,6 +130,14 @@ const routes = [
         path: '/commentMusic',
         name: 'commentMusic',
         component: CommentMusic,
+        meta: {
+            isShow: false
+        }
+    },
+    {
+        path: '/videoDetail',
+        name: 'videoDetail',
+        component: VideoDetail,
         meta: {
             isShow: false
         }

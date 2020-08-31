@@ -8,10 +8,11 @@
                 <vue-mini-player
                         ref="vueMiniPlayer"
                         :video="playerOptions[index]"
+
                         :mutex="true"
-                        @videoPlay="onVideoPlay"
                         @fullscreen="handleFullscreen"/>
-                <div class="videoInfo">
+
+                <div class="videoInfo" @click="ToDetail(index)">
                     <p class="videoTitle">{{videoList[index].title}}</p>
                     <van-cell
                             class="myCell"
@@ -29,7 +30,7 @@
                             </van-image>
                         </template>
                         <template #default>
-                            <p @click="goodClick(index)" :class="{'like':item.isLike}">
+                            <p @click.stop="goodClick(index)" :class="{'like':item.isLike}">
                                 {{item.isLike?`已点赞(${playCount(videoList[index].praisedCount)})`
                                 : `点赞(${playCount(videoList[index].praisedCount)})`}}
 
@@ -52,13 +53,25 @@
         name: "videoHome",
         created() {
             this.getVideoData();
+            if (this.$store.state.audioEl) {
+                this.$store.state.audioEl.pause();
+                this.$store.state.musicCurrentTime = this.$store.state.audioEl.currentTime;
+            }
         },
         mounted() {
+            let video1 = document.getElementsByTagName('video');
+            video1.forEach(item => {
+                item.autoplay = false;
+            })
+
+        },
+        activated() {
+            console.log(this.$refs.vueMiniPlayer.$video);
 
         },
         computed: {
-            video() {
-                return this.$refs.vueMiniPlayer;
+            $video() {
+                return this.$refs.vueMiniPlayer.$video;
             }
         },
         data() {
@@ -102,7 +115,6 @@
                 let vid = this.videoList[index].vid;
                 let t;
                 let typeC = this.videoList[index];
-                console.log(vid);
                 if (this.videoList[index].isLike) {
                     // 取消点赞
                     t = 0
@@ -136,6 +148,17 @@
                 }
                 return numInt;
             },
+            ToDetail(index) {
+                console.log('跳转');
+                this.$router.push({
+                    path: '/videoDetail',
+                    query: {
+                        vid: this.videoList[index].vid,
+                        srcUrl: this.videoList[index].srcUrl,
+                        coverUrl: this.videoList[index].coverUrl
+                    }
+                })
+            }
         },
         components: {
             [Cell.name]: Cell,
@@ -147,10 +170,11 @@
 <style lang="less">
     .qun-player {
         border-radius: 15px;
+        background: #fff !important;
     }
 
     .qun-base-controls {
-        padding: 0 40px !important;
+        padding: 20px 40px !important;
     }
 
     ._vol {

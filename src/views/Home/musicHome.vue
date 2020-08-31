@@ -27,14 +27,14 @@
     import TabControl from "../../components/music-home-child/tabControl";
     import Scroll from "../../components/scroll";
     import Recommend from "../../components/music-home-child/recommend";
-    import VideoHome from "./videoHome";
+    import VideoHome from "../video/video-home";
     export default {
         name: 'Home',
         data() {
             return {
                 active: 0,
                 isShowTabControl: true,
-                currentType: 'friend',
+                currentType: 'recommend',
             }
         },
         methods: {

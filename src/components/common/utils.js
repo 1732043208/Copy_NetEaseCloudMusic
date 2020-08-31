@@ -9,7 +9,7 @@ export function debounce(func, delay) {
     }
 }
 
-// 将整数转换成 时：分：秒的格式
+// 将整数转换成 分：秒的格式
 export function realFormatSecond(second) {
     let secondType = typeof second;
     if (secondType === 'number' || secondType === 'string') {

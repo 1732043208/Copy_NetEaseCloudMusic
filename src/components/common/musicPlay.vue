@@ -141,13 +141,13 @@
                                     name="play-circle-o"
                                     size="32px"
                                     color="#bfbfbf"
-                                    @click.stop="$refs.audio.startPlayOrPause(-1),ChangeIcon()"/>
+                                    @click.stop="$refs.audio.startPlayOrPause(),ChangeIcon()"/>
                             <van-icon
                                     v-show='!changeIcons'
                                     name="pause-circle-o"
                                     size="32px"
                                     color="#bfbfbf"
-                                    @click.stop="$refs.audio.startPlayOrPause(-1),ChangeIcon()"/>
+                                    @click.stop="$refs.audio.startPlayOrPause(),ChangeIcon()"/>
                             <img src="../../assets/next.png" height="32" width="32" @click="nextMusic"/>
                             <img src="../../assets/more.png" height="32" width="32" @click="more"/>
                         </div>
@@ -270,7 +270,7 @@
                     return this.$store.state.changeIcon
                 },
                 set(nv) {
-                    return !this.$store.state.changeIcon
+                    return this.$store.state.changeIcon = nv
                 }
             },
             changeMusicUrls: {
@@ -504,7 +504,7 @@
             [Cell.name]: Cell,
         },
         filters: {
-            // 将整数转化成时分秒
+            // 将整数转化成分秒
             formatSecond(second = 0) {
                 return realFormatSecond(second)
             }
