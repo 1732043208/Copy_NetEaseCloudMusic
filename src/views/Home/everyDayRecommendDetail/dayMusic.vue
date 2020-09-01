@@ -166,7 +166,7 @@
                         title: '分享'
                     }, {
                         icon: 'user-o',
-                        title: '查看歌手详情'
+                        title: '查看mv'
                     }, {
                         icon: 'smile-o',
                         title: '查看专辑'
@@ -245,8 +245,19 @@
                         console.log('分享');
                         break;
                     case 2:
-                        console.log('查看歌手详情');
-                        console.log(this.musicDetail.singerId);
+                        console.log('查看mv');
+                        console.log(this.musicDetail.mvId);
+                        if (this.musicDetail.mvId !== 0 && this.musicDetail.mvId !== null){
+                            this.$router.push({
+                                path: '/music-mv',
+                                query: {
+                                    mvId: this.musicInfo[index].mvId
+                                }
+                            });
+                        }else {
+                            this.$toast('抱歉,暂无MV')
+                        }
+
                         break;
                     case 3:
                         console.log('查看专辑');

@@ -3,7 +3,9 @@
         <comm-nav title="视频详情"></comm-nav>
         <scroll
                 class="content"
-                ref="scroll">
+                ref="scroll"
+                :pull-up-load="true"
+                @pullingUp="pullingUp">
             <div>
                 <vue-mini-player
                         ref="vueMiniPlayer"
@@ -13,24 +15,27 @@
                         @fullscreen="handleFullscreen"/>
                 <div class="info">
                     <h4>{{videoDetail.title}}</h4>
-                    <p>{{videoDetail.publishTime|formatDate}}</p>
+                    <p>{{$route.query.playTime|playCount}}播放
+                        <span>{{videoDetail.publishTime|formatDate}}</span>
+                    </p>
+
                     <div class="orderInfo">
-                        <div class="musicSort-item">
+                        <div class="musicSort-item" :class="{'like':videoDetailInfo.liked}" @click="goodClick">
                             <van-icon size="24" name="good-job-o"/>
-                            <p>{{videoDetail.subscribeCount|playCount}}</p>
+                            <p>{{videoDetailInfo.likedCount|playCount}}</p>
                         </div>
                         <div class="musicSort-item">
                             <van-icon size="24" name="send-gift-o"/>
-                            <p>{{videoDetail.praisedCount|playCount}}</p>
+                            <p>{{videoDetail.subscribeCount|playCount}}</p>
                         </div>
                         <div class="musicSort-item">
                             <van-icon size="24" name="comment-o"/>
-                            <p>{{videoDetail.commentCount|playCount}}</p>
+                            <p>{{videoDetailInfo.commentCount|playCount}}</p>
 
                         </div>
                         <div class="musicSort-item">
                             <van-icon size="24" name="cluster-o"/>
-                            <p>{{videoDetail.shareCount|playCount}}</p>
+                            <p>{{videoDetailInfo.shareCount|playCount}}</p>
                         </div>
                     </div>
                     <van-cell
@@ -68,7 +73,7 @@
                             </template>
                             <template #label>
                                 <p class="labelTextStyle">
-                                    {{item.playTime|realFormatSecond}}&nbsp; by &nbsp;
+                                    {{item.durationms|formatDuring}}&nbsp; by &nbsp;
                                     {{item.userName}}
                                 </p>
                             </template>
@@ -113,7 +118,8 @@
                                     </van-image>
                                 </template>
                                 <template #default>
-                                    <div class="valueText" :class="{'like':item.isLike}" @click="goodClick(index)">
+                                    <div class="valueText" :class="{'like':item.isLike}"
+                                         @click="goodCommentClick(index,0)">
                                         <p>{{item.likedCount|playCount}}</p>
                                         <van-icon size="20" name="good-job-o"/>
                                     </div>
@@ -153,7 +159,8 @@
                                         </van-image>
                                     </template>
                                     <template #default>
-                                        <div class="valueText" :class="{'like':item.isLike}" @click="goodClick(index)">
+                                        <div class="valueText" :class="{'like':item.isLike}"
+                                             @click="goodCommentClick(index,1)">
                                             <p>{{item.likedCount|playCount}}</p>
                                             <van-icon size="20" name="good-job-o"/>
                                         </div>
@@ -177,10 +184,16 @@
 <script>
     import Scroll from "../../components/scroll";
     import commNav from "../../components/nav/commNav";
-    import {GetVideoDetailAPI, GetVideoRelatedAPI, GetVideoUrlAPI, GetVideoCommentAPI} from "../../http/all-api";
+    import {
+        GetVideoDetailAPI,
+        GetVideoDetailInfoAPI,
+        GetVideoRelatedAPI,
+        GetVideoUrlAPI,
+        GetVideoCommentAPI, GetResourceLikeAPI, GetLikeAPI
+    } from "../../http/all-api";
     import {createVideoDetailInfo} from "../../../model/videoDetailInfo";
     import {createVideoRelated} from "../../../model/videoRelatedInfo";
-    import {formatDate, realFormatSecond, unique} from "../../components/common/utils";
+    import {formatDate, unique} from "../../components/common/utils";
     import {Cell, Divider, Icon, Image as VanImage} from "vant";
     import {createCommentHotInfo} from "../../../model/commentInfo";
 
@@ -191,14 +204,28 @@
                 message: '加载中',
                 forbidClick: true,
                 duration: 0
+
             });
         },
-        async created() {
-            await this.getVideoDetailData(this.$route.query.vid);
-            await this.getVideoRelatedData(this.$route.query.vid);
-            await this.getVideoCommentData({id: this.$route.query.vid, limit: this.newLimit})
+        created() {
+            GetVideoUrlAPI(this.$route.query.vid).then(res => {
+                let videoUrl = res.data.urls[0].url;
+                console.log(videoUrl);
+                if (videoUrl !== null) {
+                    this.playerOptions.url = videoUrl;
+                    this.$refs.vueMiniPlayer.$video.src = videoUrl;
+                    this.$refs.vueMiniPlayer.$video.autoplay = true;
+                }
+            })
+                .catch(error => {
+                    console.log('跳转获取视频url失败');
+                    console.log(error);
+                });
+            this.getVideoDetailData(this.$route.query.vid);
+            this.getVideoDetailInfoData(this.$route.query.vid);
+            this.getVideoRelatedData(this.$route.query.vid);
+            this.getVideoCommentData({id: this.$route.query.vid, limit: this.newLimit});
             this.$toast.clear();
-
         },
         computed: {
             srcUrl() {
@@ -210,10 +237,6 @@
             coverUrl() {
                 return this.$route.query.coverUrl
             },
-            // likeCount(time) {
-            //     return function (time) {
-            //         return this.playCount(time)
-            //     }
         },
         data() {
             return {
@@ -228,13 +251,16 @@
                     mutex: true,
                 },
                 videoDetail: {},
+                videoDetailInfo: {},
                 videoRelated: [],
                 hotComment: [],
                 newComment: [],
                 newLimit: 20,
+
             }
         },
         methods: {
+            // 视频详情
             getVideoDetailData(id) {
                 GetVideoDetailAPI(id).then(res => {
                     let result = res.data.data;
@@ -246,6 +272,37 @@
                 })
 
             },
+            getVideoDetailInfoData(vid) {
+                GetVideoDetailInfoAPI(vid).then(res => {
+                    let data = res.data;
+                    this.videoDetailInfo.likedCount = data.likedCount;
+                    this.videoDetailInfo.shareCount = data.shareCount;
+                    this.videoDetailInfo.commentCount = data.commentCount;
+                    this.videoDetailInfo.liked = data.liked;
+
+                }).catch(error => {
+                    console.log('获取点赞信息失败');
+                    console.log(error);
+                })
+            },
+            goodClick(index) {
+                let vid = this.vid;
+                let t;
+                if (this.videoDetailInfo.liked) {
+                    // 取消点赞
+                    t = 0
+                } else {
+                    // 点赞
+                    t = 1
+                }
+                GetResourceLikeAPI({id: vid, t: t, type: 5}).then(res => {
+                    console.log('点赞成功');
+                }).catch(error => {
+                    console.log('点赞失败');
+                    console.log(error)
+                })
+            },
+            // 视频相关视频
             getVideoRelatedData(id) {
                 GetVideoRelatedAPI(id).then(res => {
                     console.log(res.data.data);
@@ -259,8 +316,9 @@
                     console.log(error);
                 })
             },
+            // 视频评论
             getVideoCommentData({id, limit}) {
-                GetVideoCommentAPI({id: id, limit: limit}).then(res => {
+                GetVideoCommentAPI(id, limit).then(res => {
                     let resultHot = res.data.hotComments;
                     let resultNew = res.data.comments;
                     resultHot.forEach(item => {
@@ -269,12 +327,20 @@
                     resultNew.forEach(item => {
                         this.newComment.push(createCommentHotInfo(item))
                     });
-                    if (this.newComment.length !== 0) this.newComment = unique(this.newComment);
+                    if (this.newComment.length !== 0) {
+                        this.newComment = unique(this.newComment);
+                        if (this.newComment.length >= 20) this.$refs.scroll.finishPullUp();
+
+                    }
 
                 }).catch(error => {
                     console.log('视频评论请求失败');
                     console.log(error);
                 })
+            },
+            pullingUp() {
+                this.newLimit += 20;
+                this.getVideoCommentData({id: this.$route.query.vid, limit: this.newLimit})
             },
             onVideoPlay() {
                 console.log('开始播放');
@@ -283,8 +349,6 @@
                 console.log('全屏播放');
             },
             ToDetail(index) {
-                console.log('跳转');
-                console.dir(this.$refs.vueMiniPlayer.$video);
                 let videoUrl = null;
                 GetVideoUrlAPI(this.videoRelated[index].vid).then(res => {
                     videoUrl = res.data.urls[0].url;
@@ -296,6 +360,7 @@
                         this.playerOptions.cover = this.videoRelated[index].coverUrl;
                         this.getVideoDetailData(this.videoRelated[index].vid);
                         this.getVideoRelatedData(this.videoRelated[index].vid);
+                        this.getVideoDetailInfoData(this.videoRelated[index].vid)
                     }
                 })
                     .catch(error => {
@@ -303,6 +368,47 @@
                         console.log(error);
                     });
 
+            },
+            goodCommentClick(index, type) {
+                // 0 热门   1 新评论
+                let cid = type === 1 ? this.newComment[index].id : this.hotComment[index].id;
+                let t;
+                let typeC;
+                if (type === 1) {
+                    if (this.newComment[index].isLike) {
+                        // 取消点赞
+                        t = 0
+                    } else {
+                        // 未点赞
+                        t = 1
+                    }
+                    typeC = this.newComment[index];
+                } else {
+                    if (this.hotComment[index].isLike) {
+                        // 取消点赞
+                        t = 0
+                    } else {
+                        // 未点赞
+                        t = 1
+                    }
+                    typeC = this.hotComment[index];
+
+                }
+                GetLikeAPI({id: this.vid, cid: cid, t: t, type: 5}).then(res => {
+                    if (t === 1) {
+                        typeC.likedCount++;
+                        typeC.isLike = true
+                    } else {
+                        typeC.likedCount--;
+
+                        typeC.isLike = false;
+                    }
+                    console.log(typeC);
+                    console.log('点赞成功');
+                }).catch(error => {
+                    console.log('点赞失败');
+                    console.log(error)
+                })
             }
         },
         components: {
@@ -327,8 +433,14 @@
                 }
                 return num;
             },
-            realFormatSecond(time = 0) {
-                return realFormatSecond(time)
+            formatDuring(mss) {
+                mss = parseInt(mss);
+                let minutes = (mss % (1000 * 60 * 60)) / (1000 * 60);
+                let seconds = ((mss % (1000 * 60)) / 1000).toFixed(0);
+                console.log(seconds.length);
+                seconds.length === 1 ? seconds = seconds + '0' : seconds;
+                minutes.length === 1 ? minutes = '0' + minutes : minutes;
+                return minutes + ":" + seconds;
             }
         }
     }
@@ -431,6 +543,9 @@
                         font-size: 36px;
                     }
 
+                    .like {
+                        color: #c2463a;
+                    }
                 }
 
                 .myCell {
@@ -444,10 +559,6 @@
                     .valueText {
                         display: flex;
                         justify-content: space-around;
-                    }
-
-                    .like {
-                        color: #c2463a;
                     }
                 }
             }

@@ -288,11 +288,72 @@ export function GetVideoUrlAPI(id) {
 }
 
 // 视频评论
-export function GetVideoCommentAPI({id, limit = 20}) {
+export function GetVideoCommentAPI(id,limit) {
     return http({
         url: '/comment/video',
         params: {
             id, limit
+        }
+    })
+}
+
+// 视频点赞分享评论数量信息，是否已经点赞
+export function GetVideoDetailInfoAPI(vid) {
+    return http({
+        url: '/video/detail/info',
+        params: {
+            vid
+        }
+    })
+}
+
+// 获取mv详情
+export function GetMVDetailAPI(mvid) {
+    return http({
+        url: '/mv/detail',
+        params: {
+            mvid
+        }
+    })
+}
+
+// 获取 mv 点赞转发评论数数据
+export function GetMVDetailInfoAPI(mvid) {
+    return http({
+        url: '/mv/detail/info',
+        params: {
+            mvid
+        }
+    })
+}
+
+// 获取mv播放地址
+export function GetMVUrlAPI(id) {
+    return http({
+        url: '/mv/url',
+        params: {
+            id
+        }
+    })
+}
+
+// 相似MV
+export function GetSiMiMvAPI(mvid) {
+    return http({
+        url: '/simi/mv',
+        params: {
+            mvid
+        }
+    })
+}
+
+// mv评论
+export function GetMvCommentAPI(id,limit) {
+    return http({
+        url: '/comment/mv',
+        params: {
+            id,
+            limit
         }
     })
 }

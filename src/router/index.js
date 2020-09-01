@@ -43,7 +43,7 @@ const routes = [
         name: 'music-mv',
         component: MusicMV,
         meta: {
-            isShow: true
+            isShow: false
         }
     },
     {

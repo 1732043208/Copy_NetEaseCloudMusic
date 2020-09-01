@@ -8,12 +8,12 @@
                 <vue-mini-player
                         ref="vueMiniPlayer"
                         :video="playerOptions[index]"
-
                         :mutex="true"
                         @fullscreen="handleFullscreen"/>
 
                 <div class="videoInfo" @click="ToDetail(index)">
                     <p class="videoTitle">{{videoList[index].title}}</p>
+                    <p class="platTimeText">{{playCount(videoList[index].playTime)}}播放</p>
                     <van-cell
                             class="myCell"
                             center
@@ -45,7 +45,7 @@
 </template>
 
 <script>
-    import {GetResourceLikeAPI, GetVideoAPI} from "../../http/all-api";
+    import {GetResourceLikeAPI, GetVideoAPI, GetVideoDetailInfoAPI} from "../../http/all-api";
     import {createVideo} from "../../../model/videoInfo";
     import {Cell, Image as VanImage} from "vant";
 
@@ -63,10 +63,6 @@
             video1.forEach(item => {
                 item.autoplay = false;
             })
-
-        },
-        activated() {
-            console.log(this.$refs.vueMiniPlayer.$video);
 
         },
         computed: {
@@ -88,6 +84,22 @@
                     result.forEach(item => {
                         this.videoList.push(createVideo(item.data))
                     });
+                    if (this.videoList.length !== 0) {
+                        this.videoList.forEach(item => {
+                            GetVideoDetailInfoAPI(item.vid).then(res => {
+                                let data = res.data;
+
+                                item.praisedCount = data.likedCount;
+                                item.shareCount = data.shareCount;
+                                item.commentCount = data.commentCount;
+                                item.isLiked = data.liked;
+
+                            }).catch(error => {
+                                console.log('获取点赞信息失败');
+                                console.log(error);
+                            })
+                        })
+                    }
                     console.log(this.videoList);
                 });
                 for (let i = 0; i < this.videoList.length; i++) {
@@ -155,7 +167,8 @@
                     query: {
                         vid: this.videoList[index].vid,
                         srcUrl: this.videoList[index].srcUrl,
-                        coverUrl: this.videoList[index].coverUrl
+                        coverUrl: this.videoList[index].coverUrl,
+                        playTime: this.videoList[index].playTime
                     }
                 })
             }
@@ -205,6 +218,11 @@
                     padding: 30px 15px;
                     letter-spacing: 2px;
                     font-size: 38px;
+                }
+                .platTimeText{
+                    font-size: 36px;
+                    color: rgb(179,179,179);
+                    padding-bottom: 30px;
                 }
 
                 .myCell {
