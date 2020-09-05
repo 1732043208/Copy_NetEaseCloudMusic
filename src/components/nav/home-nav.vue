@@ -69,6 +69,10 @@
             },
             rightIconClick() {
                 console.log('右边图标');
+                this.$router.push({
+                    path:'/SearchDetail'
+                }),
+                    this.$store.commit('shabi');
             }
 
         },

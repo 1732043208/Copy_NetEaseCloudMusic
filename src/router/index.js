@@ -19,7 +19,8 @@ const AllPlayList = () => import('../views/Home/allPlayList');
 const Album = () => import('../views/album/album');
 const Rank = () => import('../views/Home/rank');
 const CommentMusic = () => import('../views/musicComment/commentMusic');
-const VideoDetail = () => import('../views/video/video-detail')
+const VideoDetail = () => import('../views/video/video-detail');
+const SearchDetail=()=>import('../views/search/searchDetail')
 
 const routes = [
     {
@@ -138,6 +139,13 @@ const routes = [
         path: '/videoDetail',
         name: 'videoDetail',
         component: VideoDetail,
+        meta: {
+            isShow: false
+        }
+    },{
+        path: '/SearchDetail',
+        name: 'SearchDetail',
+        component: SearchDetail,
         meta: {
             isShow: false
         }

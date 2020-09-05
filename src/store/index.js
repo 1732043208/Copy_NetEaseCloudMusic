@@ -4,11 +4,14 @@ import {GetMusicDetail, GetMusicUrlAPI} from "../http/all-api";
 import {createMusicInfo} from "../../model/musicInfo";
 import {unique} from "../components/common/utils";
 import {Toast} from 'vant'
+import persistedState from 'vuex-persistedstate'
 
 Vue.use(Toast);
 Vue.use(Vuex)
 
+
 export default new Vuex.Store({
+    plugins: [persistedState({storage: window.sessionStorage})],
     state: {
         isLogin: false,
         musicId: null,
@@ -23,7 +26,13 @@ export default new Vuex.Store({
         playList: [],
         musicIndex: 0,
         commentCount: 0,
-        audioEl:null,
+        audioEl: null,
+        historyList: [],
+        searchResult: [],
+        searchResultShow: false,
+        searchResultList:[],
+        guanjianci: '',
+        niubi:''
     },
     mutations: {
         // musicId
@@ -56,8 +65,41 @@ export default new Vuex.Store({
         changeCommentCount(state, count) {
             state.commentCount = count;
         },
-        changeAudioEl(state,el){
+        changeAudioEl(state, el) {
             state.audioEl = el;
+        },
+        historyBianLiList(state, haha) {
+
+            state.historyList=haha
+        },
+        historyClean(state) {
+            state.historyList = []
+        },
+        searchResult(state, result) {
+
+            state.searchResult = result
+        },
+        searchResultShow(state, IsShow, Value) {
+            if (Value === '') {
+                state.searchResultShow = false
+            }
+            state.searchResultShow = IsShow;
+        },
+        searchResultList(state,lists){
+            state.searchResultList=lists;
+        },
+        guanjianci(state,item){
+            state.guanjianci=item
+        },
+        searchWord(state,val){
+            state.guanjianci=val;
+        },
+        niubi(state,val){
+            state.niubi=val
+        },
+        shabi(state){
+            state.niubi='';
+            console.log(state.niubi);
         }
     },
     actions: {
@@ -69,7 +111,8 @@ export default new Vuex.Store({
                     context.state.changeIcon = false;
                     context.state.musicAllDetail.musicUrl = res.data.data[0].url;
                 } else {
-                    Toast('获取音乐播放地址失败');                    context.commit('NotPlaying');
+                    Toast('获取音乐播放地址失败');
+                    context.commit('NotPlaying');
                     context.commit('showIcon');
                     context.commit('changeMusicUrl', '')
                 }

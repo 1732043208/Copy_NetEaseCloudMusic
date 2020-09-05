@@ -1,4 +1,4 @@
-<template>
+npm <template>
     <div class="home">
         <tab-control
                 :title="['推荐','视频','电台']"

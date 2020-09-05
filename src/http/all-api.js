@@ -357,3 +357,34 @@ export function GetMvCommentAPI(id,limit) {
         }
     })
 }
+// 默认搜索关键词
+export function GetSearchGuanJianCiAPI() {
+    return http({
+        url: '/search/default',
+    })
+}
+// 热搜列表(详细)
+export function GetHotSearchDetailApi() {
+    return http({
+        url: '/search/hot/detail',
+    })
+}
+//搜索建议
+export function GetSearchSuggestApi(keywords,type) {
+return http({
+    url:'search/suggest',
+    params: {
+        keywords,
+        type
+    }
+})
+}
+//搜索
+export function GetSearchApi(keywords) {
+    return http({
+        url:'/search',
+        params: {
+            keywords,
+        }
+    })
+}
