@@ -1,6 +1,6 @@
 <template>
     <div ref="topNav" class="topNav">
-        <van-icon size="22" @click="goBack" color="black" name="arrow-left"/>
+        <van-icon size="22" @click="goBack" name="arrow-left"/>
         <p class="navTitle">{{title}}</p>
     </div>
 </template>
@@ -29,14 +29,13 @@
     .topNav {
         display: flex;
         padding: 30px;
-        align-items: center;
+        align-items: flex-start;
         background-color: white;
 
         .navTitle {
             padding-left: 32px;
             letter-spacing: 3px;
             font-weight: bold;
-            color: black;
 
         }
     }

@@ -188,7 +188,7 @@
     import Scroll from "../../components/scroll";
     import commNav from "../../components/nav/commNav";
     import {Cell, Divider, Icon, Image as VanImage} from "vant";
-    import {formatDate, realFormatSecond, unique} from "../../components/common/utils";
+    import {formatDate, formatDuring, unique} from "../../components/common/utils";
     import {
         GetMVDetailAPI,
         GetMVDetailInfoAPI,
@@ -404,13 +404,7 @@
                 return num;
             },
             formatDuring(mss) {
-                mss = parseInt(mss);
-                let minutes = ((mss % (1000 * 60 * 60)) / (1000 * 60)).toFixed(0);
-                let seconds = ((mss % (1000 * 60)) / 1000).toFixed(0);
-                seconds.length === 1 ? seconds = seconds + '0' : seconds;
-                minutes.length === 1 ? minutes = '0' + minutes : minutes;
-
-                return minutes + ":" + seconds;
+                return formatDuring(mss);
             }
         }
     }

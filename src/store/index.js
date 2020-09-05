@@ -11,7 +11,14 @@ Vue.use(Vuex)
 
 
 export default new Vuex.Store({
-    plugins: [persistedState({storage: window.sessionStorage})],
+    plugins: [persistedState({
+        storage: window.sessionStorage,
+        reducer(val) {
+            return {
+                historyList: val.historyList
+            }
+        }
+    })],
     state: {
         isLogin: false,
         musicId: null,
@@ -30,9 +37,9 @@ export default new Vuex.Store({
         historyList: [],
         searchResult: [],
         searchResultShow: false,
-        searchResultList:[],
+        searchResultList: [],
         guanjianci: '',
-        niubi:''
+        niubi: ''
     },
     mutations: {
         // musicId
@@ -70,7 +77,7 @@ export default new Vuex.Store({
         },
         historyBianLiList(state, haha) {
 
-            state.historyList=haha
+            state.historyList = haha
         },
         historyClean(state) {
             state.historyList = []
@@ -85,20 +92,20 @@ export default new Vuex.Store({
             }
             state.searchResultShow = IsShow;
         },
-        searchResultList(state,lists){
-            state.searchResultList=lists;
+        searchResultList(state, lists) {
+            state.searchResultList = lists;
         },
-        guanjianci(state,item){
-            state.guanjianci=item
+        guanjianci(state, item) {
+            state.guanjianci = item
         },
-        searchWord(state,val){
-            state.guanjianci=val;
+        searchWord(state, val) {
+            state.guanjianci = val;
         },
-        niubi(state,val){
-            state.niubi=val
+        niubi(state, val) {
+            state.niubi = val
         },
-        shabi(state){
-            state.niubi='';
+        shabi(state) {
+            state.niubi = '';
             console.log(state.niubi);
         }
     },

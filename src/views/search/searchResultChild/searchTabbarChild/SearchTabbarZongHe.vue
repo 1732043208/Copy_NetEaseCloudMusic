@@ -42,9 +42,8 @@
         methods:{
           getMusicId(musicId){
               // 音乐id
-              console.log(musicId);
-              this.$store.commit('changeMusicId', musicId);
-              this.musicCheck(musicId);
+              this.$store.dispatch('getMusicUrl', this.musicId);
+              this.$store.dispatch('getMusicDetail', this.musicId);
           }
         },
         components: {

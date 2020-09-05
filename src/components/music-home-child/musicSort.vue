@@ -81,12 +81,9 @@
                         path:'/rank'
                     });
                 } else if (index === 3) {
-                    GetFmAPI().then(res => {
-                        // todo 私人FM接口接通
-                        console.log(res);
-                    }).catch(err => {
-                        console.log(err);
-                    })
+                   this.$router.push({
+                       path:'/DJ'
+                   })
                 }
             },
 
