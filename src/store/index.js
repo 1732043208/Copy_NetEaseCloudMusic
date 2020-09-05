@@ -58,20 +58,19 @@ export default new Vuex.Store({
         },
         changeAudioEl(state,el){
             state.audioEl = el;
-        }
-    },
-    actions: {
-        getMusicUrl(context, musicId) {
+        },
+        getMusicUrlData(state,musicId){
             GetMusicUrlAPI(musicId).then(res => {
                 if (res.data.data[0].url !== null) {
-                    context.commit('changeMusicUrl', res.data.data[0].url);
-                    context.commit('NotPlaying');
-                    context.state.changeIcon = false;
-                    context.state.musicAllDetail.musicUrl = res.data.data[0].url;
+                    this.commit('changeMusicUrl', res.data.data[0].url);
+                    this.commit('NotPlaying');
+                    state.changeIcon = false;
+                   state.musicAllDetail.musicUrl = res.data.data[0].url;
                 } else {
-                    Toast('获取音乐播放地址失败');                    context.commit('NotPlaying');
-                    context.commit('showIcon');
-                    context.commit('changeMusicUrl', '')
+                    Toast('获取音乐播放地址失败');
+                    this.commit('NotPlaying');
+                    this.commit('showIcon');
+                    this.commit('changeMusicUrl', '')
                 }
             }).catch(error => {
                 console.dir(Vue);
@@ -79,6 +78,28 @@ export default new Vuex.Store({
                 console.log('获取音乐url失败');
                 console.log(error);
             })
+        }
+    },
+    actions: {
+        getMusicUrl(context, musicId) {
+            context.commit('getMusicUrlData',musicId);
+            // GetMusicUrlAPI(musicId).then(res => {
+            //     if (res.data.data[0].url !== null) {
+            //         context.commit('changeMusicUrl', res.data.data[0].url);
+            //         context.commit('NotPlaying');
+            //         context.state.changeIcon = false;
+            //         context.state.musicAllDetail.musicUrl = res.data.data[0].url;
+            //     } else {
+            //         Toast('获取音乐播放地址失败');                    context.commit('NotPlaying');
+            //         context.commit('showIcon');
+            //         context.commit('changeMusicUrl', '')
+            //     }
+            // }).catch(error => {
+            //     console.dir(Vue);
+            //     Toast('获取音乐播放地址失败');
+            //     console.log('获取音乐url失败');
+            //     console.log(error);
+            // })
         },
         getMusicDetail(context, musicId) {
             GetMusicDetail(musicId).then(res => {
