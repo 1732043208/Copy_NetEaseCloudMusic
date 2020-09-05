@@ -107,7 +107,8 @@ export default new Vuex.Store({
         shabi(state) {
             state.niubi = '';
             console.log(state.niubi);
-        }
+        },
+
     },
     actions: {
         getMusicUrl(context, musicId) {

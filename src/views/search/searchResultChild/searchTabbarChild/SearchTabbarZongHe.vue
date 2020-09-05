@@ -9,7 +9,7 @@
         </div>
         <div v-for="item in $store.state.searchResultList">
             <van-cell
-                    @click="getMusicId()"
+                    @click="getMusicId(item.id)"
                     title-class="titleStyle" label-class="labelStyle">
                 <template #title>
                     <span>{{item.name}}</span>
