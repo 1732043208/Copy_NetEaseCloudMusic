@@ -63,7 +63,6 @@
             return {
                 value: '',
                 historyLists: [],
-                hisList: [],
                 list2: [],
             };
         },
@@ -89,17 +88,16 @@
                     // console.log(res);
                     this.$emit("isSearchResultFunc", true);
                     this.$store.commit("searchResultList", lists);
-                    const his = this.value;
-                    this.hisList.unshift(his);
-                    Array.from(new Set(this.hisList));
 
-                    this.$store.commit('historyBianLiList', this.hisList);
+                    this.$store.state.historyList.unshift(val);
+                    let hisList=this.$store.state.historyList;
 
+                   let newarr= Array.from(new Set(hisList));
 
+                    this.$store.commit('historyBianLiList', newarr);
                 }).catch(error => {
                     console.log(error);
                 });
-
                 //点击搜索按钮之后，关闭推荐列表
                 let IsShow = false;
                 this.$store.commit('searchResultShow', IsShow)

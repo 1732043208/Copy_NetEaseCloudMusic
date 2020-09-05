@@ -70,7 +70,8 @@ export default new Vuex.Store({
         },
         historyBianLiList(state, haha) {
 
-            state.historyList=haha
+            state.historyList=haha;
+
         },
         historyClean(state) {
             state.historyList = []
@@ -100,7 +101,8 @@ export default new Vuex.Store({
         shabi(state){
             state.niubi='';
             console.log(state.niubi);
-        }
+        },
+
     },
     actions: {
         getMusicUrl(context, musicId) {
