@@ -63,7 +63,8 @@
             return {
                 value: '',
                 historyLists: [],
-                hisList: []
+                hisList: [],
+                list2: [],
             };
         },
         created() {
@@ -96,7 +97,7 @@
 
 
                 }).catch(error => {
-
+                    console.log(error);
                 });
 
                 //点击搜索按钮之后，关闭推荐列表

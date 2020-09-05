@@ -1,8 +1,12 @@
 <template>
     <div>
         <div class="father" v-if="$store.state.searchResultShow">
-            <van-cell-group v-for="item in $store.state.searchResult">
-                <van-cell :title="item.keyword" icon="search" @click="searchsuggest(item.keyword)"/>
+            <van-cell-group>
+                <van-cell
+                        v-for="item in $store.state.searchResult"
+                        :title="item.keyword"
+                        icon="search"
+                        @click="searchsuggest(item.keyword)"/>
             </van-cell-group>
         </div>
     </div>
@@ -26,7 +30,7 @@
                     let IsShow = false;
                     this.$store.commit('searchResultShow', IsShow);
                     // this.$store.commit('searchWord',val)
-                    this.$store.commit('niubi',val)
+                    this.$store.commit('niubi', val)
                 }).catch(error => {
 
                 });

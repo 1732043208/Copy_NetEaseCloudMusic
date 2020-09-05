@@ -9,6 +9,7 @@
         </div>
         <div v-for="item in $store.state.searchResultList">
             <van-cell
+                    @click="getMusicId()"
                     title-class="titleStyle" label-class="labelStyle">
                 <template #title>
                     <span>{{item.name}}</span>
@@ -38,6 +39,14 @@
 
     export default {
         name: "SearchTabbarZongHe",
+        methods:{
+          getMusicId(musicId){
+              // 音乐id
+              console.log(musicId);
+              this.$store.commit('changeMusicId', musicId);
+              this.musicCheck(musicId);
+          }
+        },
         components: {
             [Icon.name]: Icon,
             [Button.name]: Button
