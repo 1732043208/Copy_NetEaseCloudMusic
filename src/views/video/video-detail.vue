@@ -63,6 +63,7 @@
                                 class="mc-cell"
                                 :center="true"
                                 :border="false"
+                                :key="index+5"
                                 title-class="titleText"
                                 @click="ToDetail(index)">
                             <!--                            :title="value.uiElement.mainTitle.title"-->

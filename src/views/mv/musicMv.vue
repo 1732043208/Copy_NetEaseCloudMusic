@@ -65,6 +65,7 @@
                                 class="mc-cell"
                                 :center="true"
                                 :border="false"
+                                :key="index"
                                 title-class="titleText"
                                 @click="ToDetail(index)">
                             <template #title>
