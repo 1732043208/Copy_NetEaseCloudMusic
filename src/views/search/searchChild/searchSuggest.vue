@@ -20,10 +20,10 @@
         methods: {
             searchsuggest(val) {
                 console.log(val);
-                GetSearchApi(val).then(res => {
-                    let lists = res.data.result.songs;
-                    console.log(lists);
-                    console.log(res);
+                GetSearchApi(val,'1018').then(res => {
+                    let lists = res.data.result;
+                    // console.log(lists);
+                    // console.log(res);
                     this.$emit("isSearchResultFunc", true);
                     console.log(this.$store.state.searchResultShow);
                     this.$store.commit("searchResultList", lists);

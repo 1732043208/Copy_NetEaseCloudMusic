@@ -5,6 +5,9 @@
                <div v-if="index === 0">
                    <SearchTabbarZongHe></SearchTabbarZongHe>
                </div>
+                <div v-if="index ===1">
+                    <SearchTabbarDanQu></SearchTabbarDanQu>
+                </div>
             </van-tab>
         </van-tabs>
     </div>
@@ -12,6 +15,7 @@
 
 <script>
     import SearchTabbarZongHe from "./searchTabbarChild/SearchTabbarZongHe";
+    import SearchTabbarDanQu from "./searchTabbarChild/SearchTabbarDanQu";
     export default {
         name: "searchTabbar",
         data(){
@@ -20,7 +24,8 @@
             }
         },
         components:{
-            SearchTabbarZongHe
+            SearchTabbarZongHe,
+            SearchTabbarDanQu
         }
     }
 </script>

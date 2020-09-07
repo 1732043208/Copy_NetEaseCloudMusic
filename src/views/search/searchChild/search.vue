@@ -82,8 +82,12 @@
                     this.value = this.$store.state.guanjianci;
                     // console.log('哈哈');
                 }
-                GetSearchApi(this.value).then(res => {
-                    let lists = res.data.result.songs;
+                GetSearchApi(this.value,'1018').then(res => {
+                    // console.log(res);
+                    let lists = res.data.result;
+                    console.log(lists);
+                    // console.log(lists);
+                    // let lists = res;
                     // console.log(lists);
                     // console.log(res);
                     this.$emit("isSearchResultFunc", true);
@@ -137,13 +141,14 @@
             goBack() {
                 if (this.isShow) {
                     this.$emit("isSearchResultFunc", false);
-                    this.$store.commit('shabi');
+                    this.$store.commit('cutWord');
                 } else {
                     this.$router.go(-1);
                 }
             },
             cleanLabel() {
-                this.value = ''
+                this.$store.state.niubi===''?this.value = '':  this.$store.commit('cutWord');
+
             },
             getSearchData() {
                 GetSearchGuanJianCiAPI().then(res => {

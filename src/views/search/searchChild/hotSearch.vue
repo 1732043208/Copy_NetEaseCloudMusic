@@ -1,7 +1,7 @@
 <template>
     <div>
         <p style="font-weight: bold;font-size: 16px;margin-left: 16px;margin-top: 6px">热搜榜</p>
-        <div v-for="(item,index) in hots" >
+        <div v-for="(item,index) in hots">
             <van-cell-group>
                 <van-cell :title-style="{fontWeight:index+1<4?'Bold':'normal',fontSize: '15px'}"
                           :title="item.searchWord"
@@ -39,9 +39,9 @@
                     }
                 )
             },
-            getHotSearch(val){
+            getHotSearch(val) {
                 GetSearchApi(val).then(res => {
-                    let lists=res.data.result.songs;
+                    let lists = res.data.result.songs;
                     console.log(res);
                     this.$emit("isSearchResultFunc", true);
                     this.$store.commit("searchResultList", lists);
@@ -49,8 +49,8 @@
                     let IsShow = false;
                     this.$store.commit('searchResultShow', IsShow);
                     this.$store.state.historyList.unshift(val);
-let hisList=this.$store.state.historyList;
-                    let newarr= Array.from(new Set(hisList));
+                    let hisList = this.$store.state.historyList;
+                    let newarr = Array.from(new Set(hisList));
 
                     this.$store.commit('historyBianLiList', newarr);
                 })

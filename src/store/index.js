@@ -30,7 +30,7 @@ export default new Vuex.Store({
         historyList: [],
         searchResult: [],
         searchResultShow: false,
-        searchResultList:[],
+        searchResultList:{},
         guanjianci: '',
         niubi:''
     },
@@ -98,7 +98,7 @@ export default new Vuex.Store({
         niubi(state,val){
             state.niubi=val
         },
-        shabi(state){
+        cutWord(state){
             state.niubi='';
             console.log(state.niubi);
         },

@@ -39,8 +39,9 @@
                     });
             },
             historysearch(item) {
-                GetSearchApi(item).then(res => {
-                    let lists = res.data.result.songs;
+                GetSearchApi(item,'1018').then(res => {
+                    let lists = res.data.result;
+
                     console.log(res);
                     this.$emit("isSearchResultFunc", true);
                     console.log(this.$store.state.searchResultShow);
