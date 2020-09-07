@@ -204,12 +204,20 @@
 
     export default {
         name: "music-mv",
-        created() {
-            this.getMvUrlData(this.$route.query.mvId);
-            this.getMvDetailData(this.$route.query.mvId);
-            this.getMvDetailInfoData(this.$route.query.mvId);
-            this.getVideoRelatedData(this.$route.query.mvId);
-            this.getMvCommentData({id: this.$route.query.mvId, limit: this.newLimit})
+        beforeRouteEnter(to, from, next) {
+            next(vm => {
+                vm.$toast.loading({
+                    message: '加载中',
+                    forbidClick: true,
+                    duration: 0
+                });
+                vm.getMvUrlData(vm.$route.query.mvId);
+                vm.getMvDetailData(vm.$route.query.mvId);
+                vm.getMvDetailInfoData(vm.$route.query.mvId);
+                vm.getVideoRelatedData(vm.$route.query.mvId);
+                vm.getMvCommentData({id: vm.$route.query.mvId, limit: vm.newLimit})
+                vm.$toast.clear()
+            })
         },
         data() {
             return {

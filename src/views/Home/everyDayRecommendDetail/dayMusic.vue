@@ -251,7 +251,7 @@
                             this.$router.push({
                                 path: '/music-mv',
                                 query: {
-                                    mvId: this.musicInfo[index].mvId
+                                    mvId: this.musicDetail.mvId
                                 }
                             });
                         }else {
