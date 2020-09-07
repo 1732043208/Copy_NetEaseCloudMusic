@@ -57,7 +57,9 @@
                 </template>
             </van-card>
         </div>
-        <div style="font-size: 14px;text-align: center;margin-top: 8px">{{$store.state.searchResultList.playList.moreText}}</div>
+        <div style="font-size: 14px;text-align: center;margin-top: 8px">
+            {{$store.state.searchResultList.playList.moreText}}
+        </div>
         <img src="../../../../assets/jietu.jpg" style="width: 100%;height: auto"/>
 
         <!--        视频-->
@@ -65,7 +67,7 @@
             <span style="margin-left: 18px;font-weight: bold;">视频</span>
         </div>
         <div v-for="item in $store.state.searchResultList.video.videos">
-            <van-card>
+            <van-card @click="getVideoDetailData(item.vid)">
                 <template #thumb>
                     <img :src="item.coverUrl" style="width: 130px;height: auto">
                     <span style="position: absolute;left: 85px;color: white">{{Math.round(item.playTime/10000*Math.pow(10,1))/Math.pow(10,1)}}万</span>
@@ -82,13 +84,16 @@
                 </template>
             </van-card>
         </div>
-        <div style="font-size: 14px;text-align: center;margin-top: 8px">{{$store.state.searchResultList.video.moreText}}</div>
+        <div style="font-size: 14px;text-align: center;margin-top: 8px">
+            {{$store.state.searchResultList.video.moreText}}
+        </div>
         <!--       相关搜索-->
         <div style="height: 30px;margin-top: 10px">
             <span style="margin-left: 18px;font-weight: bold;">相关搜索</span>
         </div>
         <div class="historyFather">
-            <div v-for="item in $store.state.searchResultList.sim_query.sim_querys" style="background-color:#F3F3F3;font-size: 15px"
+            <div v-for="item in $store.state.searchResultList.sim_query.sim_querys"
+                 style="background-color:#F3F3F3;font-size: 15px"
                  class="historySon">{{item.keyword}}
             </div>
         </div>
@@ -118,7 +123,8 @@
     import {Card} from 'vant';
     import {Tag} from 'vant';
     import {realFormatSecond} from "../../../../components/common/utils";
-    import { Cell, CellGroup } from 'vant';
+    import {Cell, CellGroup} from 'vant';
+
     export default {
         name: "SearchTabbarZongHe",
         methods: {
@@ -127,16 +133,23 @@
                 console.log(musicId);
                 this.$store.commit('changeMusicId', musicId);
                 this.musicCheck(musicId);
+            },
+            getVideoDetailData(vid){
+                this.$router.push({
+                    path:'/videoDetail',
+                    query:{
+                        vid:vid
+                    }
+                })
             }
-
         },
         components: {
             [Icon.name]: Icon,
             [Button.name]: Button,
             [Card.name]: Card,
             [Tag.name]: Tag,
-            [Cell.name]:Cell,
-            [CellGroup.name]:CellGroup
+            [Cell.name]: Cell,
+            [CellGroup.name]: CellGroup
         }, filters: {
             // 将整数转化成分秒
             formatSecond(second = 0) {

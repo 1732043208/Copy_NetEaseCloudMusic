@@ -47,7 +47,7 @@
                     this.$emit("isSearchResultFunc", true);
                     console.log(this.$store.state.searchResultShow);
                     this.$store.commit("searchResultList", lists);
-                    this.$store.commit("guanjianci", item);
+                    this.$store.commit("searchWordFunc", item);
                     let IsShow = false;
                     this.$store.commit('searchResultShow', IsShow)
 
