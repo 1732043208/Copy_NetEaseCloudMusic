@@ -19,13 +19,17 @@
 
 <script>
     import {GetHotSearchDetailApi, GetSearchApi} from "../../../http/all-api";
-
+    import { Cell, CellGroup } from 'vant';
     export default {
         name: "hotSearch",
         data() {
             return {
                 hots: [],
             }
+        },
+        components:{
+            [CellGroup.name]:CellGroup,
+            [Cell.name]:Cell
         },
         created() {
             this.getHotSearchData();

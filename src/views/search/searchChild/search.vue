@@ -53,7 +53,8 @@
 <script>
     import {GetSearchGuanJianCiAPI, GetSearchSuggestApi, GetSearchApi} from "../../../http/all-api";
     import {Icon} from 'vant';
-
+    import { Cell, CellGroup } from 'vant';
+    import { Search } from 'vant';
     export default {
         name: "search",
         props: {
@@ -73,7 +74,10 @@
             }
         },
         components: {
-            [Icon.name]: Icon
+            [Icon.name]: Icon,
+            [Cell.name]:Cell,
+            [CellGroup.name]:CellGroup,
+            [Search.name]:Search
         },
         methods: {
             //确定搜索时触发

@@ -117,7 +117,7 @@
     import {Card} from 'vant';
     import {Tag} from 'vant';
     import {realFormatSecond} from "../../../../components/common/utils";
-
+    import { Cell, CellGroup } from 'vant';
     export default {
         name: "SearchTabbarZongHe",
         methods: {
@@ -133,7 +133,9 @@
             [Icon.name]: Icon,
             [Button.name]: Button,
             [Card.name]: Card,
-            [Tag.name]: Tag
+            [Tag.name]: Tag,
+            [Cell.name]:Cell,
+            [CellGroup.name]:CellGroup
         }, filters: {
             // 将整数转化成分秒
             formatSecond(second = 0) {

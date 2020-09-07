@@ -40,7 +40,8 @@ export default new Vuex.Store({
         searchResultShow: false,
         searchResultList: [],
         guanjianci: '',
-        niubi: ''
+        niubi: '',
+        searchWord:''
     },
     mutations: {
         changeLogin(state,type) {
@@ -108,7 +109,7 @@ export default new Vuex.Store({
         niubi(state, val) {
             state.niubi = val
         },
-        shabi(state) {
+        CutWord(state) {
             state.niubi = '';
             console.log(state.niubi);
         },

@@ -16,6 +16,8 @@
 <script>
     import SearchTabbarZongHe from "./searchTabbarChild/SearchTabbarZongHe";
     import SearchTabbarDanQu from "./searchTabbarChild/SearchTabbarDanQu";
+    import { Cell, CellGroup } from 'vant';
+    import { Tab, Tabs } from 'vant';
     export default {
         name: "searchTabbar",
         data(){
@@ -25,7 +27,11 @@
         },
         components:{
             SearchTabbarZongHe,
-            SearchTabbarDanQu
+            SearchTabbarDanQu,
+            [Cell.name]:Cell,
+            [CellGroup.name]:CellGroup,
+            [Tab.name]:Tab,
+            [Tabs.name]:Tabs
         }
     }
 </script>

@@ -15,9 +15,13 @@
 
 <script>
     import {GetSearchApi} from "../../../http/all-api";
-
+    import { Cell, CellGroup } from 'vant';
     export default {
         name: "searchSuggest",
+        components:{
+            [Cell.name]:Cell,
+            [CellGroup.name]:CellGroup
+        },
         methods: {
             searchsuggest(val) {
                 console.log(val);
