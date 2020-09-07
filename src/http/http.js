@@ -24,11 +24,10 @@ export function http(config) {
     });
 
     instance.interceptors.response.use(response => {
-
-        if (response.data.token) {
+        if (response.config.headers.token) {
             token = response.data.token;
             sessionStorage.setItem("token", response.data.token);
-            store.state.isLogin = true;
+            store.commit('changeLogin', true);
         }
         return response
     }, error => {

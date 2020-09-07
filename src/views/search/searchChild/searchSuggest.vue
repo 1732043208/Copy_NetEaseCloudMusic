@@ -3,8 +3,9 @@
         <div class="father" v-if="$store.state.searchResultShow">
             <van-cell-group>
                 <van-cell
-                        v-for="item in $store.state.searchResult"
+                        v-for="(item,index) in $store.state.searchResult"
                         :title="item.keyword"
+                        :key="index"
                         icon="search"
                         @click="searchsuggest(item.keyword)"/>
             </van-cell-group>

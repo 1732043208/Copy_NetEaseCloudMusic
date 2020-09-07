@@ -1,4 +1,5 @@
-npm <template>
+npm
+<template>
     <div class="home">
         <tab-control
                 :title="['推荐','视频','电台']"
@@ -14,7 +15,7 @@ npm <template>
                 :pull-up-load="true">
             <div>
                 <recommend v-if="this.currentType==='recommend'"></recommend>
-            <video-home v-if="this.currentType==='friend'"></video-home>
+                <video-home v-if="this.currentType==='friend'"></video-home>
             </div>
 
         </scroll>
@@ -28,6 +29,7 @@ npm <template>
     import Scroll from "../../components/scroll";
     import Recommend from "../../components/music-home-child/recommend";
     import VideoHome from "../video/video-home";
+
     export default {
         name: 'Home',
         data() {

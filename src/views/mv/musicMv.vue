@@ -65,6 +65,7 @@
                                 class="mc-cell"
                                 :center="true"
                                 :border="false"
+                                :key="index"
                                 title-class="titleText"
                                 @click="ToDetail(index)">
                             <template #title>
@@ -188,7 +189,7 @@
     import Scroll from "../../components/scroll";
     import commNav from "../../components/nav/commNav";
     import {Cell, Divider, Icon, Image as VanImage} from "vant";
-    import {formatDate, realFormatSecond, unique} from "../../components/common/utils";
+    import {formatDate, formatDuring, unique} from "../../components/common/utils";
     import {
         GetMVDetailAPI,
         GetMVDetailInfoAPI,
@@ -203,12 +204,20 @@
 
     export default {
         name: "music-mv",
-        created() {
-            this.getMvUrlData(this.$route.query.mvId);
-            this.getMvDetailData(this.$route.query.mvId);
-            this.getMvDetailInfoData(this.$route.query.mvId);
-            this.getVideoRelatedData(this.$route.query.mvId);
-            this.getMvCommentData({id: this.$route.query.mvId, limit: this.newLimit})
+        beforeRouteEnter(to, from, next) {
+            next(vm => {
+                vm.$toast.loading({
+                    message: '加载中',
+                    forbidClick: true,
+                    duration: 0
+                });
+                vm.getMvUrlData(vm.$route.query.mvId);
+                vm.getMvDetailData(vm.$route.query.mvId);
+                vm.getMvDetailInfoData(vm.$route.query.mvId);
+                vm.getVideoRelatedData(vm.$route.query.mvId);
+                vm.getMvCommentData({id: vm.$route.query.mvId, limit: vm.newLimit})
+                vm.$toast.clear()
+            })
         },
         data() {
             return {
@@ -404,13 +413,7 @@
                 return num;
             },
             formatDuring(mss) {
-                mss = parseInt(mss);
-                let minutes = ((mss % (1000 * 60 * 60)) / (1000 * 60)).toFixed(0);
-                let seconds = ((mss % (1000 * 60)) / 1000).toFixed(0);
-                seconds.length === 1 ? seconds = seconds + '0' : seconds;
-                minutes.length === 1 ? minutes = '0' + minutes : minutes;
-
-                return minutes + ":" + seconds;
+                return formatDuring(mss);
             }
         }
     }

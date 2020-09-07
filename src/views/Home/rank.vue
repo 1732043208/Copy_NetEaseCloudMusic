@@ -34,6 +34,7 @@
                     <van-grid :border="false" column-num="3">
                         <van-grid-item class="rankPic"
                                        v-for="(item,index) in rankInfo.slice(4,33)"
+                                       @click="rankClick(item.id)"
                                        :key="index">
                             <div>
                                 <van-image

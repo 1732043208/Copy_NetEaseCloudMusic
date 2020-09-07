@@ -288,7 +288,7 @@ export function GetVideoUrlAPI(id) {
 }
 
 // 视频评论
-export function GetVideoCommentAPI(id,limit) {
+export function GetVideoCommentAPI(id, limit) {
     return http({
         url: '/comment/video',
         params: {
@@ -348,7 +348,7 @@ export function GetSiMiMvAPI(mvid) {
 }
 
 // mv评论
-export function GetMvCommentAPI(id,limit) {
+export function GetMvCommentAPI(id, limit) {
     return http({
         url: '/comment/mv',
         params: {
@@ -357,35 +357,68 @@ export function GetMvCommentAPI(id,limit) {
         }
     })
 }
+
 // 默认搜索关键词
 export function GetSearchGuanJianCiAPI() {
     return http({
         url: '/search/default',
     })
 }
+
 // 热搜列表(详细)
 export function GetHotSearchDetailApi() {
     return http({
         url: '/search/hot/detail',
     })
 }
+
 //搜索建议
-export function GetSearchSuggestApi(keywords,type) {
-return http({
-    url:'search/suggest',
-    params: {
-        keywords,
-        type
-    }
-})
-}
-//搜索
-export function GetSearchApi(keywords,type) {
+export function GetSearchSuggestApi(keywords, type) {
     return http({
-        url:'/search',
+        url: 'search/suggest',
         params: {
             keywords,
             type
+        }
+    })
+}
+
+//搜索
+export function GetSearchApi(keywords,type) {
+    return http({
+        url: '/search',
+        params: {
+            keywords,
+            type
+        }
+    })
+}
+
+// 电台推荐
+export function GetDjRecommendAPI() {
+    return http({
+        url: '/dj/recommend'
+    })
+}
+
+// 电台详情
+export function GetDjDetailAPI(rid) {
+    return http({
+        url: '/dj/detail',
+        params: {
+            rid
+        }
+    })
+}
+
+// 电台节目
+export function GetDjProgramAPI(rid, {limit = 30, asc = false}) {
+    return http({
+        url: '/dj/program',
+        params: {
+            rid,
+            limit,
+            asc
         }
     })
 }

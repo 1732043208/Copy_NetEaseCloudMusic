@@ -11,7 +11,15 @@ Vue.use(Vuex)
 
 
 export default new Vuex.Store({
-    plugins: [persistedState({storage: window.sessionStorage})],
+    plugins: [persistedState({
+        storage: window.sessionStorage,
+        reducer(val) {
+            return {
+                historyList: val.historyList,
+                isLogin: val.isLogin
+            }
+        }
+    })],
     state: {
         isLogin: false,
         musicId: null,
@@ -30,11 +38,14 @@ export default new Vuex.Store({
         historyList: [],
         searchResult: [],
         searchResultShow: false,
-        searchResultList:{},
+        searchResultList: [],
         guanjianci: '',
-        niubi:''
+        niubi: ''
     },
     mutations: {
+        changeLogin(state,type) {
+            state.isLogin = type;
+        },
         // musicId
         changeMusicId(state, newId) {
             state.musicId = newId;
@@ -70,8 +81,7 @@ export default new Vuex.Store({
         },
         historyBianLiList(state, haha) {
 
-            state.historyList=haha;
-
+            state.historyList = haha
         },
         historyClean(state) {
             state.historyList = []
@@ -86,37 +96,34 @@ export default new Vuex.Store({
             }
             state.searchResultShow = IsShow;
         },
-        searchResultList(state,lists){
-            state.searchResultList=lists;
+        searchResultList(state, lists) {
+            state.searchResultList = lists;
         },
-        guanjianci(state,item){
-            state.guanjianci=item
+        guanjianci(state, item) {
+            state.guanjianci = item
         },
-        searchWord(state,val){
-            state.guanjianci=val;
+        searchWord(state, val) {
+            state.guanjianci = val;
         },
-        niubi(state,val){
-            state.niubi=val
+        niubi(state, val) {
+            state.niubi = val
         },
-        cutWord(state){
-            state.niubi='';
+        shabi(state) {
+            state.niubi = '';
             console.log(state.niubi);
         },
-
-    },
-    actions: {
-        getMusicUrl(context, musicId) {
+        getMusicUrlData(state, musicId) {
             GetMusicUrlAPI(musicId).then(res => {
                 if (res.data.data[0].url !== null) {
-                    context.commit('changeMusicUrl', res.data.data[0].url);
-                    context.commit('NotPlaying');
-                    context.state.changeIcon = false;
-                    context.state.musicAllDetail.musicUrl = res.data.data[0].url;
+                    this.commit('changeMusicUrl', res.data.data[0].url);
+                    this.commit('NotPlaying');
+                    state.changeIcon = false;
+                    state.musicAllDetail.musicUrl = res.data.data[0].url;
                 } else {
                     Toast('获取音乐播放地址失败');
-                    context.commit('NotPlaying');
-                    context.commit('showIcon');
-                    context.commit('changeMusicUrl', '')
+                    this.commit('NotPlaying');
+                    this.commit('showIcon');
+                    this.commit('changeMusicUrl', '')
                 }
             }).catch(error => {
                 console.dir(Vue);
@@ -124,6 +131,11 @@ export default new Vuex.Store({
                 console.log('获取音乐url失败');
                 console.log(error);
             })
+        }
+    },
+    actions: {
+        getMusicUrl(context, musicId) {
+            context.commit('getMusicUrlData', musicId)
         },
         getMusicDetail(context, musicId) {
             GetMusicDetail(musicId).then(res => {

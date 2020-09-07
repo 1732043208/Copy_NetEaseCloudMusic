@@ -1,7 +1,7 @@
 <template>
     <div>
         <van-tabs :swipeable="true" >
-            <van-tab v-for="(item,index) in tabbarList" :title="item">
+            <van-tab v-for="(item,index) in tabbarList" :key="index" :title="item">
                <div v-if="index === 0">
                    <SearchTabbarZongHe></SearchTabbarZongHe>
                </div>

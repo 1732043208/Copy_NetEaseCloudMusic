@@ -63,6 +63,7 @@
                                 class="mc-cell"
                                 :center="true"
                                 :border="false"
+                                :key="index+5"
                                 title-class="titleText"
                                 @click="ToDetail(index)">
                             <!--                            :title="value.uiElement.mainTitle.title"-->
@@ -193,7 +194,7 @@
     } from "../../http/all-api";
     import {createVideoDetailInfo} from "../../../model/videoDetailInfo";
     import {createVideoRelated} from "../../../model/videoRelatedInfo";
-    import {formatDate, unique} from "../../components/common/utils";
+    import {formatDate, unique, formatDuring} from "../../components/common/utils";
     import {Cell, Divider, Icon, Image as VanImage} from "vant";
     import {createCommentHotInfo} from "../../../model/commentInfo";
 
@@ -434,13 +435,7 @@
                 return num;
             },
             formatDuring(mss) {
-                mss = parseInt(mss);
-                let minutes = (mss % (1000 * 60 * 60)) / (1000 * 60);
-                let seconds = ((mss % (1000 * 60)) / 1000).toFixed(0);
-                console.log(seconds.length);
-                seconds.length === 1 ? seconds = seconds + '0' : seconds;
-                minutes.length === 1 ? minutes = '0' + minutes : minutes;
-                return minutes + ":" + seconds;
+                return formatDuring(mss);
             }
         }
     }

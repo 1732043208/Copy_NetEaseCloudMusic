@@ -20,7 +20,9 @@ const Album = () => import('../views/album/album');
 const Rank = () => import('../views/Home/rank');
 const CommentMusic = () => import('../views/musicComment/commentMusic');
 const VideoDetail = () => import('../views/video/video-detail');
-const SearchDetail=()=>import('../views/search/searchDetail')
+const SearchDetail = () => import('../views/search/searchDetail')
+const Dj = () => import('../views/dj/dj');
+const DjDetail = () => import('../views/dj/djDetail');
 
 const routes = [
     {
@@ -142,10 +144,27 @@ const routes = [
         meta: {
             isShow: false
         }
-    },{
+    },
+    {
         path: '/SearchDetail',
         name: 'SearchDetail',
         component: SearchDetail,
+        meta: {
+            isShow: false
+        }
+    },
+    {
+        path: '/DJ',
+        name: 'Dj',
+        component: Dj,
+        meta: {
+            isShow: false
+        }
+    },
+    {
+        path: '/DJ-detail',
+        name: 'Dj-detail',
+        component: DjDetail,
         meta: {
             isShow: false
         }

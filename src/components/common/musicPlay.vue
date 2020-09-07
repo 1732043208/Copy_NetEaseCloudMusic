@@ -13,7 +13,7 @@
                     :src="musicInfo.picUrl"
             />
             <div class="musicName">
-                <p>{{musicInfo.name}}</p>
+                <p>{{musicInfo.name===''?'正在播放电台':musicInfo.name}}</p>
                 <p class="tip">左右滑动可切换上下首</p>
             </div>
             <div class="musicIcon">
@@ -173,7 +173,7 @@
                                     :value-class="{'cellText':true,'selectColor':item.isColor}"
                                     @click="musicDetailClick(item,index)">
                                 <template #default>
-                                    <p>{{item.name}}<span>—{{item.singer}}</span></p>
+                                    <p>{{musicInfo.name===''?'电台音频':musicInfo.name}}<span>—{{item.singer}}</span></p>
                                 </template>
                                 <template #right-icon>
                                     <van-icon name="cross" @click.stop="removeBtn(index,item)"/>
@@ -347,7 +347,7 @@
             ChangeIcon() {
                 this.animationShow = this.$store.state.changeIcon ? 'running' : 'paused'
                 this.$store.commit('showIcon');
-                if (this.currentLyric) this.currentLyric.togglePlay();
+                if ( Object.keys(this.currentLyric).length !== 0) this.currentLyric.togglePlay();
             },
             minOrMax() {
                 this.isShowLrc = false;
