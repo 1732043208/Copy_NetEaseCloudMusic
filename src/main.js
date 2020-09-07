@@ -11,7 +11,7 @@ import 'vue-mini-player/lib/vue-mini-player.css'
 import {Search} from 'vant';
 
 Vue.use(vueMiniPlayer);
-
+Vue.use(base)
 // 全局引入vant组件
 import {Toast} from 'vant';
 
