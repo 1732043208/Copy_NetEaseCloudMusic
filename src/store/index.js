@@ -40,7 +40,7 @@ export default new Vuex.Store({
         searchResultShow: false,
         searchResultList: [],
         guanjianci: '',
-        niubi: '',
+        addWord: '',
         searchWord:''
     },
     mutations: {
@@ -106,12 +106,12 @@ export default new Vuex.Store({
         searchWord(state, val) {
             state.guanjianci = val;
         },
-        niubi(state, val) {
-            state.niubi = val
+        addWord(state, val) {
+            state.addWord = val
         },
-        CutWord(state) {
-            state.niubi = '';
-            console.log(state.niubi);
+        cutWord(state) {
+            state.addWord = '';
+            console.log(state.addWord);
         },
         getMusicUrlData(state, musicId) {
             GetMusicUrlAPI(musicId).then(res => {

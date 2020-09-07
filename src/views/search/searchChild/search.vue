@@ -1,7 +1,7 @@
 <template>
     <div>
         <form action="/">
-            <div v-if="$store.state.niubi===''">
+            <div v-if="$store.state.addWord===''">
                 <van-search
                         v-model="value"
                         :show-action="true"
@@ -24,9 +24,9 @@
                     </template>
                 </van-search>
             </div>
-            <div v-if="$store.state.niubi!==''">
+            <div v-if="$store.state.addWord!==''">
                 <van-search
-                        v-model="$store.state.niubi"
+                        v-model="$store.state.addWord"
                         :show-action="true"
                         :placeholder="this.$store.state.guanjianci"
                         @search="onSearch"
@@ -69,8 +69,8 @@
         },
         created() {
             this.getSearchData();
-            if (this.$store.state.niubi !== '') {
-                this.value = this.$store.state.niubi
+            if (this.$store.state.addWord !== '') {
+                this.value = this.$store.state.addWord
             }
         },
         components: {
@@ -151,7 +151,7 @@
                 }
             },
             cleanLabel() {
-                this.$store.state.niubi===''?this.value = '':  this.$store.commit('cutWord');
+                this.$store.state.addWord===''?this.value = '':  this.$store.commit('cutWord');
 
             },
             getSearchData() {

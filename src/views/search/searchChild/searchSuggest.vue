@@ -35,7 +35,7 @@
                     let IsShow = false;
                     this.$store.commit('searchResultShow', IsShow);
                     // this.$store.commit('searchWord',val)
-                    this.$store.commit('niubi', val)
+                    this.$store.commit('addWord', val)
                 }).catch(error => {
 
                 });
