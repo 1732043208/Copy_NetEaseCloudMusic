@@ -92,8 +92,8 @@
                             duration: 1000
                         });
                         console.log('手机登录请求成功');
-                        this.$store.state.userInfo = new userInfoModel(res.data.profile)
-                        console.log(this.$store.state.userInfo);
+                        this.$store.state.userInfo = new userInfoModel(res.data.profile);
+                        this.$store.commit('changeLogin', true);
                         this.$router.push({
                             path: '/'
                         })

@@ -15,7 +15,8 @@ export default new Vuex.Store({
         storage: window.sessionStorage,
         reducer(val) {
             return {
-                historyList: val.historyList
+                historyList: val.historyList,
+                isLogin: val.isLogin
             }
         }
     })],
@@ -42,6 +43,9 @@ export default new Vuex.Store({
         niubi: ''
     },
     mutations: {
+        changeLogin(state,type) {
+            state.isLogin = type;
+        },
         // musicId
         changeMusicId(state, newId) {
             state.musicId = newId;
