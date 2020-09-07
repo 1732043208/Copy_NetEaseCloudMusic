@@ -10,7 +10,8 @@
                 :probe-type="3"
                 :bounce="false"
                 :pull-up-load="true"
-                @scroll="musicListScroll">
+                @scroll="musicListScroll"
+                @pullingUp="pullingUp">
             <div>
                 <div class="topInfo">
                     <van-image
@@ -93,13 +94,23 @@
     import {createDjDetailInfo} from "../../../model/djDetailInfo";
     import {createProgramInfo} from "../../../model/programInfo";
     import {Cell, Icon, Image as VanImage, Tab, Tabs} from "vant";
-    import {formatDate, formatDuring} from "../../components/common/utils";
+    import {formatDate, formatDuring, unique} from "../../components/common/utils";
 
     export default {
         name: "djDetail",
+        beforeRouteEnter(to, from, next) {
+            next(vm => {
+                vm.$toast.loading({
+                    message: '加载中',
+                    forbidClick: true,
+                    duration: 0
+                });
+                vm.getDjDetailData(vm.rid);
+                vm.getDjProgramsData(vm.rid, {limit: vm.limit, asc: false});
+                vm.$toast.clear()
+            })
+        },
         created() {
-            this.getDjDetailData(this.rid);
-            this.getDjProgramsData(this.rid);
         },
         computed: {
             rid() {
@@ -125,14 +136,23 @@
                     console.log(error);
                 })
             },
-            getDjProgramsData(id) {
-                GetDjProgramAPI(id, {limit: this.limit, asc: false}).then(res => {
+            getDjProgramsData(id, {limit, asc}) {
+                GetDjProgramAPI(id, {limit: limit, asc: asc}).then(res => {
                     let result = res.data.programs;
                     this.programCount = res.data.count;
                     result.forEach(item => {
                         this.djPrograms.push(createProgramInfo(item))
                     });
-                    console.log(this.djPrograms);
+                    if (this.djPrograms.length > 30) {
+                        this.djPrograms = unique(this.djPrograms);
+                        if (this.djPrograms.length < this.programCount) {
+                            this.$refs.scroll.finishPullUp();
+                            this.$refs.scroll.refresh();
+                        } else {
+                            this.$toast('没用更多节目了')
+                        }
+
+                    }
                 }).catch(error => {
                     console.log('获取电台节目失败');
                     console.log(error);
@@ -149,6 +169,11 @@
             musicListScroll(position) {
                 let opacity = Math.abs(Math.round((position.y)) / 300);
                 this.$refs.topNav.style.background = `rgba(0,0,0,${opacity})`;
+            },
+            pullingUp() {
+                this.limit += 10;
+                this.getDjProgramsData(this.rid, {limit: this.limit, asc: false})
+                console.log('不等');
             }
         },
         components: {

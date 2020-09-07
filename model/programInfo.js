@@ -1,10 +1,10 @@
 
 class ProgramInfo {
-    constructor({name, createTime, listenerCount, musicId, duration}) {
+    constructor({name, createTime, listenerCount, id, duration}) {
         this.name = name;
         this.createTime = createTime;
         this.listenerCount = listenerCount;
-        this.musicId = musicId;
+        this.id = id;
         this.duration = duration;
     }
 }
@@ -14,7 +14,7 @@ export function createProgramInfo(data) {
         name: data.name,
         createTime: data.createTime,
         listenerCount: data.listenerCount,
-        musicId: data.mainSong.id,
+        id: data.mainSong.id,
         duration: data.mainSong.duration
     })
 }
