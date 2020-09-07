@@ -59,6 +59,7 @@
         </div>
         <div style="font-size: 14px;text-align: center;margin-top: 8px">{{$store.state.searchResultList.playList.moreText}}</div>
         <img src="../../../../assets/jietu.jpg" style="width: 100%;height: auto"/>
+
         <!--        视频-->
         <div style="height: 30px;">
             <span style="margin-left: 18px;font-weight: bold;">视频</span>

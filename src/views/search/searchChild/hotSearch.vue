@@ -44,19 +44,24 @@
                 )
             },
             getHotSearch(val) {
-                GetSearchApi(val).then(res => {
-                    let lists = res.data.result.songs;
-                    console.log(res);
+                GetSearchApi(val,'1018').then(res => {
+                    // console.log(res);
+                    let lists = res.data.result;
+                    console.log(lists);
+                    // console.log(lists);
+                    // let lists = res;
+                    // console.log(lists);
+                    // console.log(res);
                     this.$emit("isSearchResultFunc", true);
                     this.$store.commit("searchResultList", lists);
-                    this.$store.commit("guanjianci", val);
-                    let IsShow = false;
-                    this.$store.commit('searchResultShow', IsShow);
+
                     this.$store.state.historyList.unshift(val);
-                    let hisList = this.$store.state.historyList;
-                    let newarr = Array.from(new Set(hisList));
+                    let hisList=this.$store.state.historyList;
+
+                    let newarr= Array.from(new Set(hisList));
 
                     this.$store.commit('historyBianLiList', newarr);
+                    this.$store.commit('searchWordFunc',val)
                 })
             }
         }

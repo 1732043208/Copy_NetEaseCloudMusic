@@ -41,7 +41,7 @@ export default new Vuex.Store({
         searchResultList: [],
         guanjianci: '',
         addWord: '',
-        searchWord:''
+        searchWord:'',
     },
     mutations: {
         changeLogin(state,type) {
@@ -112,6 +112,9 @@ export default new Vuex.Store({
         cutWord(state) {
             state.addWord = '';
             console.log(state.addWord);
+        },
+        searchWordFunc(state,val){
+            state.searchWord=val
         },
         getMusicUrlData(state, musicId) {
             GetMusicUrlAPI(musicId).then(res => {

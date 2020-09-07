@@ -103,6 +103,7 @@
                    let newarr= Array.from(new Set(hisList));
 
                     this.$store.commit('historyBianLiList', newarr);
+                    this.$store.commit('searchWordFunc',this.value)
                 }).catch(error => {
                     console.log(error);
                 });

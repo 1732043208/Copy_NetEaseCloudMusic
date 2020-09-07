@@ -55,7 +55,7 @@
 
         },
         created() {
-            GetSearchApi(this.$store.state.guanjianci).then(res => {
+            GetSearchApi(this.$store.state.searchWord).then(res => {
                 // console.log(res);
                 let lists = res.data.result;
                 this.songsList=lists.songs;
