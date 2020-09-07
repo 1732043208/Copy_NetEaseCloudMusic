@@ -384,11 +384,12 @@ export function GetSearchSuggestApi(keywords, type) {
 }
 
 //搜索
-export function GetSearchApi(keywords) {
+export function GetSearchApi(keywords,type) {
     return http({
         url: '/search',
         params: {
             keywords,
+            type
         }
     })
 }

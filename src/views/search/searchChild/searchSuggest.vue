@@ -15,23 +15,27 @@
 
 <script>
     import {GetSearchApi} from "../../../http/all-api";
-
+    import { Cell, CellGroup } from 'vant';
     export default {
         name: "searchSuggest",
+        components:{
+            [Cell.name]:Cell,
+            [CellGroup.name]:CellGroup
+        },
         methods: {
             searchsuggest(val) {
                 console.log(val);
-                GetSearchApi(val).then(res => {
-                    let lists = res.data.result.songs;
-                    console.log(lists);
-                    console.log(res);
+                GetSearchApi(val,'1018').then(res => {
+                    let lists = res.data.result;
+                    // console.log(lists);
+                    // console.log(res);
                     this.$emit("isSearchResultFunc", true);
                     console.log(this.$store.state.searchResultShow);
                     this.$store.commit("searchResultList", lists);
                     let IsShow = false;
                     this.$store.commit('searchResultShow', IsShow);
                     // this.$store.commit('searchWord',val)
-                    this.$store.commit('niubi', val)
+                    this.$store.commit('addWord', val)
                 }).catch(error => {
 
                 });

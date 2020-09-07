@@ -1,7 +1,7 @@
 <template>
     <div>
         <form action="/">
-            <div v-if="$store.state.niubi===''">
+            <div v-if="$store.state.addWord===''">
                 <van-search
                         v-model="value"
                         :show-action="true"
@@ -24,9 +24,9 @@
                     </template>
                 </van-search>
             </div>
-            <div v-if="$store.state.niubi!==''">
+            <div v-if="$store.state.addWord!==''">
                 <van-search
-                        v-model="$store.state.niubi"
+                        v-model="$store.state.addWord"
                         :show-action="true"
                         :placeholder="this.$store.state.guanjianci"
                         @search="onSearch"
@@ -53,7 +53,8 @@
 <script>
     import {GetSearchGuanJianCiAPI, GetSearchSuggestApi, GetSearchApi} from "../../../http/all-api";
     import {Icon} from 'vant';
-
+    import { Cell, CellGroup } from 'vant';
+    import { Search } from 'vant';
     export default {
         name: "search",
         props: {
@@ -68,12 +69,15 @@
         },
         created() {
             this.getSearchData();
-            if (this.$store.state.niubi !== '') {
-                this.value = this.$store.state.niubi
+            if (this.$store.state.addWord !== '') {
+                this.value = this.$store.state.addWord
             }
         },
         components: {
-            [Icon.name]: Icon
+            [Icon.name]: Icon,
+            [Cell.name]:Cell,
+            [CellGroup.name]:CellGroup,
+            [Search.name]:Search
         },
         methods: {
             //确定搜索时触发
@@ -82,8 +86,12 @@
                     this.value = this.$store.state.guanjianci;
                     // console.log('哈哈');
                 }
-                GetSearchApi(this.value).then(res => {
-                    let lists = res.data.result.songs;
+                GetSearchApi(this.value,'1018').then(res => {
+                    // console.log(res);
+                    let lists = res.data.result;
+                    console.log(lists);
+                    // console.log(lists);
+                    // let lists = res;
                     // console.log(lists);
                     // console.log(res);
                     this.$emit("isSearchResultFunc", true);
@@ -95,6 +103,7 @@
                    let newarr= Array.from(new Set(hisList));
 
                     this.$store.commit('historyBianLiList', newarr);
+                    this.$store.commit('searchWordFunc',this.value)
                 }).catch(error => {
                     console.log(error);
                 });
@@ -137,13 +146,14 @@
             goBack() {
                 if (this.isShow) {
                     this.$emit("isSearchResultFunc", false);
-                    this.$store.commit('shabi');
+                    this.$store.commit('cutWord');
                 } else {
                     this.$router.go(-1);
                 }
             },
             cleanLabel() {
-                this.value = ''
+                this.$store.state.addWord===''?this.value = '':  this.$store.commit('cutWord');
+
             },
             getSearchData() {
                 GetSearchGuanJianCiAPI().then(res => {

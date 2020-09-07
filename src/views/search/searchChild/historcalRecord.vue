@@ -19,6 +19,7 @@
     import {Icon} from 'vant';
     import {Dialog} from 'vant';
     import {GetSearchApi} from "../../../http/all-api";
+    import { Cell, CellGroup } from 'vant';
 
     export default {
         name: "historcalRecord",
@@ -39,8 +40,9 @@
                     });
             },
             historysearch(item) {
-                GetSearchApi(item).then(res => {
-                    let lists = res.data.result.songs;
+                GetSearchApi(item,'1018').then(res => {
+                    let lists = res.data.result;
+
                     console.log(res);
                     this.$emit("isSearchResultFunc", true);
                     console.log(this.$store.state.searchResultShow);
@@ -57,6 +59,8 @@
         components: {
             [Icon.name]: Icon,
             [Dialog.Component.name]: Dialog.Component,
+            [Cell.name]:Cell,
+            [CellGroup.name]:CellGroup
         },
     }
 </script>

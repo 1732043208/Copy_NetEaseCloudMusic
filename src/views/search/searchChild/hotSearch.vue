@@ -1,7 +1,7 @@
 <template>
     <div>
         <p style="font-weight: bold;font-size: 16px;margin-left: 16px;margin-top: 6px">热搜榜</p>
-        <div v-for="(item,index) in hots" >
+        <div v-for="(item,index) in hots">
             <van-cell-group>
                 <van-cell :title-style="{fontWeight:index+1<4?'Bold':'normal',fontSize: '15px'}"
                           :title="item.searchWord"
@@ -19,13 +19,17 @@
 
 <script>
     import {GetHotSearchDetailApi, GetSearchApi} from "../../../http/all-api";
-
+    import { Cell, CellGroup } from 'vant';
     export default {
         name: "hotSearch",
         data() {
             return {
                 hots: [],
             }
+        },
+        components:{
+            [CellGroup.name]:CellGroup,
+            [Cell.name]:Cell
         },
         created() {
             this.getHotSearchData();
@@ -39,20 +43,25 @@
                     }
                 )
             },
-            getHotSearch(val){
-                GetSearchApi(val).then(res => {
-                    let lists=res.data.result.songs;
-                    console.log(res);
+            getHotSearch(val) {
+                GetSearchApi(val,'1018').then(res => {
+                    // console.log(res);
+                    let lists = res.data.result;
+                    console.log(lists);
+                    // console.log(lists);
+                    // let lists = res;
+                    // console.log(lists);
+                    // console.log(res);
                     this.$emit("isSearchResultFunc", true);
                     this.$store.commit("searchResultList", lists);
-                    this.$store.commit("guanjianci", val);
-                    let IsShow = false;
-                    this.$store.commit('searchResultShow', IsShow);
+
                     this.$store.state.historyList.unshift(val);
-let hisList=this.$store.state.historyList;
+                    let hisList=this.$store.state.historyList;
+
                     let newarr= Array.from(new Set(hisList));
 
                     this.$store.commit('historyBianLiList', newarr);
+                    this.$store.commit('searchWordFunc',val)
                 })
             }
         }

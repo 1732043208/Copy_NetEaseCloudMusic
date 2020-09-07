@@ -72,7 +72,7 @@
                 this.$router.push({
                     path:'/SearchDetail'
                 }),
-                    this.$store.commit('shabi');
+                    this.$store.commit('cutWord');
             }
 
         },
