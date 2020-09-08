@@ -167,9 +167,6 @@
                     path: '/videoDetail',
                     query: {
                         vid: this.videoList[index].vid,
-                        srcUrl: this.videoList[index].srcUrl,
-                        coverUrl: this.videoList[index].coverUrl,
-                        playTime: this.videoList[index].playTime
                     }
                 })
             }
