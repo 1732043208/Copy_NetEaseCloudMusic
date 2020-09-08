@@ -27,14 +27,14 @@
                     .then(() => {
                         // on confirm
                         logoutAPI().then(res => {
-                            this.$store.state.isLogin = false;
+                            this.$store.commit('changeLogin', false);
                             sessionStorage.removeItem('token');
                             console.log(res);
                             this.$toast.success({
-                                message:'退出成功'
+                                message: '退出成功'
                             });
                             this.$router.replace({
-                                path:'/'
+                                path: '/'
                             })
                         }).catch(error => {
                             console.log(error);
