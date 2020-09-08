@@ -55,7 +55,7 @@
             this.getVideoData();
             if (this.$store.state.audioEl) {
                 this.$store.state.audioEl.pause();
-                this.$store.commit('showIcon');
+                if (!this.$store.state.changeIcon) this.$store.commit('showIcon');
 
             }
         },
@@ -217,9 +217,10 @@
                     letter-spacing: 2px;
                     font-size: 38px;
                 }
-                .platTimeText{
+
+                .platTimeText {
                     font-size: 36px;
-                    color: rgb(179,179,179);
+                    color: rgb(179, 179, 179);
                     padding-bottom: 30px;
                 }
 

@@ -232,13 +232,7 @@
         created() {
             if (this.$store.state.audioEl) {
                 this.$store.state.audioEl.pause();
-                this.$store.commit('showIcon');
-            }
-        },
-        destroyed() {
-            if (this.$store.state.audioEl) {
-                this.$store.state.audioEl.play();
-                this.$store.commit('showIcon');
+                if (!this.$store.state.changeIcon) this.$store.commit('showIcon');
             }
         },
         computed: {
