@@ -59,10 +59,10 @@ function padLeftZero(str) {
 // 持续时间转化为分秒
 export function formatDuring(mss) {
     mss = parseInt(mss);
-    let minutes = ((mss % (1000 * 60 * 60)) / (1000 * 60)).toFixed(0);
-    let seconds = ((mss % (1000 * 60)) / 1000).toFixed(0);
-    seconds.length === 1 ? seconds = seconds + '0' : seconds;
-    minutes.length === 1 ? minutes = '0' + minutes : minutes;
+    let minutes = Math.floor((mss / 1000 / 60));
+    let seconds = Math.floor((mss / 1000) % 60);
+    seconds.toString().length === 1 ? seconds = seconds + '0' : seconds;
+    minutes.toString().length === 1 ? minutes = '0' + minutes : minutes;
 
     return minutes + ":" + seconds;
 }
