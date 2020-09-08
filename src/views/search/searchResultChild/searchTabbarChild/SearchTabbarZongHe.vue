@@ -78,7 +78,7 @@
                     </div>
                 </template>
                 <template #tags>
-                    <span style="margin-left: 46px;">{{item.playTime|formatSecond}}</span>
+                    <span style="margin-left: 46px;">{{item.durationms|formatDuring}}</span>
                     <span> by </span>
                     <span v-for="creator in item.creator">{{creator.userName}}</span>
                 </template>
@@ -102,7 +102,7 @@
         </div>
         <div v-for="item in $store.state.searchResultList.artist.artists">
 
-            <van-cell title="单元格">
+            <van-cell>
                 <!-- 使用 right-icon 插槽来自定义右侧图标 -->
                 <template #icon><img :src="item.img1v1Url" class="getgold_top_head_img"></template>
                 <template #title>
@@ -122,11 +122,14 @@
     import {Button} from 'vant';
     import {Card} from 'vant';
     import {Tag} from 'vant';
-    import {realFormatSecond} from "../../../../components/common/utils";
+    import {formatDuring} from "../../../../components/common/utils";
     import {Cell, CellGroup} from 'vant';
 
     export default {
         name: "SearchTabbarZongHe",
+        created() {
+            console.log(this.$store.state.searchResultList);
+        },
         methods: {
             getMusicId(musicId) {
                 // 音乐id
@@ -134,11 +137,11 @@
                 this.$store.commit('changeMusicId', musicId);
                 this.musicCheck(musicId);
             },
-            getVideoDetailData(vid){
+            getVideoDetailData(vid) {
                 this.$router.push({
-                    path:'/videoDetail',
-                    query:{
-                        vid:vid
+                    path: '/videoDetail',
+                    query: {
+                        vid: vid
                     }
                 })
             }
@@ -150,10 +153,11 @@
             [Tag.name]: Tag,
             [Cell.name]: Cell,
             [CellGroup.name]: CellGroup
-        }, filters: {
+        },
+        filters: {
             // 将整数转化成分秒
-            formatSecond(second = 0) {
-                return realFormatSecond(second)
+            formatDuring(second = 0) {
+                return formatDuring(second)
             }
         }
     }
