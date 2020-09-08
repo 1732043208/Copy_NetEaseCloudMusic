@@ -55,7 +55,8 @@
             this.getVideoData();
             if (this.$store.state.audioEl) {
                 this.$store.state.audioEl.pause();
-                this.$store.state.musicCurrentTime = this.$store.state.audioEl.currentTime;
+                this.$store.commit('showIcon');
+
             }
         },
         mounted() {
