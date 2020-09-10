@@ -76,6 +76,8 @@
                                 <p class="labelTextStyle">
                                     {{item.durationms|formatDuring}}&nbsp; by &nbsp;
                                     {{item.userName}}
+                                    <span class="mvBox" v-if="item.type===0">mv</span>
+
                                 </p>
                             </template>
                             <template #icon>
@@ -585,6 +587,13 @@
 
                 .topBox {
                     .comm()
+                }
+                .mvBox{
+                    display: inline-block;
+                    padding: 0 8px;
+                    color: #c2463a;
+                    border: 1px solid #c2463a;
+                    border-radius: 6px;
                 }
             }
         }

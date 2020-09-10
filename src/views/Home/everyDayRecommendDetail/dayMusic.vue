@@ -55,7 +55,8 @@
                         </template>
                         <template #label>
                             <p class="ov">
-                                {{value.singer}}&nbsp--&nbsp
+                                <span class="mvBox" v-if="value.mvId!==0&value.mvId!==null">mv</span>
+                                {{value.singer}}—
                                 <span class="titleAlias">
                             {{value.album}}</span>
                             </p>
@@ -247,14 +248,14 @@
                     case 2:
                         console.log('查看mv');
                         console.log(this.musicDetail.mvId);
-                        if (this.musicDetail.mvId !== 0 && this.musicDetail.mvId !== null){
+                        if (this.musicDetail.mvId !== 0 && this.musicDetail.mvId !== null) {
                             this.$router.push({
                                 path: '/music-mv',
                                 query: {
                                     mvId: this.musicDetail.mvId
                                 }
                             });
-                        }else {
+                        } else {
                             this.$toast('抱歉,暂无MV')
                         }
 
@@ -311,6 +312,14 @@
             .titleAlias {
                 color: #a7a6a7;
                 font-size: 36px;
+            }
+
+            .mvBox {
+                display: inline-block;
+                padding: 0 8px;
+                color: #c2463a;
+                border: 1px solid #c2463a;
+                border-radius: 6px;
             }
         }
 
