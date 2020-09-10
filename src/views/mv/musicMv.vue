@@ -77,13 +77,13 @@
                                 <p class="labelTextStyle">
                                     {{item.durationms|formatDuring}}&nbsp; by &nbsp;
                                     {{item.userName}}
-                                    <span>{{}}</span>
+                                    <span class="mvBox" v-if="item.type===0">mv</span>
                                 </p>
                             </template>
                             <template #icon>
                                 <van-image
                                         class="leftImage"
-                                        width="6rem" height="4.2rem"
+                                        width="6rem" height="4.5rem"
                                         radius="5"
                                         :src="item.coverUrl" alt="">
                                 </van-image>
@@ -94,7 +94,7 @@
                 </div>
                 <div class="marvellousVideo">
                     <h4>精彩评论</h4>
-                    <div class="hot">
+                    <div v-if="hotComment.length>0" class="hot">
 
                         <div
                                 v-for="(item,index) in hotComment"
@@ -134,8 +134,11 @@
                             <van-divider></van-divider>
                         </div>
                     </div>
+                    <div v-if="hotComment.length===0">
+                        <p class="notComment">暂无精彩评论</p>
+                    </div>
                     <h4>最近评论</h4>
-                    <div class="new">
+                    <div v-if="newComment.length>0" class="new">
                         <div>
                             <div
                                     v-for="(item,index) in newComment"
@@ -178,6 +181,9 @@
 
 
                     </div>
+                    <div v-if="newComment.length===0">
+                        <p class="notComment">暂无最近评论</p>
+                    </div>
                 </div>
             </div>
         </scroll>
@@ -215,7 +221,7 @@
                 vm.getMvDetailData(vm.$route.query.mvId);
                 vm.getMvDetailInfoData(vm.$route.query.mvId);
                 vm.getVideoRelatedData(vm.$route.query.mvId);
-                vm.getMvCommentData({id: vm.$route.query.mvId, limit: vm.newLimit})
+                vm.getMvCommentData({id: vm.$route.query.mvId, limit: vm.newLimit});
                 vm.$toast.clear()
             })
         },
@@ -240,6 +246,7 @@
             }
         },
         methods: {
+            // 视频播放地址
             getMvUrlData(id) {
                 GetMVUrlAPI(id).then(res => {
                     let mvUrl = res.data.data.url;
@@ -254,9 +261,9 @@
                     console.log(error);
                 })
             },
+            // 获取mv简介
             getMvDetailData(id) {
                 GetMVDetailAPI(id).then(res => {
-                    // console.log(res);
                     this.mvDetail = createMvInfo(res.data.data);
                     console.log(this.mvDetail);
                 }).catch(error => {
@@ -264,6 +271,7 @@
                     console.log(error);
                 })
             },
+            // 点赞及其他信息
             getMvDetailInfoData(id) {
                 GetMVDetailInfoAPI(id).then(res => {
                     let data = res.data;
@@ -271,19 +279,19 @@
                     this.mvDetailInfo.shareCount = data.shareCount;
                     this.mvDetailInfo.commentCount = data.commentCount;
                     this.mvDetailInfo.liked = data.liked;
-                    console.log(this.mvDetailInfo);
 
                 }).catch(error => {
                     console.log('获取点赞信息失败');
                     console.log(error);
                 })
             },
+            // 相关视频
             getVideoRelatedData(id) {
+                this.videoRelated = [];
                 GetVideoRelatedAPI(id).then(res => {
-                    console.log(res.data.data);
                     let result = res.data.data;
+                    console.log(result);
                     result.forEach(item => {
-                        console.log(item.durationms);
                         this.videoRelated.push(createVideoRelated(item))
                     });
                     console.log(this.videoRelated);
@@ -322,17 +330,35 @@
                 this.newLimit += 20;
                 this.getMvCommentData({id: this.$route.query.mvId, limit: this.newLimit})
             },
-            ToDetail(index) {
-                let mvUrl = null;
-                // console.log(this.videoRelated[index]);
-                this.$router.push({
-                    path: '/videoDetail',
-                    query: {
-                        vid: this.videoRelated[index].vid,
-                    }
-                })
+            async ToDetail(index) {
+                let vid = this.videoRelated[index].vid;
+                console.log(vid);
+                if (this.videoRelated[index].type === 1) {
+                    this.$router.push({
+                        path: '/videoDetail',
+                        query: {
+                            vid: vid,
+                        }
+                    })
+                } else {
+                    console.log('mv');
+                    this.$toast.loading({
+                        message: '加载中',
+                        forbidClick: true,
+                        duration: 0
+
+                    });
+                    await this.getMvUrlData(vid);
+                    await this.getMvDetailData(vid);
+                    await this.getMvDetailInfoData(vid);
+                    await this.getVideoRelatedData(vid);
+                    this.hotComment = [];
+                    this.newComment = [];
+                    await this.getMvCommentData({id: vid, limit: this.newLimit});
+                    this.$toast.clear();
+                }
             },
-            goodClick(index) {
+            goodClick() {
                 let vid = this.$route.query.mvId;
                 let t;
                 if (this.mvDetailInfo.liked) {
@@ -427,7 +453,7 @@
         }
 
         .leftImage {
-            margin-left: 30px;
+            margin-left: 15px;
             margin-right: 30px;
         }
 
@@ -553,6 +579,11 @@
                 .topBox {
                     .comm()
                 }
+                .mvBox{
+                    padding: 0 8px 5px;
+                    color: #c2463a;
+                    border: 1px solid #c2463a;
+                }
             }
         }
 
@@ -566,6 +597,16 @@
 
             .new {
                 .cellComm();
+            }
+
+            .notComment {
+                font-size: 42px;
+                width: 100vw;
+                height: 500px;
+                text-align: center;
+                line-height: 500px;
+                font-weight: bold;
+
             }
         }
     }

@@ -93,7 +93,7 @@
                 <div class="marvellousVideo">
                     <h4>精彩评论</h4>
                     <div class="hot">
-                        <div v-if="hotComment.length!==0" v-for="(item,index) in hotComment" :key="index">
+                        <div v-if="hotComment.length>0" v-for="(item,index) in hotComment" :key="index">
                             <van-cell
                                     :border="false"
                                     center
@@ -128,14 +128,14 @@
                             </div>
                             <van-divider></van-divider>
                         </div>
-                        <div v-else>
+                        <div v-if="hotComment.length===0">
                             <p class="notComment">暂无精彩评论</p>
                         </div>
                     </div>
                     <h4>最近评论</h4>
                     <div class="new">
                         <div>
-                            <div v-if="newComment.length!==0" v-for="(item,index) in newComment" :key="index">
+                            <div v-if="newComment.length>0" v-for="(item,index) in newComment" :key="index">
                                 <van-cell
                                         :border="false"
                                         center
@@ -170,12 +170,10 @@
                                 </div>
                                 <van-divider></van-divider>
                             </div>
-                            <div v-else>
+                            <div v-if="newComment.length===0">
                                 <p class="notComment">暂无最近评论</p>
                             </div>
                         </div>
-
-
                     </div>
                 </div>
             </div>
@@ -267,7 +265,6 @@
                 GetVideoDetailAPI(id).then(res => {
                     let result = res.data.data;
                     this.videoDetail = createVideoDetailInfo(result);
-                    console.log(this.videoDetail);
                 }).catch(error => {
                     console.log('获取视频详情失败');
                     console.log(error);
@@ -331,9 +328,7 @@
                     if (this.newComment.length !== 0) {
                         this.newComment = unique(this.newComment);
                         if (this.newComment.length >= 20) this.$refs.scroll.finishPullUp();
-
                     }
-
                 }).catch(error => {
                     console.log('视频评论请求失败');
                     console.log(error);
@@ -351,33 +346,45 @@
             },
             async ToDetail(index) {
                 let videoUrl = null;
-                this.$toast.loading({
-                    message: '加载中',
-                    forbidClick: true,
-                    duration: 0
+                let vid = this.videoRelated[index].vid;
+                if (this.videoRelated[index].type === 0) {
+                    this.$router.push({
+                        path: '/music_nv',
+                        query: {
+                            vid: vid,
+                        }
+                    })
+                } else {
+                    this.$toast.loading({
+                        message: '加载中',
+                        forbidClick: true,
+                        duration: 0
 
-                });
-                await GetVideoUrlAPI(this.videoRelated[index].vid).then(res => {
-                    videoUrl = res.data.urls[0].url;
-                    console.log(videoUrl);
-                    if (videoUrl !== null) {
-                        this.playerOptions.url = videoUrl;
-                        this.$refs.vueMiniPlayer.$video.src = videoUrl;
-                        this.$refs.vueMiniPlayer.$video.autoplay = true;
-                        this.playerOptions.cover = this.videoRelated[index].coverUrl;
-                        this.getVideoDetailData(this.videoRelated[index].vid);
-                        this.getVideoRelatedData(this.videoRelated[index].vid);
-                        this.getVideoDetailInfoData(this.videoRelated[index].vid);
-                        this.hotComment = [];
-                        this.newComment = [];
-                        this.getVideoCommentData({id: this.videoRelated[index].vid, limit: this.newLimit})
-                    }
-                })
-                    .catch(error => {
-                        console.log('跳转获取视频url失败');
-                        console.log(error);
                     });
-                this.$toast.clear();
+                    await GetVideoUrlAPI(vid).then(res => {
+                        videoUrl = res.data.urls[0].url;
+                        console.log(videoUrl);
+                        if (videoUrl !== null) {
+                            this.playerOptions.url = videoUrl;
+                            this.$refs.vueMiniPlayer.$video.src = videoUrl;
+                            this.$refs.vueMiniPlayer.$video.autoplay = true;
+                            this.playerOptions.cover = this.videoRelated[index].coverUrl;
+                            this.getVideoDetailData(vid);
+                            this.getVideoRelatedData(vid);
+                            this.getVideoDetailInfoData(vid);
+                            this.hotComment = [];
+                            this.newComment = [];
+                            this.getVideoCommentData({id: vid, limit: this.newLimit})
+                            this.$toast.clear();
+                        }
+                    })
+                        .catch(error => {
+                            console.log('跳转获取视频url失败');
+                            console.log(error);
+                        });
+                }
+
+
             },
             goodCommentClick(index, type) {
                 // 0 热门   1 新评论
