@@ -66,7 +66,7 @@
         },
         methods: {
             scrollTo() {
-                this.scroll && this.scroll.scrollTo.apply(this.scroll, arguments)
+                this.scroll && this.scroll.scrollTo.apply(this.scroll, arguments);
             },
             // 实现多次上拉加载更多
             finishPullUp() {
@@ -78,8 +78,7 @@
             },
             scrollToElement() {
                 this.scroll && this.scroll.scrollToElement.apply(this.scroll, arguments)
-            }
-
+            },
         }
     }
 </script>

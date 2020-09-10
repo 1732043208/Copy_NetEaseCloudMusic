@@ -8,12 +8,12 @@
             <div>
                 <search @isSearchResultFunc="isSearchResultFunc" :isShow="isSearchResult"></search>
                 <div v-if="!isSearchResult">
-                    <img src="../../assets/jietu.jpg" style="width: 100%;height: auto">
-                    <historcal-record @isSearchResultFunc="isSearchResultFunc" ></historcal-record>
-                    <hot-search @isSearchResultFunc="isSearchResultFunc"></hot-search>
+                    <div><img src="../../assets/jietu.jpg" style="width: 100%;height: auto">
+                        <historcal-record @isSearchResultFunc="isSearchResultFunc" ></historcal-record>
+                        <hot-search @isSearchResultFunc="isSearchResultFunc"></hot-search></div>
                 </div>
                 <div v-if="isSearchResult">
-                    <search-tabbar></search-tabbar>
+                    <search-tabbar @backtop="getbacktop"></search-tabbar>
                 </div>
                 <search-suggest @isSearchResultFunc="isSearchResultFunc"></search-suggest>
             </div>
@@ -32,7 +32,8 @@ import searchTabbar from "./searchResultChild/searchTabbar";
         name: "searchDetail",
         data() {
             return {
-                isSearchResult: false
+                isSearchResult: false,
+                backtop:''
             }
         },
         components: {
@@ -46,6 +47,9 @@ import searchTabbar from "./searchResultChild/searchTabbar";
         methods: {
             isSearchResultFunc(val) {
                 this.isSearchResult = val
+            },
+            getbacktop(){
+             this.$refs.scroll.scrollTo(0,0,400)
             }
         }
     }

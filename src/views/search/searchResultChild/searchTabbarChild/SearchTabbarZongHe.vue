@@ -1,119 +1,146 @@
 <template>
     <div>
         <!--        单曲-->
-        <div style="margin-top: 10px;height: 30px;">
-            <span style="margin-left: 18px;font-weight: bold;">单曲</span>
-            <van-button round type="info" plain hairline color="#BEBFC0" size="mini"
-                        style="width:80px;height: 24px;float: right;margin-right: 10px;display: inline-block;vertical-align: middle">
-                <van-icon name="play-circle-o" color="black" style="margin-top: 2px"/>
-                <span style="color: black">播放全部</span></van-button>
-        </div>
-        <div v-for="item in $store.state.searchResultList.song.songs">
-            <van-cell
-                    @click="getMusicId(item.id)"
-                    title-class="titleStyle" label-class="labelStyle">
-                <template #title>
-                    <span>{{item.name}}</span>
-                    <span class="titleSecond" v-if="item.alia.length!==0"> ({{item.alia[0]}})</span>
-                </template>
-                <template #label>
+        <div>
+            <div style="margin-top: 10px;height: 30px;">
+                <span style="margin-left: 18px;font-weight: bold;">单曲</span>
+                <van-button round type="info" plain hairline color="#BEBFC0" size="mini"
+                            style="width:80px;height: 24px;float: right;margin-right: 10px;display: inline-block;vertical-align: middle">
+                    <van-icon name="play-circle-o" color="black" style="margin-top: 2px"/>
+                    <span style="color: black">播放全部</span></van-button>
+            </div>
+            <div v-for="item in $store.state.searchResultList.song.songs">
+                <van-cell
+                        @click="getMusicId(item.id)"
+                        title-class="titleStyle" label-class="labelStyle">
+                    <template #title>
+                        <span>{{item.name}}</span>
+                        <span class="titleSecond" v-if="item.alia.length!==0"> ({{item.alia[0]}})</span>
+                    </template>
+                    <template #label>
                     <span v-for="(niubi,index) in item.ar">
                         <span v-if="index !==0">/</span>
                         {{niubi.name}}
                     </span>
-                    <span>{{' - '+item.al.name}}</span>
-                    <span v-if="item.alia.length!==0"> ({{item.alia[0]}})</span>
-                </template>
-                <!-- 使用 right-icon 插槽来自定义右侧图标 -->
-                <template #right-icon>
-                    <van-icon name="ellipsis" class="search-icon" size="18px"/>
-                </template>
+                        <span>{{' - '+item.al.name}}</span>
+                        <span v-if="item.alia.length!==0"> ({{item.alia[0]}})</span>
+                    </template>
+                    <!-- 使用 right-icon 插槽来自定义右侧图标 -->
+                    <template #right-icon>
+                        <van-icon name="ellipsis" class="search-icon" size="18px"/>
+                    </template>
 
-            </van-cell>
-        </div>
-        <img src="../../../../assets/jietu.jpg" style="width: 100%;height: auto"/>
-        <!--        歌单-->
-        <div style="height: 30px;">
-            <span style="margin-left: 18px;font-weight: bold;">歌单</span>
-        </div>
-        <div v-for="item in $store.state.searchResultList.playList.playLists">
-            <van-card>
-                <template #thumb><img :src="item.coverImgUrl" style="width: 80px;height: 80px"></template>
-                <template #desc>
-                    <div style="margin-top: 4px">
-                        <span> {{item.trackCount+'首'+' by '+item.creator.nickname+','+'播放'+Math.round(item.playCount/10000*Math.pow(10,1))/Math.pow(10,1)+'万次'}}</span>
-                    </div>
-                </template>
-                <template #title>
-                    <div style="font-size: 16px">{{item.name}}</div>
-                </template>
-                <template #tags>
-                    <div v-for="biaoqian in item.officialTags" style="margin-top: 8px">
-                        <van-tag plain type="danger"
-                                 style="background-color:#FFDCDB;font-size: 12px;float: left;margin-left: 5px">
-                            {{biaoqian}}
-                        </van-tag>
-                    </div>
-                </template>
-            </van-card>
-        </div>
-        <div style="font-size: 14px;text-align: center;margin-top: 8px">
-            {{$store.state.searchResultList.playList.moreText}}
-        </div>
-        <img src="../../../../assets/jietu.jpg" style="width: 100%;height: auto"/>
+                </van-cell>
+            </div>
+            <img src="../../../../assets/jietu.jpg" style="width: 100%;height: auto"/>
+            <!--        歌单-->
+            <div style="height: 30px;">
+                <span style="margin-left: 18px;font-weight: bold;">歌单</span>
+            </div>
+            <div v-for="item in $store.state.searchResultList.playList.playLists">
+                <van-card @click="getSongListData(item.id)">
+                    <template #thumb><img :src="item.coverImgUrl" style="width: 80px;height: 80px"></template>
+                    <template #desc>
+                        <div style="margin-top: 4px">
+                            <span> {{item.trackCount+'首'+' by '+item.creator.nickname+','+'播放'+Math.round(item.playCount/10000*Math.pow(10,1))/Math.pow(10,1)+'万次'}}</span>
+                        </div>
+                    </template>
+                    <template #title>
+                        <div style="font-size: 16px">{{item.name}}</div>
+                    </template>
+                    <template #tags>
+                        <div v-for="biaoqian in item.officialTags" style="margin-top: 8px">
+                            <van-tag plain type="danger"
+                                     style="background-color:#FFDCDB;font-size: 12px;float: left;margin-left: 5px">
+                                {{biaoqian}}
+                            </van-tag>
+                        </div>
+                    </template>
+                </van-card>
+            </div>
+            <div style="font-size: 14px;text-align: center;margin-top: 8px">
+                {{$store.state.searchResultList.playList.moreText}}
+            </div>
+            <img src="../../../../assets/jietu.jpg" style="width: 100%;height: auto"/>
 
-        <!--        视频-->
-        <div style="height: 30px;">
-            <span style="margin-left: 18px;font-weight: bold;">视频</span>
-        </div>
-        <div v-for="item in $store.state.searchResultList.video.videos">
-            <van-card @click="getVideoDetailData(item.vid)">
-                <template #thumb>
-                    <img :src="item.coverUrl" style="width: 130px;height: auto">
-                    <span style="position: absolute;left: 85px;color: white">{{Math.round(item.playTime/10000*Math.pow(10,1))/Math.pow(10,1)}}万</span>
-                </template>
-                <template #title>
-                    <div style="font-size: 14px;margin-left: 46px;white-space: pre-wrap;margin-top: 4px;margin-bottom: 6px">
-                        {{item.title}}
-                    </div>
-                </template>
-                <template #tags>
-                    <span style="margin-left: 46px;">{{item.durationms|formatDuring}}</span>
-                    <span> by </span>
-                    <span v-for="creator in item.creator">{{creator.userName}}</span>
-                </template>
-            </van-card>
-        </div>
-        <div style="font-size: 14px;text-align: center;margin-top: 8px">
-            {{$store.state.searchResultList.video.moreText}}
-        </div>
-        <!--       相关搜索-->
-        <div style="height: 30px;margin-top: 10px">
-            <span style="margin-left: 18px;font-weight: bold;">相关搜索</span>
-        </div>
-        <div class="historyFather">
-            <div v-for="item in $store.state.searchResultList.sim_query.sim_querys"
-                 style="background-color:#F3F3F3;font-size: 15px"
-                 class="historySon">{{item.keyword}}
+            <!--        视频-->
+            <div style="height: 30px;">
+                <span style="margin-left: 18px;font-weight: bold;">视频</span>
+            </div>
+            <div v-for="item in $store.state.searchResultList.video.videos">
+                <van-card @click="getVideoDetailData(item.vid)">
+                    <template #thumb>
+                        <img :src="item.coverUrl" style="width: 130px;height: auto">
+                        <span style="position: absolute;left: 85px;color: white">{{Math.round(item.playTime/10000*Math.pow(10,1))/Math.pow(10,1)}}万</span>
+                    </template>
+                    <template #title>
+                        <div style="font-size: 14px;margin-left: 46px;white-space: pre-wrap;margin-top: 4px;margin-bottom: 6px">
+                            {{item.title}}
+                        </div>
+                    </template>
+                    <template #tags>
+                        <span style="margin-left: 46px;">{{item.durationms|formatDuring}}</span>
+                        <span> by </span>
+                        <span v-for="creator in item.creator">{{creator.userName}}</span>
+                    </template>
+                </van-card>
+            </div>
+            <div style="font-size: 14px;text-align: center;margin-top: 8px">
+                {{$store.state.searchResultList.video.moreText}}
+            </div>
+            <!--       相关搜索-->
+            <div style="height: 30px;margin-top: 10px">
+                <span style="margin-left: 18px;font-weight: bold;">相关搜索</span>
+            </div>
+            <div class="historyFather">
+                <div v-for="item in $store.state.searchResultList.sim_query.sim_querys"
+                     @click="relevantSearch(item.keyword)"
+                     style="background-color:#F3F3F3;font-size: 15px"
+                     class="historySon">{{item.keyword}}
+                </div>
+            </div>
+            <!--               歌手-->
+            <div style="height: 30px;margin-top: 10px">
+                <span style="margin-left: 18px;font-weight: bold;">歌手</span>
+            </div>
+            <div v-for="item in $store.state.searchResultList.artist.artists">
+                <van-cell>
+                    <!-- 使用 right-icon 插槽来自定义右侧图标 -->
+                    <template #icon><img :src="item.img1v1Url" class="getgold_top_head_img"></template>
+                    <template #title>
+                        <div>
+                            <div style="position: relative;top: 35px;left: 14px">
+                                <span>{{item.name}}</span>
+                                <span v-for="name in item.alia">{{name}}</span></div>
+                        </div>
+                    </template>
+                </van-cell>
+            </div>
+<!--            专辑-->
+            <div style="height: 30px;margin-top: 10px">
+                <span style="margin-left: 18px;font-weight: bold;">专辑</span>
+            </div>
+            <div v-for="item in $store.state.searchResultList.album.albums">
+                <van-cell>
+                    <!-- 使用 right-icon 插槽来自定义右侧图标 -->
+                    <template #icon><img :src="item.picUrl" class="getgold_top_head_img"></template>
+                    <template #title>
+                        <div>
+                            <div style="position: relative;top: 35px;left: 14px">
+                                <span>{{item.name}}</span>
+                                <span v-for="name in item.alia">{{name}}</span></div>
+                        </div>
+                    </template>
+                    <template #label>
+                        <div>
+                            <span>{{item.artist.name}}</span>
+                            <span>{{item.publishTime}}</span>
+                        </div>
+                    </template>
+                </van-cell>
             </div>
         </div>
-        <div style="height: 30px;margin-top: 10px">
-            <span style="margin-left: 18px;font-weight: bold;">歌手</span>
-        </div>
-        <div v-for="item in $store.state.searchResultList.artist.artists">
 
-            <van-cell>
-                <!-- 使用 right-icon 插槽来自定义右侧图标 -->
-                <template #icon><img :src="item.img1v1Url" class="getgold_top_head_img"></template>
-                <template #title>
-                    <div>
-                        <div style="position: relative;top: 35px;left: 14px">
-                            <span>{{item.name}}</span>
-                            <span v-for="name in item.alia">{{name}}</span></div>
-                    </div>
-                </template>
-            </van-cell>
-        </div>
     </div>
 </template>
 
@@ -124,6 +151,8 @@
     import {Tag} from 'vant';
     import {formatDuring} from "../../../../components/common/utils";
     import {Cell, CellGroup} from 'vant';
+    import {GetSearchApi} from "../../../../http/all-api";
+    import scroll from "../../../../components/scroll";
 
     export default {
         name: "SearchTabbarZongHe",
@@ -144,6 +173,31 @@
                         vid: vid
                     }
                 })
+            },
+            relevantSearch(item) {
+                GetSearchApi(item, '1018').then(res => {
+                    let lists = res.data.result;
+
+                    console.log(res);
+                    this.$emit("isSearchResultFunc", true);
+                    console.log(this.$store.state.searchResultShow);
+                    this.$store.commit("searchResultList", lists);
+                    this.$store.commit("searchWordFunc", item);
+                    let IsShow = false;
+                    this.$store.commit('searchResultShow', IsShow);
+                    this.$store.commit('addWord', item);
+                    this.$emit('backtop')
+                }).catch(error => {
+
+                });
+            },
+            getSongListData(id) {
+                this.$router.push({
+                    path: '/daySongList',
+                    query: {
+                        id: id
+                    }
+                })
             }
         },
         components: {
@@ -152,7 +206,8 @@
             [Card.name]: Card,
             [Tag.name]: Tag,
             [Cell.name]: Cell,
-            [CellGroup.name]: CellGroup
+            [CellGroup.name]: CellGroup,
+            scroll
         },
         filters: {
             // 将整数转化成分秒
