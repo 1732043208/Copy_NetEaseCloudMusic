@@ -116,25 +116,32 @@
                     </template>
                 </van-cell>
             </div>
-<!--            专辑-->
+            <!--            专辑-->
             <div style="height: 30px;margin-top: 10px">
                 <span style="margin-left: 18px;font-weight: bold;">专辑</span>
             </div>
             <div v-for="item in $store.state.searchResultList.album.albums">
                 <van-cell>
                     <!-- 使用 right-icon 插槽来自定义右侧图标 -->
-                    <template #icon><img :src="item.picUrl" class="getgold_top_head_img"></template>
+                    <template #icon>
+                        <img :src="item.picUrl" style="
+        width: 100px;
+        height: auto;
+        margin-top: 15px;
+        margin-left: 10px;">
+
+                    </template>
                     <template #title>
                         <div>
-                            <div style="position: relative;top: 35px;left: 14px">
+                            <div style="position: relative;top: 30px;left: 14px">
                                 <span>{{item.name}}</span>
                                 <span v-for="name in item.alia">{{name}}</span></div>
                         </div>
                     </template>
                     <template #label>
-                        <div>
-                            <span>{{item.artist.name}}</span>
-                            <span>{{item.publishTime}}</span>
+                        <div style="position: relative;top: 25px;left: 14px">
+                            <span>{{item.artist.name}} </span>
+                            <span> {{item.publishTime|formatDate}}</span>
                         </div>
                     </template>
                 </van-cell>
@@ -153,6 +160,7 @@
     import {Cell, CellGroup} from 'vant';
     import {GetSearchApi} from "../../../../http/all-api";
     import scroll from "../../../../components/scroll";
+    import {formatDate} from "../../../../components/common/utils";
 
     export default {
         name: "SearchTabbarZongHe",
@@ -213,6 +221,10 @@
             // 将整数转化成分秒
             formatDuring(second = 0) {
                 return formatDuring(second)
+            },
+            formatDate(time) {
+                let date = new Date(time);
+                return formatDate(date, 'yyyy.MM.dd')
             }
         }
     }
