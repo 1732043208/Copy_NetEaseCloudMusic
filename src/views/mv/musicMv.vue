@@ -580,9 +580,11 @@
                     .comm()
                 }
                 .mvBox{
-                    padding: 0 8px 5px;
+                    display: inline-block;
+                    padding: 0 8px;
                     color: #c2463a;
                     border: 1px solid #c2463a;
+                    border-radius: 6px;
                 }
             }
         }
