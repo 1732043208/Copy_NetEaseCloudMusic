@@ -55,7 +55,7 @@
 
         },
         created() {
-            GetSearchApi(this.$store.state.searchWord).then(res => {
+            GetSearchApi(this.$store.state.addWord).then(res => {
                 // console.log(res);
                 let lists = res.data.result;
                 this.songsList=lists.songs;
