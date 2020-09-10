@@ -50,7 +50,7 @@
                     this.$store.commit("searchWordFunc", item);
                     let IsShow = false;
                     this.$store.commit('searchResultShow', IsShow)
-
+                    this.$store.commit('addWord', item)
                 }).catch(error => {
 
                 });
