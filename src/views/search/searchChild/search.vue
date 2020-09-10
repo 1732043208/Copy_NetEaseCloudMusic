@@ -104,6 +104,8 @@
 
                     this.$store.commit('historyBianLiList', newarr);
                     this.$store.commit('searchWordFunc',this.value)
+                    this.$store.commit('addWord', val)
+
                 }).catch(error => {
                     console.log(error);
                 });
@@ -147,8 +149,10 @@
                 if (this.isShow) {
                     this.$emit("isSearchResultFunc", false);
                     this.$store.commit('cutWord');
+                    this.value=''
                 } else {
                     this.$router.go(-1);
+                    this.$store.commit('cutWord');
                 }
             },
             cleanLabel() {

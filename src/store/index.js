@@ -107,11 +107,12 @@ export default new Vuex.Store({
             state.guanjianci = val;
         },
         addWord(state, val) {
-            state.addWord = val
+            state.addWord = val;
+            console.log('addword'+state.addWord );
         },
         cutWord(state) {
             state.addWord = '';
-            console.log(state.addWord);
+            console.log('cutword'+state.addWord);
         },
         searchWordFunc(state,val){
             state.searchWord=val
