@@ -12,7 +12,8 @@
             <div v-for="item in $store.state.searchResultList.song.songs">
                 <van-cell
                         @click="getMusicId(item.id)"
-                        title-class="titleStyle" label-class="labelStyle">
+                         label-class="labelStyle"
+                        title-class="titleStyle">
                     <template #title>
                         <span>{{item.name}}</span>
                         <span class="titleSecond" v-if="item.alia.length!==0"> ({{item.alia[0]}})</span>
@@ -231,20 +232,25 @@
 </script>
 
 <style scoped>
-    .titleStyle {
-        font-size: 44px;
-    }
+.titleStyle{
 
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
     .labelStyle {
-        width: 500px;
+        width: 600px;
         font-size: 10px;
         overflow: hidden;
         text-overflow: ellipsis;
+
     }
 
     .titleSecond {
-        font-size: 44px;
+        font-size: 40px;
         color: #BEBFC0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+width: 100px;
     }
 
     .search-icon {
