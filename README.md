@@ -8,7 +8,7 @@
 
 ### 技术栈
 
-1.Vue全家桶(vue,vue-router,vuex)
+1.Vue全家桶(vue4.x,vue-cli,vue-router,vuex)
 
 2.axios
 
@@ -86,11 +86,12 @@ Github地址：[github.com/Binaryify/N…](https://github.com/Binaryify/NeteaseC
 
   4. ##### 排行榜
 
-     - 查看排行榜，点击可跳转查看排行榜歌单详情
+     - 查看排行榜详情，点击可跳转查看排行榜歌单详情
 
   5. ##### 电台
 
      - 获取每日推荐电台，点击可跳转查看电台详情
+       - 电台详情包括电台简介，电台主播，电台节目(可播放)，
 
   6. ##### 每日推荐歌单
 
@@ -102,7 +103,7 @@ Github地址：[github.com/Binaryify/N…](https://github.com/Binaryify/NeteaseC
 
   8. ##### 官方歌单
 
-     - 每日推荐的官方歌单，点击可跳转查看详情
+     - 每日推荐的官方歌单，点击可跳转查看歌单详情
 
   9. ##### 每日新歌新碟
 
@@ -110,7 +111,7 @@ Github地址：[github.com/Binaryify/N…](https://github.com/Binaryify/NeteaseC
 
 - #### 视频首页
 
-  1. ##### 每日推荐视频（只有8个视频，隔一段时间会刷新新的8个新视频）
+  1. ##### 每日推荐视频（只有8个视频，隔一段时间会刷新新的8个视频）
 
      - 可点击播放也可以点击跳转到视频详情（均可实现播放视频）
        - 视频详情可查看视频简介，点赞、收藏、分享、评论、播放次数的数量及视频创建时间
@@ -132,11 +133,15 @@ Github地址：[github.com/Binaryify/N…](https://github.com/Binaryify/NeteaseC
 
   根据个人配置 设计稿宽度为750px，即100vw = 750px 1vw = 7.5px
 
+  
+
 - ##### 侧边栏实现
 
   利用自己所学的JS知识，写的侧边栏抽屉效果，遮罩层渐变展示隐藏，内容部分从左到右滑动展现
 
   可点击遮罩层关闭也可以向左滑动超过一定阈值收起侧边栏
+
+  
 
 - ##### 轮播图实现：
 
@@ -148,11 +153,23 @@ Github地址：[github.com/Binaryify/N…](https://github.com/Binaryify/NeteaseC
 
   网易云音乐接口拿到的歌词微秒位有三种情况(:100,:010,:10)，需要fork包，修改代码中this.lines.push的，然后package修改依赖
 
+  
+
 - ##### 移动端滑动解决方案
 
-  1. 使用[better-scroll](https://github.com/ustbhuangyi/better-scroll)处理移动端滚动
+  使用[better-scroll](https://github.com/ustbhuangyi/better-scroll)处理移动端滚动
 
-     better-scroll 是一个移动端滚动的解决方案，它是基于 iscroll 的重写，它和 iscroll 的主要区别在[这里](https://github.com/ustbhuangyi/better-scroll/issues/36)。better-scroll 也很强大，不仅可以做普通的滚动列表，还可以做轮播图、picker 等等。使用方法请看[这里](https://juejin.im/post/6844903480121884685)
+  better-scroll 是一个移动端滚动的解决方案，它是基于 iscroll 的重写，它和 iscroll 的主要区别在[这里](https://github.com/ustbhuangyi/better-scroll/issues/36)。
+
+  better-scroll 也很强大，不仅可以做普通的滚动列表，还可以做轮播图、picker 等等。使用方法请看[这里](https://juejin.im/post/6844903480121884685)
+
+  
+
+- ##### 视频播放
+
+  使用[vue-mini-player](https://github.com/webweifeng/vue-mini-player)，基于 Vue 的一个轻量级视频播放组件，适配 PC 和移动端
+
+  GitHub地址：[点击](https://github.com/webweifeng/vue-mini-player)
 
 ### 致谢
 
