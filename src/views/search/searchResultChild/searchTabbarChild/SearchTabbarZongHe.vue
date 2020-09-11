@@ -110,7 +110,7 @@
                     <template #icon><img :src="item.img1v1Url" class="getgold_top_head_img"></template>
                     <template #title>
                         <div>
-                            <div style="position: relative;top: 35px;left: 14px">
+                            <div style="position: relative;top: 22px;left: 14px">
                                 <span>{{item.name}}</span>
                                 <span v-for="name in item.alia">{{name}}</span></div>
                         </div>
@@ -216,7 +216,6 @@
             [Tag.name]: Tag,
             [Cell.name]: Cell,
             [CellGroup.name]: CellGroup,
-            scroll
         },
         filters: {
             // 将整数转化成分秒
@@ -278,10 +277,9 @@ width: 100px;
     }
 
     .getgold_top_head_img {
-        height: 250px;
-        width: 250px;
+        height: 200px;
+        width: 200px;
         border-radius: 50%;
-        margin-top: 15px;
-        margin-left: 50px;
+        margin-left: 10px;
     }
 </style>
