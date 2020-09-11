@@ -173,7 +173,7 @@
                                     :value-class="{'cellText':true,'selectColor':item.isColor}"
                                     @click="musicDetailClick(item,index)">
                                 <template #default>
-                                    <p>{{musicInfo.name===''?'电台音频':musicInfo.name}}<span>—{{item.singer}}</span></p>
+                                    <p>{{musicInfo.name===''?'电台音频':item.name}}<span>—{{item.singer}}</span></p>
                                 </template>
                                 <template #right-icon>
                                     <van-icon name="cross" @click.stop="removeBtn(index,item)"/>
@@ -247,7 +247,7 @@
                     this.$store.dispatch('getMusicDetail', nv);
                     if (Object.keys(this.currentLyric).length !== 0) {
                         this.currentLyric.stop();
-                        this.currentLyric = null;
+                        this.currentLyric = {};
                         this.lines = [];
                     }
                     this.Lyric(nv);
@@ -347,7 +347,7 @@
             ChangeIcon() {
                 this.animationShow = this.$store.state.changeIcon ? 'running' : 'paused'
                 this.$store.commit('showIcon');
-                if ( Object.keys(this.currentLyric).length !== 0) this.currentLyric.togglePlay();
+                if (Object.keys(this.currentLyric).length !== 0) this.currentLyric.togglePlay();
             },
             minOrMax() {
                 this.isShowLrc = false;
@@ -386,31 +386,27 @@
                 switch (this.playType) {
                     case 1:
                         console.log('执行列表循环下一首');
-                        this.$refs.audio.listLoop();
+                        this.$refs.audio.listLoop(0);
                         break;
                     case 2:
                         console.log('执行随机播放下一首');
-                        this.$refs.audio.randomPlay();
+                        this.$refs.audio.randomPlay(0);
                         break;
                     case 3:
                         console.log('单曲下一首');
-                        this.$refs.audio.listLoop();
+                        this.$refs.audio.listLoop(0);
                         break;
 
                 }
             },
             previousMusic() {
-                if (this.musicIndex1 > 0) {
-                    console.log('previousMusic true');
-                    console.log(this.musicIndex1);
-                    this.musicIndex1--;
-                    this.nextId = this.$store.state.playList[this.musicIndex1].id;
+                if (this.playType === 1 || this.playType === 3) {
+                    // 单曲和列表循环的上一首
+                    this.$refs.audio.listLoop(-1);
                 } else {
-                    console.log('else');
-                    this.musicIndex1 = this.$store.state.playList.length - 1;
-                    this.nextId = this.$store.state.playList[this.musicIndex1].id;
+                    // 随机上一首
+                    this.$refs.audio.randomPlay(-1);
                 }
-                this.$store.commit('changeMusicId', this.nextId);
             },
             more() {
                 this.show = !this.show;
@@ -435,7 +431,7 @@
                 let index = this.playList.findIndex(value => {
                     return value.id === parseInt(this.musicId);
                 });
-                this.$store.state.playList[index].isColor = true;
+                this.playList[index].isColor = true;
             },
             removeBtn(index, item) {
                 this.$delete(this.playList, index);
@@ -449,7 +445,7 @@
                         let index1 = this.playList.findIndex(value => {
                             return value.id === parseInt(this.musicId);
                         });
-                        this.$store.state.playList[index1].isColor = true;
+                        this.playList[index1].isColor = true;
                     }, 1000)
 
 

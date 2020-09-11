@@ -14,6 +14,7 @@
 </template>
 
 <script>
+    import {disorder} from "./utils";
 
     export default {
         name: "audioCom",
@@ -31,6 +32,22 @@
                 set(nv) {
                     return this.$store.state.musicIndex = nv
                 }
+            },
+            playList: {
+                get() {
+                    return this.$store.state.playList
+                }
+            },
+            musicId: {
+                get() {
+                    return this.$store.state.musicId
+                }
+            }
+        },
+        data() {
+            return {
+                isDisorder: false,
+                disorderArr: []
             }
         },
         methods: {
@@ -87,11 +104,11 @@
                 switch (this.$parent.playType) {
                     case 1:
                         console.log('执行列表循环');
-                        this.listLoop();
+                        this.listLoop(0);
                         break;
                     case 2:
                         console.log('执行随机播放');
-                        this.randomPlay();
+                        this.randomPlay(0);
                         break;
                     case 3:
                         console.log('单曲');
@@ -111,41 +128,83 @@
                 this.$store.commit('showIcon');
             },
             // 列表循环
-            listLoop() {
-                if (this.$store.state.playList.length === 1) {
+            listLoop(type) {
+                let index = this.playList.findIndex(value => {
+                    return value.id === parseInt(this.musicId);
+                });
+                console.log('这里index');
+                console.log(index);
+                if (index !== -1) {
+                    this.musicIndex1 = index;
+                }
+                if (this.playList.length === 1) {
                     this.loop();
                     return;
                 }
-                if (this.musicIndex1 < this.$store.state.playList.length) {
+                if (this.musicIndex1 < this.playList.length) {
                     console.log('true listLoopMusic');
-                    this.musicIndex1++;
-                    if (this.musicIndex1 >= this.$store.state.playList.length) {
-                        console.log('执行了这里');
-                        console.log(this.musicIndex1);
-                        this.musicIndex1 = 0;
+                    if (type === 0) {
+                        this.musicIndex1++;
+                        if (this.musicIndex1 >= this.playList.length) {
+                            this.musicIndex1 = 0;
+                        }
+                    } else {
+                        if (this.musicIndex1 > 0) {
+                            console.log('previousMusic true');
+                            this.musicIndex1--;
+                        } else {
+                            console.log('else');
+                            this.musicIndex1 = this.playList.length - 1;
+                        }
                     }
-                    let nextId = this.$store.state.playList[this.musicIndex1].id;
+                    let nextId = this.playList[this.musicIndex1].id;
                     this.$store.commit('changeMusicId', nextId);
                     this.$store.dispatch('getMusicUrl', nextId);
-                    this.$store.dispatch('getMusicDetail', nextId);
 
                     this.$store.commit('NotPlaying');
                     this.$store.commit('IsPlaying');
                     this.$store.commit('showIcon');
-
                 }
+
+
             },
             // 随机播放
-            randomPlay() {
-                let index = Math.floor(Math.random() * this.$store.state.playList.length - 1);
-                this.musicIndex1 = index;
-                let nextId = this.$store.state.playList[index].id;
+            randomPlay(type) {
+                // 创建新数组，js非基本类型引用为引用传递，打乱数组会影响原数组，所有需要
+                // 创建新数组
+                let arr;
+                // 只打乱一次
+                if (!this.isDisorder) {
+                    console.log('打乱了');
+                    arr = this.playList.slice();
+                    this.disorderArr = disorder(arr);
+                    this.isDisorder = true;
+                }
+                if (type === 0) {
+                    if (this.musicIndex1 < this.playList.length) {
+                        console.log('true listLoopMusic');
+                        this.musicIndex1++;
+                        if (this.musicIndex1 >= this.playList.length) {
+                            this.musicIndex1 = 0;
+                        }
+                    }
+                } else {
+                    if (this.musicIndex1 > 0) {
+                        console.log('previousMusic true');
+                        this.musicIndex1--;
+                    } else {
+                        console.log('else');
+                        this.musicIndex1 = this.playList.length - 1;
+                    }
+                }
+                console.log(this.disorderArr);
+                let nextId = this.disorderArr[this.musicIndex1].id;
+                console.log('nextId' + nextId);
                 this.$store.commit('changeMusicId', nextId);
                 this.$store.dispatch('getMusicUrl', nextId);
-                this.$store.dispatch('getMusicDetail', nextId);
                 this.$store.commit('IsPlaying');
                 this.$store.commit('showIcon');
-            }
+            },
 
         }
     }
