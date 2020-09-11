@@ -62,6 +62,7 @@
 
                     this.$store.commit('historyBianLiList', newarr);
                     this.$store.commit('searchWordFunc',val)
+                    this.$store.commit('addWord',val)
                 })
             }
         }

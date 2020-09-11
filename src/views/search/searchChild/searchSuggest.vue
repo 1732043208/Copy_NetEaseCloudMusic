@@ -36,6 +36,11 @@
                     this.$store.commit('searchResultShow', IsShow);
                     // this.$store.commit('searchWord',val)
                     this.$store.commit('addWord', val)
+
+                    this.$store.state.historyList.unshift(val);
+                    let hisList=this.$store.state.historyList;
+                    let newarr= Array.from(new Set(hisList));
+                    this.$store.commit('historyBianLiList', newarr);
                 }).catch(error => {
 
                 });

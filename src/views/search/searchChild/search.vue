@@ -99,10 +99,9 @@
 
                     this.$store.state.historyList.unshift(val);
                     let hisList=this.$store.state.historyList;
-
                    let newarr= Array.from(new Set(hisList));
-
                     this.$store.commit('historyBianLiList', newarr);
+
                     this.$store.commit('searchWordFunc',this.value)
                     this.$store.commit('addWord', val)
 
