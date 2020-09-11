@@ -125,22 +125,17 @@
                 <van-cell>
                     <!-- 使用 right-icon 插槽来自定义右侧图标 -->
                     <template #icon>
-                        <img :src="item.picUrl" style="
-        width: 100px;
-        height: auto;
-        margin-top: 15px;
-        margin-left: 10px;">
-
+                        <img :src="item.picUrl" style="width: 80px;height: auto;">
                     </template>
                     <template #title>
                         <div>
-                            <div style="position: relative;top: 30px;left: 14px">
+                            <div style="position: relative;top: 20px;left: 14px">
                                 <span>{{item.name}}</span>
                                 <span v-for="name in item.alia">{{name}}</span></div>
                         </div>
                     </template>
                     <template #label>
-                        <div style="position: relative;top: 25px;left: 14px">
+                        <div style="position: relative;top: 15px;left: 14px">
                             <span>{{item.artist.name}} </span>
                             <span> {{item.publishTime|formatDate}}</span>
                         </div>
@@ -160,7 +155,6 @@
     import {formatDuring} from "../../../../components/common/utils";
     import {Cell, CellGroup} from 'vant';
     import {GetSearchApi} from "../../../../http/all-api";
-    import scroll from "../../../../components/scroll";
     import {formatDate} from "../../../../components/common/utils";
 
     export default {
