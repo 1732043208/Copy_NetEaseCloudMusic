@@ -177,7 +177,7 @@
                 }
 
                 .titleText {
-                    width: 500px;
+                    width: 650px;
                     font-weight: 600;
                     font-size: 38px;
 
@@ -188,7 +188,7 @@
                 }
 
                 .labelTextStyle {
-                    width: 500px;
+                    width: 700px;
                     font-size: 30px;
                 }
 

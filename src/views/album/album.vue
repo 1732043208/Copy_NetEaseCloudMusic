@@ -47,11 +47,6 @@
                         <div class="songListTitle">
                             <h4>{{albumInfo.albumName}}</h4>
                             <div class="avatarInfo">
-                                <!--                                <van-image-->
-                                <!--                                        round-->
-                                <!--                                        width="30" height="30"-->
-                                <!--                                        :src="albumInfo.avatarUrl" alt="">-->
-                                <!--                                </van-image>-->
                                 <p>歌手:{{albumInfo.songer}}</p>
                             </div>
                             <div class="subTitle">
@@ -313,7 +308,7 @@
                 }
 
                 .avatarInfo {
-                    margin-top: 20px;
+                    margin-top: 30px;
                     display: flex;
                     align-items: center;
 
@@ -324,8 +319,11 @@
                 }
 
                 .subTitle {
+                    margin-top: 30px;
+
                     p {
-                        line-height: 52px;
+                        line-height: 60px;
+                        letter-spacing: 2px;
                         font-size: 30px;
                         overflow: hidden;
                         text-overflow: ellipsis;
