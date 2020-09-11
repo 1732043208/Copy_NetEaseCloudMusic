@@ -120,14 +120,8 @@
                         </template>
                         <template #icon>
                             <div class="leftIcon">
-                                {{index}}
+                                {{index+1}}
                             </div>
-                            <!--                            <van-image-->
-                            <!--                                    class="leftImage"-->
-                            <!--                                    width="50" height="50"-->
-                            <!--                                    radius="5"-->
-                            <!--                                    :src="value.picUrl" alt="">-->
-                            <!--                            </van-image>-->
                         </template>
                         <template #right-icon>
                             <van-icon name="ellipsis" class="rightImage"/>
@@ -159,6 +153,10 @@
         async created() {
             await this.getAlbumData(this.$route.query.id);
             this.$toast.clear();
+            if (this.$store.state.musicId !== null) {
+                this.$refs.scroll.$el.style.height = 92 + '%';
+                this.$refs.scroll.refresh();
+            }
         },
         data() {
             return {
@@ -260,6 +258,7 @@
 
             #content {
                 position: relative;
+                /*padding-bottom: 150px;*/
 
                 .bg {
                     width: 100vw;

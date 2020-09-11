@@ -5,22 +5,20 @@
                 class="my-swipe"
                 :autoplay="3000"
                 indicator-color="#c2463a"
-        >
+                :stop-propagation="false">
             <van-swipe-item
                     v-for="(item,index) in bannerList"
                     :key="index">
                 <div class="bannerBox">
-                    <span
-                            class="text"
-                            :style="{'color':'white',
-                            'background-color':'#c2463a'}"
-                    >{{item.typeTitle}}</span>
-                    <img
-                            class="bannerImg"
-                            :src="item.pic"
-                            @click="BannerImgClick(item)"
-                            alt="">
-
+                    <span class="text"
+                          :style="{'color':'white',
+                            'background-color':'#c2463a'}">
+                        {{item.typeTitle}}
+                    </span>
+                    <img class="bannerImg"
+                         :src="item.pic"
+                         @click="BannerImgClick(item)"
+                         alt="">
                 </div>
 
             </van-swipe-item>
@@ -44,13 +42,13 @@
                 v-if="officialSongInfoList.length>0"
                 :official-song-list="officialSongInfoList"
                 :top-title="topTitle2"
-                :btn-more="btnMore2"
-        >
-
+                :btn-more="btnMore2">
         </official-song-list>
         <yun-cun
                 v-if="Object.keys(yunCun).length>0"
-                :yun-cun="yunCun"></yun-cun>
+                :yun-cun="yunCun">
+
+        </yun-cun>
         <new-musci-or-disc
                 v-if="newMusic.length>0 && newDisc.length>0"
                 :new-disc="newDisc"
@@ -93,9 +91,9 @@
                 duration: 0
             });
         },
-        async  created() {
-           await this.getHomeData();
-           this.$toast.clear();
+        async created() {
+            await this.getHomeData();
+            this.$toast.clear();
         },
         mounted() {
             GetBannerAPI(1).then(res => {

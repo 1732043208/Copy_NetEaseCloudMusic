@@ -141,6 +141,8 @@
         async created() {
             await this.getMusicInfo();
             this.$toast.clear();
+            this.$refs.scroll.$el.style.height = 92 + '%';
+            this.$refs.scroll.refresh();
         },
         computed: {
             isMusicPlay() {
@@ -201,9 +203,9 @@
                 this.$router.go(-1);
             },
             musicListScroll(position) {
-                let opacity = Math.abs(Math.round(position.y) / 100);
-                // this.$refs.topNav.style.background = `rgba(0,0,0,${opacity})`;
-                this.$refs.topNav.style.color = `rgba(255,255,255,${opacity})`;
+                let opacity = Math.abs(Math.round(position.y) / 200);
+                this.$refs.topNav.style.background = `rgba(0,0,0,${opacity})`;
+                // this.$refs.topNav.style.color = `rgba(255,255,255,${opacity})`;
                 if (position.y === 0) {
                     this.$refs.topNav.style.height = 185 + 'px'
                 } else {
@@ -339,7 +341,7 @@
             padding: 30px;
             align-items: flex-start;
             backdrop-filter: blur(10px);
-            background-color: rgba(0, 0, 0, 0.5);
+            background-color: rgba(0, 0, 0, 0.2);
             height: 465px;
 
             .navTitle {

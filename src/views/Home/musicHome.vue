@@ -4,15 +4,14 @@ npm
         <tab-control
                 :title="['推荐','视频','电台']"
                 @tabClick="tabClick"
-                ref="tabControl1"
-                v-show="isShowTabControl"
-        >
+                ref="tabControl1">
         </tab-control>
         <scroll
                 class="content"
                 ref="scroll"
                 :probe-type="3"
-                :pull-up-load="true">
+                :pull-up-load="true"
+                @scroll="homeScroll">
             <div>
                 <recommend v-if="this.currentType==='recommend'"></recommend>
                 <video-home v-if="this.currentType==='friend'"></video-home>
@@ -32,11 +31,12 @@ npm
 
     export default {
         name: 'Home',
+
         data() {
             return {
                 active: 0,
-                isShowTabControl: true,
                 currentType: 'recommend',
+                toChangeHeight: false
             }
         },
         methods: {
@@ -53,12 +53,20 @@ npm
                         break;
                 }
             },
+            homeScroll(position) {
+                if (this.$store.state.musicId !== null && !this.toChangeHeight) {
+                    this.toChangeHeight = true;
+                    this.$refs.scroll.$el.style.height = 80 + 'vh';
+                    this.$refs.scroll.refresh();
+                }
+            }
         },
         components: {TabControl, Scroll, Recommend, VideoHome},
     }
 </script>
 <style scoped lang="less">
     .content {
+        width: 100vw;
         overflow: hidden;
         position: absolute;
         top: 250px;

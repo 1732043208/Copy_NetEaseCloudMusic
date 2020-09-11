@@ -41,10 +41,10 @@ export default new Vuex.Store({
         searchResultList: [],
         guanjianci: '',
         addWord: '',
-        searchWord:'',
+        searchWord: '',
     },
     mutations: {
-        changeLogin(state,type) {
+        changeLogin(state, type) {
             state.isLogin = type;
         },
         // musicId
@@ -108,14 +108,14 @@ export default new Vuex.Store({
         },
         addWord(state, val) {
             state.addWord = val;
-            console.log('addword'+state.addWord );
+            console.log('addword' + state.addWord);
         },
         cutWord(state) {
             state.addWord = '';
-            console.log('cutword'+state.addWord);
+            console.log('cutword' + state.addWord);
         },
-        searchWordFunc(state,val){
-            state.searchWord=val
+        searchWordFunc(state, val) {
+            state.searchWord = val
         },
         getMusicUrlData(state, musicId) {
             GetMusicUrlAPI(musicId).then(res => {
