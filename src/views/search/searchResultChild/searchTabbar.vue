@@ -17,6 +17,9 @@
                 <div v-if="index===5">
                     <SearchTabbarZhuanJi></SearchTabbarZhuanJi>
                 </div>
+                <div v-if="index===6">
+                    <SearchTabbarGeDan></SearchTabbarGeDan>
+                </div>
             </van-tab>
         </van-tabs>
     </div>
@@ -28,6 +31,7 @@
     import SearchTabbarShiPin from "./searchTabbarChild/SearchTabbarShiPin";
     import SearchTabbarGeShou from "./searchTabbarChild/SearchTabbarGeShou";
     import SearchTabbarZhuanJi from "./searchTabbarChild/SearchTabbarZhuanJi";
+    import SearchTabbarGeDan from "./searchTabbarChild/SearchTabbarGeDan";
     import {Cell, CellGroup} from 'vant';
     import {Tab, Tabs} from 'vant';
 
@@ -45,6 +49,7 @@
             SearchTabbarShiPin,
             SearchTabbarGeShou,
             SearchTabbarZhuanJi,
+            SearchTabbarGeDan,
             [Cell.name]: Cell,
             [CellGroup.name]: CellGroup,
             [Tab.name]: Tab,
