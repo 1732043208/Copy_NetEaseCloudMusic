@@ -9,13 +9,6 @@
             />
         </div>
         <div class="center">
-            <van-icon
-                    size="26"
-                    name="music-o"
-                    class="music"
-                    :color="activeColor1"
-                    @click="centerIconClick(0)"
-            />
             <van-icon :color="activeColor2" size="26" name="wap-home-o" class="home" @click="centerIconClick(1)"/>
             <van-icon :color="activeColor3" size="26" name="video-o" class="video" @click="centerIconClick(2)"/>
         </div>
@@ -36,9 +29,6 @@
             }
         },
         computed: {
-            activeColor1() {
-                return this.currentIndex === 0 ? '#c2463a' : '#a7a6a7'
-            },
             activeColor2() {
                 return this.currentIndex === 1 ? '#c2463a' : '#a7a6a7'
             },
@@ -53,25 +43,21 @@
             },
             centerIconClick(index) {
                 this.currentIndex = index;
-                if (this.currentIndex === 0) {
-                    this.$router.push({
-                        path: '/music-mine'
-                    })
-                } else if (this.currentIndex === 1) {
+                if (this.currentIndex === 1) {
                     this.$router.push({
                         path: '/'
                     })
                 } else if (this.currentIndex === 2) {
                     this.$router.push({
-                        path: '/music-mv'
+                        path: '/home-mv'
                     })
                 }
             },
             rightIconClick() {
                 console.log('右边图标');
                 this.$router.push({
-                    path:'/SearchDetail'
-                }),
+                    path: '/SearchDetail'
+                });
                     this.$store.commit('cutWord');
             }
 

@@ -10,17 +10,17 @@ const Setting = () => import('../views/login/setting');
 const Register = () => import('../views/login/register');
 const PhoneLogin = () => import('../views/login/phone-login');
 const Captcha = () => import('../views/login/captcha');
-const MusicMine = () => import('../views/Mine/musicMine');
+const HomeMv = () => import('../views/Home_mv/homeMv');
 const MusicMV = () => import('../views/mv/musicMv');
 // const Recommend = () => import('../components/music-home-child/recommend');
 const DayMusic = () => import('../views/Home/everyDayRecommendDetail/dayMusic');
-const DaySongList = () => import('../views/Home/everyDayRecommendDetail/daySongList')
+const DaySongList = () => import('../views/Home/everyDayRecommendDetail/daySongList');
 const AllPlayList = () => import('../views/Home/allPlayList');
 const Album = () => import('../views/album/album');
 const Rank = () => import('../views/Home/rank');
 const CommentMusic = () => import('../views/musicComment/commentMusic');
 const VideoDetail = () => import('../views/video/video-detail');
-const SearchDetail = () => import('../views/search/searchDetail')
+const SearchDetail = () => import('../views/search/searchDetail');
 const Dj = () => import('../views/dj/dj');
 const DjDetail = () => import('../views/dj/djDetail');
 
@@ -34,9 +34,9 @@ const routes = [
         }
     },
     {
-        path: '/music-mine',
-        name: 'music-mine',
-        component: MusicMine,
+        path: '/home-mv',
+        name: 'home-mv',
+        component: HomeMv,
         meta: {
             isShow: true
         },

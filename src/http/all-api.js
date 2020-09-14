@@ -384,7 +384,7 @@ export function GetSearchSuggestApi(keywords, type) {
 }
 
 //搜索
-export function GetSearchApi(keywords,type) {
+export function GetSearchApi(keywords, type) {
     return http({
         url: '/search',
         params: {
@@ -419,6 +419,16 @@ export function GetDjProgramAPI(rid, {limit = 30, asc = false}) {
             rid,
             limit,
             asc
+        }
+    })
+}
+
+// 全部MV
+export function GetAllMvAPI({area = "全部", type = "全部", order = "上升最快", limit = 30}) {
+    return http({
+        url: '/mv/all',
+        params: {
+            area, type, order, limit
         }
     })
 }
