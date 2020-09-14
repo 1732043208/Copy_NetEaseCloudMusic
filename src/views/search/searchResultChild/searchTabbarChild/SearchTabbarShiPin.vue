@@ -1,7 +1,7 @@
 <template>
     <div>
         <div v-for="item in this.videos">
-            <van-card @click="getVideoDetailData(item.vid)">
+            <van-card @click="getVideoDetailData(item.vid,item.type)">
                 <template #thumb>
                     <img :src="item.coverUrl" style="width: 130px;height: auto">
                     <span style="position: absolute;left: 85px;color: white">{{Math.round(item.playTime/10000*Math.pow(10,1))/Math.pow(10,1)}}万</span>
@@ -32,12 +32,12 @@
 
     export default {
         name: "SearchTabbarShiPin",
-        data(){
-          return{
-              videos:[]
-          }
+        data() {
+            return {
+                videos: []
+            }
         },
-        components:{
+        components: {
             [Icon.name]: Icon,
             [Button.name]: Button,
             [Card.name]: Card,
@@ -46,7 +46,7 @@
             [CellGroup.name]: CellGroup,
         },
         created() {
-            GetSearchApi(this.$store.state.addWord,'1014').then(res => {
+            GetSearchApi(this.$store.state.addWord, '1014').then(res => {
                 this.videos = res.data.result.videos;
                 console.log(res);
 
@@ -61,14 +61,23 @@
             },
 
         },
-        methods:{
-            getVideoDetailData(vid) {
-                this.$router.push({
-                    path: '/videoDetail',
-                    query: {
-                        vid: vid
-                    }
-                })
+        methods: {
+            getVideoDetailData(vid, type) {
+                if (type === 1) {
+                    this.$router.push({
+                        path: '/videoDetail',
+                        query: {
+                            vid: vid
+                        }
+                    })
+                } else if (type === 0) {
+                    this.$router.push({
+                        path: '/music-mv',
+                        query: {
+                            mvId: vid
+                        }
+                    })
+                }
             },
         }
     }

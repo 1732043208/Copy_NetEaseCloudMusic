@@ -53,8 +53,9 @@
 <script>
     import {GetSearchGuanJianCiAPI, GetSearchSuggestApi, GetSearchApi} from "../../../http/all-api";
     import {Icon} from 'vant';
-    import { Cell, CellGroup } from 'vant';
-    import { Search } from 'vant';
+    import {Cell, CellGroup} from 'vant';
+    import {Search} from 'vant';
+
     export default {
         name: "search",
         props: {
@@ -75,9 +76,9 @@
         },
         components: {
             [Icon.name]: Icon,
-            [Cell.name]:Cell,
-            [CellGroup.name]:CellGroup,
-            [Search.name]:Search
+            [Cell.name]: Cell,
+            [CellGroup.name]: CellGroup,
+            [Search.name]: Search
         },
         methods: {
             //确定搜索时触发
@@ -86,7 +87,7 @@
                     this.value = this.$store.state.guanjianci;
                     // console.log('哈哈');
                 }
-                GetSearchApi(this.value,'1018').then(res => {
+                GetSearchApi(this.value, '1018').then(res => {
                     // console.log(res);
                     let lists = res.data.result;
                     console.log(lists);
@@ -98,11 +99,11 @@
                     this.$store.commit("searchResultList", lists);
 
                     this.$store.state.historyList.unshift(val);
-                    let hisList=this.$store.state.historyList;
-                   let newarr= Array.from(new Set(hisList));
+                    let hisList = this.$store.state.historyList;
+                    let newarr = Array.from(new Set(hisList));
                     this.$store.commit('historyBianLiList', newarr);
 
-                    this.$store.commit('searchWordFunc',this.value)
+                    this.$store.commit('searchWordFunc', this.value)
                     this.$store.commit('addWord', val)
 
                 }).catch(error => {
@@ -148,14 +149,14 @@
                 if (this.isShow) {
                     this.$emit("isSearchResultFunc", false);
                     this.$store.commit('cutWord');
-                    this.value=''
+                    this.value = ''
                 } else {
                     this.$router.go(-1);
                     this.$store.commit('cutWord');
                 }
             },
             cleanLabel() {
-                this.$store.state.addWord===''?this.value = '':  this.$store.commit('cutWord');
+                this.$store.state.addWord === '' ? this.value = '' : this.$store.commit('cutWord');
 
             },
             getSearchData() {

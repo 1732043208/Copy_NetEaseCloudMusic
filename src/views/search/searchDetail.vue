@@ -36,6 +36,12 @@ import searchTabbar from "./searchResultChild/searchTabbar";
                 backtop:''
             }
         },
+        created() {
+            console.log(this.$route.meta.keep);
+        },
+        destroyed() {
+            console.log('卢本伟牛逼');
+        },
         components: {
             search,
             hotSearch,

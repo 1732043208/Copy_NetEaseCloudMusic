@@ -1,7 +1,7 @@
 <template>
     <div>
         <div v-for="item in zhuanjis">
-            <van-cell>
+            <van-cell @click="pushAlbum(item.id)">
                 <!-- 使用 right-icon 插槽来自定义右侧图标 -->
                 <template #icon>
                     <img :src="item.picUrl" style="width: 60px;height: auto;">
@@ -59,6 +59,16 @@
             formatDate(time) {
                 let date = new Date(time);
                 return formatDate(date, 'yyyy.MM.dd')
+            }
+        },
+        methods:{
+            pushAlbum(id){
+                this.$router.push({
+                    path: '/album',
+                    query: {
+                        id: id
+                    }
+                })
             }
         }
     }

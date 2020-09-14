@@ -30,7 +30,8 @@ const routes = [
         name: 'Home',
         component: Home,
         meta: {
-            isShow: true
+            isShow: true,
+            keep: true
         }
     },
     {
@@ -38,7 +39,8 @@ const routes = [
         name: 'home-mv',
         component: HomeMv,
         meta: {
-            isShow: true
+            isShow: true,
+            keep: false
         },
     },
     {
@@ -46,7 +48,8 @@ const routes = [
         name: 'music-mv',
         component: MusicMV,
         meta: {
-            isShow: false
+            isShow: false,
+            keep: false
         }
     },
     {
@@ -54,7 +57,8 @@ const routes = [
         name: 'login',
         component: Login,
         meta: {
-            isShow: false
+            isShow: false,
+            keep: false
         }
     },
     {
@@ -62,7 +66,8 @@ const routes = [
         name: 'register',
         component: Register,
         meta: {
-            isShow: false
+            isShow: false,
+            keep: false
         }
     },
     {
@@ -70,7 +75,8 @@ const routes = [
         name: 'phone-login',
         component: PhoneLogin,
         meta: {
-            isShow: false
+            isShow: false,
+            keep: false
         }
     },
     {
@@ -78,7 +84,8 @@ const routes = [
         name: 'captcha',
         component: Captcha,
         meta: {
-            isShow: false
+            isShow: false,
+            keep: false
         }
     },
     {
@@ -86,7 +93,8 @@ const routes = [
         name: 'setting',
         component: Setting,
         meta: {
-            isShow: false
+            isShow: false,
+            keep: false
         }
     },
     {
@@ -94,7 +102,8 @@ const routes = [
         name: 'dayMusic',
         component: DayMusic,
         meta: {
-            isShow: false
+            isShow: false,
+            keep: false
         }
     },
     {
@@ -102,7 +111,8 @@ const routes = [
         name: 'daySongList',
         component: DaySongList,
         meta: {
-            isShow: false
+            isShow: false,
+            keep: false
         }
     },
     {
@@ -110,7 +120,8 @@ const routes = [
         name: 'allPlayList',
         component: AllPlayList,
         meta: {
-            isShow: false
+            isShow: false,
+            keep: false
         }
     },
     {
@@ -118,7 +129,8 @@ const routes = [
         name: 'album',
         component: Album,
         meta: {
-            isShow: false
+            isShow: false,
+            keep: false
         }
     },
     {
@@ -126,7 +138,8 @@ const routes = [
         name: 'rank',
         component: Rank,
         meta: {
-            isShow: false
+            isShow: false,
+            keep: false
         }
     },
     {
@@ -134,7 +147,8 @@ const routes = [
         name: 'commentMusic',
         component: CommentMusic,
         meta: {
-            isShow: false
+            isShow: false,
+            keep: false
         }
     },
     {
@@ -142,7 +156,8 @@ const routes = [
         name: 'videoDetail',
         component: VideoDetail,
         meta: {
-            isShow: false
+            isShow: false,
+            keep: false
         }
     },
     {
@@ -150,7 +165,8 @@ const routes = [
         name: 'SearchDetail',
         component: SearchDetail,
         meta: {
-            isShow: false
+            isShow: false,
+            keep: true
         }
     },
     {
@@ -158,7 +174,8 @@ const routes = [
         name: 'Dj',
         component: Dj,
         meta: {
-            isShow: false
+            isShow: false,
+            keep: false
         }
     },
     {
@@ -166,7 +183,8 @@ const routes = [
         name: 'Dj-detail',
         component: DjDetail,
         meta: {
-            isShow: false
+            isShow: false,
+            keep: false
         }
     },
 ];

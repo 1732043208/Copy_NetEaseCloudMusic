@@ -100,9 +100,9 @@
             <div slot="content">
                 <home-nav v-if="$route.meta.isShow"></home-nav>
                 <keep-alive>
-                    <router-view v-if="$route.meta.isShow"></router-view>
+                    <router-view v-if="$route.meta.keep"></router-view>
                 </keep-alive>
-                <router-view v-if="!$route.meta.isShow"></router-view>
+                <router-view v-if="!$route.meta.keep"></router-view>
                 <music-play v-if="isMusicPlay" :music-id.sync="$store.state.musicId"></music-play>
                 <!--                <router-view v-if="$route.meta.isShow"></router-view>-->
             </div>
@@ -123,6 +123,7 @@
     export default {
         name: "appCom",
         created() {
+            console.log(this.$route.meta.keep);
             LoginStatusAPI().then(res => {
                 console.log(res);
                 this.$store.state.userInfo = new userInfoModel(res.data.profile)

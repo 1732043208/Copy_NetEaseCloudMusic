@@ -16,9 +16,9 @@
                     <span class="titleSecond" v-if="item.alias.length!==0"> ({{item.alias[0]}})</span>
                 </template>
                 <template #label>
-                    <span v-for="(niubi,index) in item.artists">
+                    <span v-for="(val,index) in item.artists">
                         <span v-if="index !==0">/</span>
-                        {{niubi.name}}
+                        {{val.name}}
                     </span>
                     <span>{{' - '+item.album.name}}</span>
                     <span v-if="item.alias.length!==0"> ({{item.alias[0]}})</span>
@@ -51,7 +51,8 @@
                 console.log(musicId);
                 this.$store.commit('changeMusicId', musicId);
                 this.musicCheck(musicId);
-            }
+            },
+
 
         },
         created() {
