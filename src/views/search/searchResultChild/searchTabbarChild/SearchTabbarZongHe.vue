@@ -152,8 +152,9 @@
     import {Button} from 'vant';
     import {Card} from 'vant';
     import {Tag} from 'vant';
-    import {formatDuring} from "../../../../components/common/utils";
     import {Cell, CellGroup} from 'vant';
+    import {formatDuring} from "../../../../components/common/utils";
+
     import {GetSearchApi} from "../../../../http/all-api";
     import {formatDate} from "../../../../components/common/utils";
 

@@ -23,7 +23,8 @@ const VideoDetail = () => import('../views/video/video-detail');
 const SearchDetail = () => import('../views/search/searchDetail');
 const Dj = () => import('../views/dj/dj');
 const DjDetail = () => import('../views/dj/djDetail');
-
+const Singer = () => import('../views/singer/singer');
+const SingIntroduction = () => import('../views/singer/sing-Introduction')
 const routes = [
     {
         path: '/',
@@ -185,6 +186,22 @@ const routes = [
         meta: {
             isShow: false,
             keep: false
+        }
+    },
+    {
+        path: '/singer',
+        name: 'singer',
+        component: Singer,
+        meta: {
+            isShow: false,
+        }
+    },
+    {
+        path: '/sing-introduction',
+        name: 'sing-introduction',
+        component: SingIntroduction,
+        meta: {
+            isShow: false,
         }
     },
 ];

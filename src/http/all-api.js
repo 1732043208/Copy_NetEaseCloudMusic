@@ -432,3 +432,29 @@ export function GetAllMvAPI({area = "全部", type = "全部", order = "上升�
         }
     })
 }
+//获取歌手描述
+export function GetSingerDescribeApi(id) {
+    return http({
+        url: '/artist/desc',
+        params: {
+            id
+        }
+    })
+}
+//获取近期热门
+export function GetSingerHotApi(id) {
+    return http({
+        url: '/artist/top/song',
+        params: {
+            id
+        }
+    })
+}//获取相似歌手
+export function GetSimilaritySingerApi(id) {
+    return http({
+        url: '/simi/artist',
+        params: {
+            id
+        }
+    })
+}

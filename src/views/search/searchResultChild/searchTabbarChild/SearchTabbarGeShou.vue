@@ -1,7 +1,7 @@
 <template>
     <div>
         <div v-for="item in artists">
-            <van-cell>
+            <van-cell @click="pushSinger(item.id)">
                 <!-- 使用 right-icon 插槽来自定义右侧图标 -->
                 <template #icon><img :src="item.img1v1Url" class="getgold_top_head_img"></template>
                 <template #title>
@@ -49,6 +49,16 @@
                 console.log(error);
             });
         },
+        methods:{
+            pushSinger(id){
+                this.$router.push({
+                    path:'/singer',
+                    query:{
+                        id:id
+                    }
+                })
+            }
+        }
     }
 </script>
 
