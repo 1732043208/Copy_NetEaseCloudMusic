@@ -41,9 +41,61 @@ Github地址：[github.com/Binaryify/N…](https://github.com/Binaryify/NeteaseC
 
 ### 界面实现效果
 
-首页：![image-20200916161852300](C:\Users\PC01\AppData\Roaming\Typora\typora-user-images\image-20200916161852300.png)![image-20200916161946414](C:\Users\PC01\AppData\Roaming\Typora\typora-user-images\image-20200916161946414.png)
+##### 首页：
+
+<img src="C:\Users\PC01\AppData\Roaming\Typora\typora-user-images\image-20200916161852300.png" alt="image-20200916161852300" style="zoom:50%;" /><img src="C:\Users\PC01\AppData\Roaming\Typora\typora-user-images\image-20200916161946414.png" alt="image-20200916161946414" style="zoom:50%;" />
+
+##### 推荐视频：
+
+<img src="C:\Users\PC01\AppData\Roaming\Typora\typora-user-images\image-20200916162129565.png" alt="image-20200916162129565" style="zoom:50%;" /><img src="C:\Users\PC01\AppData\Roaming\Typora\typora-user-images\image-20200916162318069.png" alt="image-20200916162318069" style="zoom:50%;" /><img src="C:\Users\PC01\AppData\Roaming\Typora\typora-user-images\image-20200916162357025.png" alt="image-20200916162357025" style="zoom: 50%;" />
+
+##### 日推：
+
+<img src="C:\Users\PC01\AppData\Roaming\Typora\typora-user-images\image-20200916162809310.png" alt="image-20200916162809310" style="zoom:50%;" /><img src="C:\Users\PC01\AppData\Roaming\Typora\typora-user-images\image-20200916162853372.png" alt="image-20200916162853372" style="zoom:50%;" />
+
+##### 歌曲评论：
+
+<img src="C:\Users\PC01\AppData\Roaming\Typora\typora-user-images\image-20200916163223704.png" alt="image-20200916163223704" style="zoom:50%;" /><img src="C:\Users\PC01\AppData\Roaming\Typora\typora-user-images\image-20200916163236308.png" alt="image-20200916163236308" style="zoom:50%;" />
+
+##### 歌单广场：
+
+<img src="C:\Users\PC01\AppData\Roaming\Typora\typora-user-images\image-20200916163432460.png" alt="image-20200916163432460" style="zoom:50%;" /><img src="C:\Users\PC01\AppData\Roaming\Typora\typora-user-images\image-20200916163455813.png" alt="image-20200916163455813" style="zoom:50%;" />
+
+##### 排行榜：
+
+<img src="C:\Users\PC01\AppData\Roaming\Typora\typora-user-images\image-20200916163735363.png" alt="image-20200916163735363" style="zoom:50%;" />![image-20200916163855276](C:\Users\PC01\AppData\Roaming\Typora\typora-user-images\image-20200916163855276.png)<img src="C:\Users\PC01\AppData\Roaming\Typora\typora-user-images\image-20200916163735363.png" alt="image-20200916163735363" style="zoom:50%;" />![image-20200916163855276](C:\Users\PC01\AppData\Roaming\Typora\typora-user-images\image-20200916163855276.png)
+
+##### 歌单详情：
+
+<img src="C:\Users\PC01\AppData\Roaming\Typora\typora-user-images\image-20200916164006585.png" alt="image-20200916164006585" style="zoom:50%;" />
+
+##### 全部mv：
+
+<img src="C:\Users\PC01\AppData\Roaming\Typora\typora-user-images\image-20200916164052788.png" alt="image-20200916164052788" style="zoom:50%;" /><img src="C:\Users\PC01\AppData\Roaming\Typora\typora-user-images\image-20200916164113068.png" alt="image-20200916164113068" style="zoom:50%;" />
+
+##### MV详情：
 
 
+
+<img src="C:\Users\PC01\AppData\Roaming\Typora\typora-user-images\image-20200916164226468.png" alt="image-20200916164226468" style="zoom:50%;" /><img src="C:\Users\PC01\AppData\Roaming\Typora\typora-user-images\image-20200916164246427.png" alt="image-20200916164246427" style="zoom:50%;" />
+
+##### 电台：
+
+<img src="C:\Users\PC01\AppData\Roaming\Typora\typora-user-images\image-20200916164352187.png" alt="image-20200916164352187" style="zoom:50%;" /><img src="C:\Users\PC01\AppData\Roaming\Typora\typora-user-images\image-20200916164404468.png" alt="image-20200916164404468" style="zoom:50%;" /><img src="C:\Users\PC01\AppData\Roaming\Typora\typora-user-images\image-20200916164449362.png" alt="image-20200916164449362" style="zoom:50%;" />
+
+![image-20200916164422378](C:\Users\PC01\AppData\Roaming\Typora\typora-user-images\image-20200916164422378.png)
+
+侧边栏：
+
+<img src="C:\Users\PC01\AppData\Roaming\Typora\typora-user-images\image-20200916164623565.png" alt="image-20200916164623565" style="zoom:50%;" /><img src="C:\Users\PC01\AppData\Roaming\Typora\typora-user-images\image-20200916164639811.png" alt="image-20200916164639811" style="zoom:50%;" />
+
+迷你播放器：
+
+<img src="C:\Users\PC01\AppData\Roaming\Typora\typora-user-images\image-20200916164739810.png" alt="image-20200916164739810" style="zoom:50%;" />
+
+播放器页面：
+
+<img src="C:\Users\PC01\AppData\Roaming\Typora\typora-user-images\image-20200916164916095.png" alt="image-20200916164916095" style="zoom:50%;" /><img src="C:\Users\PC01\AppData\Roaming\Typora\typora-user-images\image-20200916174700823.png" alt="image-20200916174700823" style="zoom:50%;" /><img src="C:\Users\PC01\AppData\Roaming\Typora\typora-user-images\image-20200916174812536.png" alt="image-20200916174812536" style="zoom:50%;" />
 
 ### 项目实现功能
 
