@@ -160,6 +160,9 @@
 
                     p {
                         padding-bottom: 30px;
+                        width: 700px;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
                     }
                 }
             }

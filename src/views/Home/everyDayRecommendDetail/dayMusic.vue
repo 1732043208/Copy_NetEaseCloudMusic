@@ -141,7 +141,7 @@
         async created() {
             await this.getMusicInfo();
             this.$toast.clear();
-            this.$refs.scroll.$el.style.height = 92 + '%';
+          if (this.isMusicPlay)  this.$refs.scroll.$el.style.height = 92 + '%';
             this.$refs.scroll.refresh();
         },
         computed: {

@@ -347,7 +347,9 @@
             ChangeIcon() {
                 this.animationShow = this.$store.state.changeIcon ? 'running' : 'paused'
                 this.$store.commit('showIcon');
-                if (Object.keys(this.currentLyric).length !== 0) this.currentLyric.togglePlay();
+                if (Object.keys(this.currentLyric).length !== 0) {
+                    this.currentLyric.togglePlay();
+                }
             },
             minOrMax() {
                 this.isShowLrc = false;
@@ -471,21 +473,27 @@
             },
             handleLyric({lineNum, txt}) {
                 this.currentLineNum = lineNum;
-                // 若当前行大于5,开始滚动,以保歌词显示于中间位置
-                if (lineNum > 1) {
+                // 若当前行大于3,开始滚动
+                if (lineNum > 3) {
                     let lineEl = this.$refs.lyricLine[lineNum - 1];
-                    // 过了第一句歌词开始滚动歌词
+                    // 过了第3句歌词开始滚动歌词
                     this.$refs.lyricList.scrollToElement(lineEl, 1000)
                 } else {
                     this.$refs.lyricList.scrollTo(0, 0, 1000)
                 }
             },
             showLrc() {
+                console.log(this.currentLineNum);
                 this.isShowLrc = !this.isShowLrc;
                 if (this.isShowLrc && Object.keys(this.currentLyric).length !== 0) {
-                    console.log(this.$refs.audio.getCurrentTime());
-                    this.currentLyric.play();
-                    this.currentLyric.seek(this.$refs.audio.getCurrentTime() * 1000);
+                    if (!this.$store.state.changeIcon) {
+                        console.log('开始');
+                        this.currentLyric.play();
+                        this.currentLyric.seek(this.$refs.audio.getCurrentTime() * 1000);
+                    } else {
+                        console.log('暂停');
+                        this.currentLyric.stop();
+                    }
 
                 }
 
@@ -615,8 +623,9 @@
                         color: white;
 
                         .text {
+                            height: 120px;
                             font-size: 40px;
-                            padding-top: 70px;
+                            /*padding-top: 60px;*/
                         }
 
                         .text:first-child {

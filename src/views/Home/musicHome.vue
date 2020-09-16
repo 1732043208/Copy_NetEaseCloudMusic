@@ -16,9 +16,7 @@ npm
                 <recommend v-show="this.currentType==='recommend'"/>
                 <video-home v-show="this.currentType==='friend'"/>
             </div>
-
         </scroll>
-
     </div>
 </template>
 
@@ -28,7 +26,6 @@ npm
     import Scroll from "../../components/scroll";
     import Recommend from "../../components/music-home-child/recommend";
     import VideoHome from "../video/video-home";
-    import dj from "../dj/dj";
 
     export default {
         name: 'Home',
@@ -62,7 +59,7 @@ npm
                 }
             }
         },
-        components: {TabControl, Scroll, Recommend, VideoHome, dj},
+        components: {TabControl, Scroll, Recommend, VideoHome},
     }
 </script>
 <style scoped lang="less">
