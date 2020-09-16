@@ -39,6 +39,12 @@ Github地址：[github.com/Binaryify/N…](https://github.com/Binaryify/NeteaseC
 
 后端操作见文档。
 
+### 界面实现效果
+
+首页：![image-20200916161852300](C:\Users\PC01\AppData\Roaming\Typora\typora-user-images\image-20200916161852300.png)![image-20200916161946414](C:\Users\PC01\AppData\Roaming\Typora\typora-user-images\image-20200916161946414.png)
+
+
+
 ### 项目实现功能
 
 - #### 侧边栏模块
