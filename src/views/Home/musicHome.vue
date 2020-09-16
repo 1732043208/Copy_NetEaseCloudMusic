@@ -2,7 +2,7 @@ npm
 <template>
     <div class="home">
         <tab-control
-                :title="['推荐','视频','电台']"
+                :title="['推荐','视频']"
                 @tabClick="tabClick"
                 ref="tabControl1">
         </tab-control>
@@ -13,8 +13,8 @@ npm
                 :pull-up-load="true"
                 @scroll="homeScroll">
             <div>
-                <recommend v-if="this.currentType==='recommend'"></recommend>
-                <video-home v-if="this.currentType==='friend'"></video-home>
+                <recommend v-show="this.currentType==='recommend'"/>
+                <video-home v-show="this.currentType==='friend'"/>
             </div>
 
         </scroll>
@@ -28,6 +28,7 @@ npm
     import Scroll from "../../components/scroll";
     import Recommend from "../../components/music-home-child/recommend";
     import VideoHome from "../video/video-home";
+    import dj from "../dj/dj";
 
     export default {
         name: 'Home',
@@ -61,7 +62,7 @@ npm
                 }
             }
         },
-        components: {TabControl, Scroll, Recommend, VideoHome},
+        components: {TabControl, Scroll, Recommend, VideoHome, dj},
     }
 </script>
 <style scoped lang="less">

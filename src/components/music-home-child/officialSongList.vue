@@ -70,11 +70,9 @@
         methods: {
             TopClick() {
                 console.log('更多歌单');
-                GetHotPlayList().then(res => {
-                    console.log(res);
-                }).catch(error => {
-                    console.log(error);
-                })
+            this.$router.push({
+                path:'/allPlayList'
+            })
             },
             SongListClick(id) {
                 // todo 跳转歌单详情
