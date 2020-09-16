@@ -41,61 +41,61 @@ Github地址：[github.com/Binaryify/N…](https://github.com/Binaryify/NeteaseC
 
 ### 界面实现效果
 
-##### 首页：<img src="https://ftp.bmp.ovh/imgs/2020/09/60b7b83eb04c1b87.png" alt="https://ftp.bmp.ovh/imgs/2020/09/60b7b83eb04c1b87.png" style="zoom: 33%;" /><img src="https://ftp.bmp.ovh/imgs/2020/09/b7b96281633d70c0.png" alt="https://ftp.bmp.ovh/imgs/2020/09/b7b96281633d70c0.png" style="zoom:33%;" />
+##### 首页：
+
+##### <img src="https://ftp.bmp.ovh/imgs/2020/09/60b7b83eb04c1b87.png" alt="https://ftp.bmp.ovh/imgs/2020/09/60b7b83eb04c1b87.png"  width="300" height="600" /><img src="https://ftp.bmp.ovh/imgs/2020/09/b7b96281633d70c0.png" alt="https://ftp.bmp.ovh/imgs/2020/09/b7b96281633d70c0.png" width="300" height="600" />
 
 ##### 推荐视频：
 
-<img src="https://ftp.bmp.ovh/imgs/2020/09/72e8ff0334302e50.png" alt="https://ftp.bmp.ovh/imgs/2020/09/72e8ff0334302e50.png" style="zoom:33%;" />
+<img src="https://ftp.bmp.ovh/imgs/2020/09/72e8ff0334302e50.png" alt="https://ftp.bmp.ovh/imgs/2020/09/72e8ff0334302e50.png" width="300" height="600" /><img src="https://ftp.bmp.ovh/imgs/2020/09/574793bd802fa9e8.png" alt="https://ftp.bmp.ovh/imgs/2020/09/574793bd802fa9e8.png" width="300" height="600"  />
 
-<img src="C:\Users\PC01\AppData\Roaming\Typora\typora-user-images\image-20200916162318069.png" alt="image-20200916162318069" style="zoom:50%;" /><img src="C:\Users\PC01\AppData\Roaming\Typora\typora-user-images\image-20200916162357025.png" alt="image-20200916162357025" style="zoom: 50%;" />
+<img src="https://ftp.bmp.ovh/imgs/2020/09/48d5de71d5dcc7aa.png" width="300" height="600" />
 
 ##### 日推：
 
-<img src="C:\Users\PC01\AppData\Roaming\Typora\typora-user-images\image-20200916162809310.png" alt="image-20200916162809310" style="zoom:50%;" /><img src="C:\Users\PC01\AppData\Roaming\Typora\typora-user-images\image-20200916162853372.png" alt="image-20200916162853372" style="zoom:50%;" />
+<img src="https://ftp.bmp.ovh/imgs/2020/09/405838a00f768868.png" width="300" height="600"  /><img src="https://ftp.bmp.ovh/imgs/2020/09/9ead68fc895beffc.png" alt="image-20200916162853372"  width="300" height="600" />
 
 ##### 歌曲评论：
 
-<img src="C:\Users\PC01\AppData\Roaming\Typora\typora-user-images\image-20200916163223704.png" alt="image-20200916163223704" style="zoom:50%;" /><img src="C:\Users\PC01\AppData\Roaming\Typora\typora-user-images\image-20200916163236308.png" alt="image-20200916163236308" style="zoom:50%;" />
+<img src="https://ftp.bmp.ovh/imgs/2020/09/1ab5c2a11785b92f.png" width="300" height="600" /><img src="https://ftp.bmp.ovh/imgs/2020/09/438da41e7f27bea5.png" alt="image-20200916163236308" width="300" height="600" />
 
 ##### 歌单广场：
 
-<img src="C:\Users\PC01\AppData\Roaming\Typora\typora-user-images\image-20200916163432460.png" alt="image-20200916163432460" style="zoom:50%;" /><img src="C:\Users\PC01\AppData\Roaming\Typora\typora-user-images\image-20200916163455813.png" alt="image-20200916163455813" style="zoom:50%;" />
+<img src="https://ftp.bmp.ovh/imgs/2020/09/767e6512d7a52b17.png" width="300" height="600"  />
 
 ##### 排行榜：
 
-<img src="C:\Users\PC01\AppData\Roaming\Typora\typora-user-images\image-20200916163735363.png" alt="image-20200916163735363" style="zoom:50%;" />![image-20200916163855276](C:\Users\PC01\AppData\Roaming\Typora\typora-user-images\image-20200916163855276.png)<img src="C:\Users\PC01\AppData\Roaming\Typora\typora-user-images\image-20200916163735363.png" alt="image-20200916163735363" style="zoom:50%;" />![image-20200916163855276](C:\Users\PC01\AppData\Roaming\Typora\typora-user-images\image-20200916163855276.png)
+[![96df602d08d450408970ee5413b4cbc.png](https://i.postimg.cc/cCL6523g/96df602d08d450408970ee5413b4cbc.png)](https://postimg.cc/hzNSXCpc)
 
 ##### 歌单详情：
 
-<img src="C:\Users\PC01\AppData\Roaming\Typora\typora-user-images\image-20200916164006585.png" alt="image-20200916164006585" style="zoom:50%;" />
+[![c9c7955aa9bfd07b72b5d0f79aff06e.png](https://i.postimg.cc/LXbM2b7Z/c9c7955aa9bfd07b72b5d0f79aff06e.png)](https://postimg.cc/gX87KNGY)
 
 ##### 全部mv：
 
-<img src="C:\Users\PC01\AppData\Roaming\Typora\typora-user-images\image-20200916164052788.png" alt="image-20200916164052788" style="zoom:50%;" /><img src="C:\Users\PC01\AppData\Roaming\Typora\typora-user-images\image-20200916164113068.png" alt="image-20200916164113068" style="zoom:50%;" />
+[![1addfb119fa91d1f431f22008db3273.png](https://i.postimg.cc/3wLw09V3/1addfb119fa91d1f431f22008db3273.png)](https://postimg.cc/R3Hmj1vY)[![ca6b31b7fe002110392ef4cef2a4efe.png](https://i.postimg.cc/xTS9CW8K/ca6b31b7fe002110392ef4cef2a4efe.png)](https://postimg.cc/4nwD22zd)
 
 ##### MV详情：
 
 
 
-<img src="C:\Users\PC01\AppData\Roaming\Typora\typora-user-images\image-20200916164226468.png" alt="image-20200916164226468" style="zoom:50%;" /><img src="C:\Users\PC01\AppData\Roaming\Typora\typora-user-images\image-20200916164246427.png" alt="image-20200916164246427" style="zoom:50%;" />
+[![c359abb2282ca2784fa08453b3f48bd.png](https://i.postimg.cc/t4KkQt2C/c359abb2282ca2784fa08453b3f48bd.png)](https://postimg.cc/NKxmRX3W)[![b5ebc9f930fd75aa146def67aa86b47.png](https://i.postimg.cc/6Qz8LB2J/b5ebc9f930fd75aa146def67aa86b47.png)](https://postimg.cc/KKkcmSDJ)
 
 ##### 电台：
 
-<img src="C:\Users\PC01\AppData\Roaming\Typora\typora-user-images\image-20200916164352187.png" alt="image-20200916164352187" style="zoom:50%;" /><img src="C:\Users\PC01\AppData\Roaming\Typora\typora-user-images\image-20200916164404468.png" alt="image-20200916164404468" style="zoom:50%;" /><img src="C:\Users\PC01\AppData\Roaming\Typora\typora-user-images\image-20200916164449362.png" alt="image-20200916164449362" style="zoom:50%;" />
-
-![image-20200916164422378](C:\Users\PC01\AppData\Roaming\Typora\typora-user-images\image-20200916164422378.png)
+[![090710fd4ad87f599559bb6e5ba526a.png](https://i.postimg.cc/yNWDPwFD/090710fd4ad87f599559bb6e5ba526a.png)](https://postimg.cc/yJ466ppK)[![dbc44c862f988c13e899f1610b4fe2e.png](https://i.postimg.cc/FzGvwKvN/dbc44c862f988c13e899f1610b4fe2e.png)](https://postimg.cc/RJ32H4qD)[![b2340b4033e92897e6a75877809d6d6.png](https://i.postimg.cc/X774d9KJ/b2340b4033e92897e6a75877809d6d6.png)](https://postimg.cc/mhqvGz5f)
 
 侧边栏：
 
-<img src="C:\Users\PC01\AppData\Roaming\Typora\typora-user-images\image-20200916164623565.png" alt="image-20200916164623565" style="zoom:50%;" /><img src="C:\Users\PC01\AppData\Roaming\Typora\typora-user-images\image-20200916164639811.png" alt="image-20200916164639811" style="zoom:50%;" />
+[![eab9ae2c2e02b7b5302e606be8dcf47.png](https://i.postimg.cc/HxgCxMsT/eab9ae2c2e02b7b5302e606be8dcf47.png)](https://postimg.cc/3ynqfdvq)[![24b3bf627f7538d48c42f89bae305e2.png](https://i.postimg.cc/tJRQdHxf/24b3bf627f7538d48c42f89bae305e2.png)](https://postimg.cc/XGPz3mxc)
 
 迷你播放器：
 
-<img src="C:\Users\PC01\AppData\Roaming\Typora\typora-user-images\image-20200916164739810.png" alt="image-20200916164739810" style="zoom:50%;" />
+[![2b08e8c1168305c0b2c5bd4faf1f5f1.png](https://i.postimg.cc/c4by3249/2b08e8c1168305c0b2c5bd4faf1f5f1.png)](https://postimg.cc/hfT5WCmT)
 
 播放器页面：
 
-<img src="C:\Users\PC01\AppData\Roaming\Typora\typora-user-images\image-20200916164916095.png" alt="image-20200916164916095" style="zoom:50%;" /><img src="C:\Users\PC01\AppData\Roaming\Typora\typora-user-images\image-20200916174700823.png" alt="image-20200916174700823" style="zoom:50%;" /><img src="C:\Users\PC01\AppData\Roaming\Typora\typora-user-images\image-20200916174812536.png" alt="image-20200916174812536" style="zoom:50%;" />
+[![b0d9c7d3b75d75767f2992d39cb8cbd.png](https://i.postimg.cc/Fz6Wftg0/b0d9c7d3b75d75767f2992d39cb8cbd.png)](https://postimg.cc/gLvq5T70)[![365091f1a6f9881b9633718a3afa227.png](https://i.postimg.cc/YCYnSs4m/365091f1a6f9881b9633718a3afa227.png)](https://postimg.cc/XrNcHxkV)[![a5aa5f438b47fdb9c9ce44f985dce25.png](https://i.postimg.cc/MTKddZ9y/a5aa5f438b47fdb9c9ce44f985dce25.png)](https://postimg.cc/v1krmyFB)
 
 ### 项目实现功能
 
