@@ -41,13 +41,13 @@ Github地址：[github.com/Binaryify/N…](https://github.com/Binaryify/NeteaseC
 
 ### 界面实现效果
 
-##### 首页：<img src="https://ftp.bmp.ovh/imgs/2020/09/60b7b83eb04c1b87.png" alt="https://ftp.bmp.ovh/imgs/2020/09/60b7b83eb04c1b87.png" style="zoom:50%;" />
-
-<img src="C:\Users\PC01\AppData\Roaming\Typora\typora-user-images\image-20200916161852300.png" alt="image-20200916161852300" style="zoom:50%;" /><img src="C:\Users\PC01\AppData\Roaming\Typora\typora-user-images\image-20200916161946414.png" alt="image-20200916161946414" style="zoom:50%;" />
+##### 首页：<img src="https://ftp.bmp.ovh/imgs/2020/09/60b7b83eb04c1b87.png" alt="https://ftp.bmp.ovh/imgs/2020/09/60b7b83eb04c1b87.png" style="zoom: 33%;" /><img src="https://ftp.bmp.ovh/imgs/2020/09/b7b96281633d70c0.png" alt="https://ftp.bmp.ovh/imgs/2020/09/b7b96281633d70c0.png" style="zoom:33%;" />
 
 ##### 推荐视频：
 
-<img src="C:\Users\PC01\AppData\Roaming\Typora\typora-user-images\image-20200916162129565.png" alt="image-20200916162129565" style="zoom:50%;" /><img src="C:\Users\PC01\AppData\Roaming\Typora\typora-user-images\image-20200916162318069.png" alt="image-20200916162318069" style="zoom:50%;" /><img src="C:\Users\PC01\AppData\Roaming\Typora\typora-user-images\image-20200916162357025.png" alt="image-20200916162357025" style="zoom: 50%;" />
+<img src="https://ftp.bmp.ovh/imgs/2020/09/72e8ff0334302e50.png" alt="https://ftp.bmp.ovh/imgs/2020/09/72e8ff0334302e50.png" style="zoom:33%;" />
+
+<img src="C:\Users\PC01\AppData\Roaming\Typora\typora-user-images\image-20200916162318069.png" alt="image-20200916162318069" style="zoom:50%;" /><img src="C:\Users\PC01\AppData\Roaming\Typora\typora-user-images\image-20200916162357025.png" alt="image-20200916162357025" style="zoom: 50%;" />
 
 ##### 日推：
 
