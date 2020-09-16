@@ -41,7 +41,7 @@ Github地址：[github.com/Binaryify/N…](https://github.com/Binaryify/NeteaseC
 
 ### 界面实现效果
 
-##### 首页：
+##### 首页：<img src="https://ftp.bmp.ovh/imgs/2020/09/60b7b83eb04c1b87.png" alt="https://ftp.bmp.ovh/imgs/2020/09/60b7b83eb04c1b87.png" style="zoom:50%;" />
 
 <img src="C:\Users\PC01\AppData\Roaming\Typora\typora-user-images\image-20200916161852300.png" alt="image-20200916161852300" style="zoom:50%;" /><img src="C:\Users\PC01\AppData\Roaming\Typora\typora-user-images\image-20200916161946414.png" alt="image-20200916161946414" style="zoom:50%;" />
 
