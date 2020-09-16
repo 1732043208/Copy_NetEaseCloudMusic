@@ -41,7 +41,7 @@ const routes = [
         component: HomeMv,
         meta: {
             isShow: true,
-            keep: false
+            keep: true
         },
     },
     {
