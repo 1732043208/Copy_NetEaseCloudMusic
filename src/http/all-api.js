@@ -458,3 +458,12 @@ export function GetSimilaritySingerApi(id) {
         }
     })
 }
+//获取歌手单曲
+export function GetSingerDanQuApi(id) {
+    return http({
+        url: '/artists',
+        params: {
+            id
+        }
+    })
+}

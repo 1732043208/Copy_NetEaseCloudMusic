@@ -27,7 +27,7 @@
 
     export default {
         name: "SearchTabbarGeShou",
-        components:{
+        components: {
             [Icon.name]: Icon,
             [Button.name]: Button,
             [Card.name]: Card,
@@ -35,26 +35,26 @@
             [Cell.name]: Cell,
             [CellGroup.name]: CellGroup,
         },
-        data(){
-          return {
-              artists:[]
-          }
+        data() {
+            return {
+                artists: []
+            }
         },
         created() {
-            GetSearchApi(this.$store.state.addWord,'100').then(res => {
-        this.artists= res.data.result.artists;
+            GetSearchApi(this.$store.state.addWord, '100').then(res => {
+                this.artists = res.data.result.artists;
                 console.log(this.artists);
 
             }).catch(error => {
                 console.log(error);
             });
         },
-        methods:{
-            pushSinger(id){
+        methods: {
+            pushSinger(id) {
                 this.$router.push({
-                    path:'/singer',
-                    query:{
-                        id:id
+                    path: '/singer',
+                    query: {
+                        id: id
                     }
                 })
             }

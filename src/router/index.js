@@ -202,6 +202,7 @@ const routes = [
         component: SingIntroduction,
         meta: {
             isShow: false,
+            keep:true
         }
     },
 ];

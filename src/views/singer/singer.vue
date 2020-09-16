@@ -1,6 +1,12 @@
 <template>
     <div>
         <!--        近期热门-->
+        <comm-nav :title="this.xiangqing.name">
+            <div style="position: absolute;right: 20px;">
+                <van-icon name="share-o" />
+                <van-icon name="ellipsis" />
+            </div>
+        </comm-nav>
         <div style="margin-left: 10px;margin-top: 10px">
             <van-icon name="play-circle-o"/>
             <span style="font-weight: bold;margin-left: 4px">近期热门</span>
@@ -37,14 +43,25 @@
         <div style="margin: 12px 10px 8px 14px;font-size: 14px;overflow: hidden;text-overflow: ellipsis;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:5;">
             <p>{{this.SingerDescribe.briefDesc}}</p>
         </div>
+<!--        相似艺人-->
+        <div>
+            <span style="margin-left: 14px;margin-top: 10px;font-weight: bold;">相似艺人</span>
+        </div>
+
+        <div style="margin: 20px 30px 20px 0px;">
+            <div style="margin-left: 10px;background:grey;width: 100px;height: 130px;float: left;text-align: center;padding-top: 10px" v-for="(item,index) in this.simiarts"  v-if="index>2?false:true">
+                <img :src="item.img1v1Url" style="width: 60px;border-radius: 50px;">
+                <p style="font-size: 14px">{{item.name}}</p>
+            </div>
+        </div>
     </div>
 
 </template>
 
 <script>
-    import {GetSingerDescribeApi, GetSingerHotApi, GetSimilaritySingerApi} from "../../http/all-api";
+    import {GetSingerDescribeApi, GetSingerHotApi, GetSimilaritySingerApi, GetSingerDanQuApi} from "../../http/all-api";
     import {Icon, Button, Card, Tag, Cell, CellGroup} from "vant";
-
+import commNav from "../../components/nav/commNav";
     export default {
         name: "singer",
         data() {
@@ -52,6 +69,8 @@
                 hots: [],
                 simiarts: [],
                 SingerDescribe: [],
+                xiangqing: [],
+
 
             }
         },
@@ -60,7 +79,7 @@
             let iid=this.$route.query.id;
             GetSingerDescribeApi(iid).then(res => {
                 this.SingerDescribe = res.data;
-                console.log(res);
+                // console.log(res);
             }).catch(error => {
                 console.log(error);
             });
@@ -76,10 +95,16 @@
             //相似艺人
             GetSimilaritySingerApi(iid).then(res => {
                 this.simiarts = res.data.artists;
-                // console.log(res);
+                console.log(res);
             }).catch(error => {
                 console.log(error);
             });
+            GetSingerDanQuApi(iid).then(res => {
+                this.xiangqing = res.data.artist;
+                // console.log(res);
+            }).catch(error => {
+                console.log(error);
+            })
         },
         components: {
             [Icon.name]: Icon,
@@ -88,6 +113,7 @@
             [Tag.name]: Tag,
             [Cell.name]: Cell,
             [CellGroup.name]: CellGroup,
+            commNav
         },
         methods: {
             pushXinXi(){

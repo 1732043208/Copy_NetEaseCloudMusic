@@ -2,6 +2,7 @@
     <div ref="topNav" class="topNav">
         <van-icon size="22" @click="goBack" name="arrow-left"/>
         <p class="navTitle">{{title}}</p>
+        <slot></slot>
     </div>
 </template>
 

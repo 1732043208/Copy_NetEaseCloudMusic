@@ -39,9 +39,6 @@ import searchTabbar from "./searchResultChild/searchTabbar";
         created() {
             console.log(this.$route.meta.keep);
         },
-        destroyed() {
-            console.log('卢本伟牛逼');
-        },
         components: {
             search,
             hotSearch,
