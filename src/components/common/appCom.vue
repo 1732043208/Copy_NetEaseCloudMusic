@@ -98,12 +98,12 @@
                 </scroll>
             </div>
             <div slot="content">
-                <home-nav v-if="$route.meta.isShow"></home-nav>
+                <home-nav v-if="$route.meta.isShow"/>
                 <keep-alive>
-                    <router-view v-if="$route.meta.keep"></router-view>
+                    <router-view v-if="$route.meta.keep"/>
                 </keep-alive>
-                <router-view v-if="!$route.meta.keep"></router-view>
-                <music-play v-if="isMusicPlay" :music-id.sync="$store.state.musicId"></music-play>
+                <router-view v-if="!$route.meta.keep"/>
+                <music-play v-if="isMusicPlay" :music-id.sync="$store.state.musicId"/>
                 <!--                <router-view v-if="$route.meta.isShow"></router-view>-->
             </div>
         </drawer>

@@ -15,6 +15,7 @@ export default new Vuex.Store({
         storage: window.sessionStorage,
         reducer(val) {
             return {
+                currentIndexRouter: val.currentIndexRouter,
                 historyList: val.historyList,
                 isLogin: val.isLogin
             }
@@ -22,6 +23,7 @@ export default new Vuex.Store({
     })],
     state: {
         isLogin: false,
+        currentIndexRouter: 1,
         musicId: null,
         musicUrl: null,
         isPlay: false,
@@ -46,6 +48,9 @@ export default new Vuex.Store({
     mutations: {
         changeLogin(state, type) {
             state.isLogin = type;
+        },
+        changeCurrentIndexRouter(state, index) {
+            state.currentIndexRouter = index;
         },
         // musicId
         changeMusicId(state, newId) {

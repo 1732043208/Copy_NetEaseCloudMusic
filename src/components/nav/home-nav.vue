@@ -24,11 +24,17 @@
     export default {
         name: "home-nav",
         data() {
-            return {
-                currentIndex: 1
-            }
+            return {}
         },
         computed: {
+            currentIndex: {
+                get() {
+                    return this.$store.state.currentIndexRouter
+                },
+                set(v) {
+                    return this.$store.state.currentIndexRouter = v;
+                }
+            },
             activeColor2() {
                 return this.currentIndex === 1 ? '#c2463a' : '#a7a6a7'
             },
@@ -42,7 +48,7 @@
                 this.$store.commit('toggleDrawer');
             },
             centerIconClick(index) {
-                this.currentIndex = index;
+                this.$store.commit('changeCurrentIndexRouter', index);
                 if (this.currentIndex === 1) {
                     this.$router.push({
                         path: '/'
@@ -58,7 +64,7 @@
                 this.$router.push({
                     path: '/SearchDetail'
                 });
-                    this.$store.commit('cutWord');
+                this.$store.commit('cutWord');
             }
 
         },
