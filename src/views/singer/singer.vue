@@ -72,15 +72,21 @@
                         <div v-if="index===1">
                             <!--        近期热门-->
                             <div style="margin-left: 10px;margin-top: 10px;margin-bottom: 6px">
-                                <van-icon name="play-circle-o"/>
-                                <span style="font-weight: bold;margin-left: 4px">收藏热门50</span>
+                                <div @click="showPopupAdd">
+                                    <van-icon name="add-o"/>
+                                    <span style="font-weight: bold;margin-left: 4px">收藏热门50</span>
+                                    <van-popup v-model="showAdd" get-container="body" :close="closeAddfunc">内容</van-popup>
+                                </div>
                                 <div style="float: right;display: inline-block;vertical-align: middle;margin-right: 16px"
                                      @click="showPopup">
                                     <van-icon name="bars" size="13px" style="line-height: 20px"/>
                                     <span style="font-size: 13px">管理</span>
                                     <!--                                    底部弹出框-->
-                                    <van-popup :close="closefunc" v-model="show" round position="bottom"
-                                               :style="{ height: '30%' }">内容
+                                    <van-popup :close="closefunc" v-model="showBottom" round position="bottom"
+                                               :style="{ height: '20%' }" get-container="body">
+                                        <van-cell title="管理"/>
+                                        <van-cell title="多选" icon="bars"/>
+                                        <van-cell title="选择排序方式" icon="ascending"/>
                                     </van-popup>
                                 </div>
 
@@ -133,8 +139,8 @@
                 SingerDescribe: [],
                 xiangqing: [],
                 tabbar: ['主页', '歌曲', '专辑', '视频'],
-                show: false,
-
+                showBottom: false,
+showAdd:false
             }
         },
         created() {
@@ -200,10 +206,17 @@
                 this.musicCheck(musicId);
             },
             showPopup() {
-                this.show = true;
+                this.showBottom = true;
+            },
+
+            showPopupAdd() {
+                this.showAdd = true;
             },
             closefunc() {
-                this.show = false
+                this.showBottom = false
+            },
+            closeAddfunc(){
+                this.showAdd = false
             }
         }
     }
