@@ -467,3 +467,21 @@ export function GetSingerDanQuApi(id) {
         }
     })
 }
+//获取歌手专辑
+export function GetSingerZhuanJiApi(id) {
+    return http({
+        url: '/artist/album',
+        params: {
+            id
+        }
+    })
+}
+//获取歌手mv
+export function GetSingerMVApi(id) {
+    return http({
+        url: '/artist/mv',
+        params: {
+            id
+        }
+    })
+}
