@@ -4,7 +4,6 @@ import Vue from "vue";
 import router from "../router";
 import store from '../store'
 
-let token = '';
 
 export function http(config) {
     const instance = axios.create({
@@ -15,8 +14,7 @@ export function http(config) {
         withCredentials: true
     });
     instance.interceptors.request.use(config => {
-        token = sessionStorage.token !== '' ? sessionStorage.token : token;
-        config.headers['token'] = token;
+        config.headers['token'] = store.state.token;
         return config
     }, error => {
         console.log('请求出错' + error);
@@ -25,8 +23,7 @@ export function http(config) {
 
     instance.interceptors.response.use(response => {
         if (response.config.headers.token) {
-            token = response.data.token;
-            sessionStorage.setItem("token", response.data.token);
+            store.commit('saveToken', response.config.headers.token);
             store.commit('changeLogin', true);
         }
         return response
@@ -34,14 +31,12 @@ export function http(config) {
         console.log('响应出错');
         console.dir(error);
         if (error.response.status) {
+            console.log('这里');
             switch (error.response.status) {
                 case 401:
-                    sessionStorage.removeItem('token');
+                    store.commit('saveToken', '');
                     router.push({
                         path: '/login',
-                        query: {
-                            redirect: router.currentRoute.fullPath
-                        }
                     });
                     Vue.prototype.$toast('登陆过期');
                     break;
@@ -53,14 +48,17 @@ export function http(config) {
                     break;
                 case 403:
                     Vue.prototype.$toast('没有权限');
-                    setTimeout(() => {
-                        router.replace({
-                            path: '/',
-                            query: {
-                                redirect: router.currentRoute.fullPath
-                            }
-                        });
-                    }, 1000)
+                    router.go(-1);
+                    break;
+                case 301:
+                    store.commit('saveToken', '');
+                    Vue.prototype.$toast('请先登录');
+                    router.push({
+                        path: '/login',
+                        query: {
+                            redirect: router.currentRoute.fullPath
+                        }
+                    });
                     break;
                 default:
                     console.error(error.response)
