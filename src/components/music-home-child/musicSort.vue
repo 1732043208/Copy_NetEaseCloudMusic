@@ -50,7 +50,6 @@
         mounted() {
             GetHomeIconAPI().then(res => {
                 this.icons.push(...res.data.data);
-
             }).catch(error => {
                 console.log('获取首页圆形图标出错');
                 console.dir(error);

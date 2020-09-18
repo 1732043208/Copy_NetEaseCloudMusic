@@ -51,6 +51,7 @@
     //导入api请求方法
     import {PhoneLoginAPI} from "../../http/all-api";
     import {userInfoModel} from "../../../model/userInfo";
+    import store from "../../store";
 
     export default {
         name: "phone-login",
@@ -94,6 +95,9 @@
                         console.log('手机登录请求成功');
                         this.$store.state.userInfo = new userInfoModel(res.data.profile);
                         this.$store.commit('changeLogin', true);
+
+                        this.$store.commit('saveToken', res.data.token);
+                        console.log(this.$store.state.token);
                         this.$router.push({
                             path: '/'
                         })

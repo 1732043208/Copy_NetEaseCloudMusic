@@ -52,7 +52,6 @@
     export default {
         name: "videoHome",
         created() {
-            this.getVideoData();
             if (this.$store.state.audioEl) {
                 this.$store.state.audioEl.pause();
                 if (!this.$store.state.changeIcon) this.$store.commit('showIcon');
@@ -64,6 +63,21 @@
             video1.forEach(item => {
                 item.autoplay = false;
             })
+        },
+        props: {
+            videoList: {
+                type: Array,
+                default() {
+                    return [];
+                }
+            },
+            playerOptions: {
+                type: Array,
+                default() {
+                    return [];
+                }
+            },
+
 
         },
         computed: {
@@ -72,53 +86,9 @@
             }
         },
         data() {
-            return {
-                videoList: [],
-                playerOptions: [],
-            }
+            return {}
         },
         methods: {
-            async getVideoData() {
-                await GetVideoAPI().then(res => {
-                    let result = res.data.datas;
-                    console.log(result);
-                    result.forEach(item => {
-                        this.videoList.push(createVideo(item.data))
-                    });
-                    if (this.videoList.length !== 0) {
-                        this.videoList.forEach(item => {
-                            GetVideoDetailInfoAPI(item.vid).then(res => {
-                                let data = res.data;
-
-                                item.praisedCount = data.likedCount;
-                                item.shareCount = data.shareCount;
-                                item.commentCount = data.commentCount;
-                                item.isLiked = data.liked;
-
-                            }).catch(error => {
-                                console.log('获取点赞信息失败');
-                                console.log(error);
-                            })
-                        })
-                    }
-                    console.log(this.videoList);
-                });
-                for (let i = 0; i < this.videoList.length; i++) {
-                    let arr = {
-                        url: this.videoList[i].srcUrl,
-                        cover: this.videoList[i].coverUrl,
-                        muted: false,
-                        loop: false,
-                        preload: 'auto',
-                        volume: 1,
-                        autoplay: false,
-                        mutex: true,
-
-                    };
-                    this.playerOptions.push(arr);
-                }
-            },
-
             handleFullscreen() {
             },
             onVideoPlay() {

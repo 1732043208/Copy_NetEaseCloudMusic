@@ -107,6 +107,7 @@
         }
 
         .text {
+            height: 90px;
             width: 300px;
             line-height: 52px;
             font-size: 30px;

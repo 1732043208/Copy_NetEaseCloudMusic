@@ -1,7 +1,7 @@
 <template>
     <div class="wrapper" ref="wrapper">
 
-            <slot></slot>
+        <slot></slot>
 
     </div>
 </template>
@@ -12,30 +12,36 @@
     export default {
         name: "Scroll",
         props: {
+            // 是否开启滚动监听 0 不开启
             probeType: {
                 type: Number,
                 default() {
                     return 0
                 }
             },
+            // 上拉加载
             pullUpLoad: {
                 type: Boolean,
                 default() {
                     return false;
                 }
             },
-            scrollX: {
-                type: Boolean,
-                default: false
-            },
-            scrollY:{
-                type:Boolean,
-                default:true
-            },
             // 滚动回弹效果
-            bounce:{
-                type:Boolean,
-                default:true
+            bounce: {
+                type: Boolean,
+                default() {
+                    return true;
+                }
+            },
+            // 下拉刷新
+            pullDownRefresh: {
+                type: Object,
+                default() {
+                    return {
+                        threshold: 0,
+                        stop: 0
+                    }
+                }
             }
         },
         data() {
@@ -50,9 +56,8 @@
                 // 设置2或者3都可以监听滚动
                 probeType: this.probeType,
                 pullUpLoad: this.pullUpLoad,
-                scrollX: this.scrollX,
-                scrollY: this.scrollY,
-                bounce: this.bounce
+                bounce: this.bounce,
+                pullDownRefresh: this.pullDownRefresh
                 // eventPassthrough: 'vertical'
                 // eventPassthrough: 'horizontal'
             });
@@ -62,6 +67,9 @@
             });
             this.scroll.on('pullingUp', () => {
                 this.$emit('pullingUp')
+            });
+            this.scroll.on('pullingDown', () => {
+                this.$emit('pullingDown');
             })
         },
         methods: {
@@ -72,6 +80,11 @@
             finishPullUp() {
                 // 上拉加载
                 this.scroll && this.scroll.finishPullUp();
+            },
+            // 多次下来刷新
+            finishPullDown() {
+                // 上拉加载
+                this.scroll && this.scroll.finishPullDown();
             },
             refresh() {
                 this.scroll && this.scroll.refresh();

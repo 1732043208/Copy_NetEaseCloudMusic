@@ -123,15 +123,15 @@
     export default {
         name: "appCom",
         created() {
-            console.log(this.$route.meta.keep);
             LoginStatusAPI().then(res => {
                 console.log(res);
-                this.$store.state.userInfo = new userInfoModel(res.data.profile)
+                this.$store.state.userInfo = new userInfoModel(res.data.profile);
                 console.log(this.$store.state.userInfo);
             }).catch(error => {
-                if (error.status === 301) {
-                    this.$toast('未登录')
-                }
+                console.log(error);
+                // if (error.status === 301) {
+                this.$toast('请先登录')
+
             })
         },
         computed: {
