@@ -15,6 +15,7 @@ export default new Vuex.Store({
         storage: window.sessionStorage,
         reducer(val) {
             return {
+                token: val.token,
                 currentIndexRouter: val.currentIndexRouter,
                 historyList: val.historyList,
                 isLogin: val.isLogin
@@ -22,6 +23,7 @@ export default new Vuex.Store({
         }
     })],
     state: {
+        token: '',
         isLogin: false,
         currentIndexRouter: 1,
         musicId: null,
@@ -46,6 +48,9 @@ export default new Vuex.Store({
         searchWord: '',
     },
     mutations: {
+        saveToken(state, token) {
+            state.token = token;
+        },
         changeLogin(state, type) {
             state.isLogin = type;
         },
