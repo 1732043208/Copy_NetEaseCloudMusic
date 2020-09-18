@@ -1,7 +1,7 @@
 <template>
     <div>
         <div v-for="item in diantais">
-            <van-cell>
+            <van-cell @click="pushDianTai(item.id)">
                 <!-- 使用 right-icon 插槽来自定义右侧图标 -->
                 <template #icon>
                     <img :src="item.picUrl" style="width: 50px;height: auto;">
@@ -45,7 +45,8 @@
             [Tag.name]: Tag,
             [Cell.name]: Cell,
             [CellGroup.name]: CellGroup,
-        }, created() {
+        },
+        created() {
             GetSearchApi(this.$store.state.addWord, '1009').then(res => {
                 this.diantais = res.data.result.djRadios;
                 console.log(this.diantais);
@@ -53,6 +54,16 @@
                 console.log(error);
             });
         },
+        methods:{
+            pushDianTai(id){
+                this.$router.push({
+                    path:'/Dj-detail',
+                    query:{
+                        id:id
+                    }
+                })
+            }
+        }
     }
 </script>
 
