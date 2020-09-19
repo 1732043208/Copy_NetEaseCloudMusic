@@ -28,7 +28,7 @@
                         // on confirm
                         logoutAPI().then(res => {
                             this.$store.commit('changeLogin', false);
-                            sessionStorage.removeItem('token');
+                            this.$store.commit('saveToken','');
                             console.log(res);
                             this.$toast.success({
                                 message: '退出成功'
