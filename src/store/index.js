@@ -71,8 +71,13 @@ export default new Vuex.Store({
         NotPlaying(state) {
             state.isPlay = false;
         },
-        showIcon(state) {
-            state.changeIcon = !state.changeIcon;
+        showIcon(state, val) {
+            if (val !== undefined) {
+                state.changeIcon = val;
+            } else {
+                state.changeIcon = !state.changeIcon;
+            }
+
         },
         toggleDrawer(state) {
             state.isShowDrawer = !state.isShowDrawer
@@ -127,18 +132,24 @@ export default new Vuex.Store({
         searchWordFunc(state, val) {
             state.searchWord = val
         },
-        getMusicUrlData(state, musicId) {
+        update_musicAllDetail(state, {type, val}) {
+            state.musicAllDetail[type] = val;
+        }
+    },
+    actions: {
+        getMusicUrl(context, musicId) {
             GetMusicUrlAPI(musicId).then(res => {
                 if (res.data.data[0].url !== null) {
-                    this.commit('changeMusicUrl', res.data.data[0].url);
-                    this.commit('NotPlaying');
-                    state.changeIcon = false;
-                    state.musicAllDetail.musicUrl = res.data.data[0].url;
+                    context.commit('changeMusicUrl', res.data.data[0].url);
+                    context.commit('NotPlaying');
+                    context.commit('showIcon', false);
+                    context.commit('update_musicAllDetail', {type: 'musicUrl', val: res.data.data[0].url});
+                    // state.musicAllDetail.musicUrl = res.data.data[0].url;
                 } else {
                     Toast('获取音乐播放地址失败');
-                    this.commit('NotPlaying');
-                    this.commit('showIcon');
-                    this.commit('changeMusicUrl', '')
+                    context.commit('NotPlaying');
+                    context.commit('showIcon');
+                    context.commit('changeMusicUrl', '')
                 }
             }).catch(error => {
                 console.dir(Vue);
@@ -146,40 +157,26 @@ export default new Vuex.Store({
                 console.log('获取音乐url失败');
                 console.log(error);
             })
-        }
-    },
-    actions: {
-        getMusicUrl(context, musicId) {
-            context.commit('getMusicUrlData', musicId)
+
         },
         getMusicDetail(context, musicId) {
             GetMusicDetail(musicId).then(res => {
                 let musicInfo;
                 res.data.songs.forEach(item => {
                     musicInfo = createMusicInfo(item);
-                    let musicAllDetail = context.state.musicAllDetail;
-                    let test = {};
-                    let {album, albumId, id, mvId, name, picUrl, singer, singerId} = musicInfo;
-                    musicAllDetail.album = album;
-                    musicAllDetail.albumId = albumId;
-                    musicAllDetail.id = id;
-                    musicAllDetail.mvId = mvId;
-                    musicAllDetail.name = name;
-                    musicAllDetail.picUrl = picUrl;
-                    musicAllDetail.singer = singer;
-                    musicAllDetail.singerId = singerId;
+                    let playList = {};
+                    for (let item in musicInfo) {
+                        if (musicInfo.hasOwnProperty(item)) {
+                            context.commit('update_musicAllDetail', {type: item, val: musicInfo[item]});
+                        }
+                    }
                     //
-                    test.album = album;
-                    test.albumId = albumId;
-                    test.musicUrl = musicAllDetail.musicUrl;
-                    test.id = id;
-                    test.mvId = mvId;
-                    test.name = name;
-                    test.picUrl = picUrl;
-                    test.singer = singer;
-                    test.singerId = singerId;
-                    test.isColor = false;
-                    context.commit('joinPlayList', test);
+                    for (let item in musicInfo) {
+                        if (musicInfo.hasOwnProperty(item)) {
+                            playList[item] = musicInfo[item];
+                        }
+                    }
+                    context.commit('joinPlayList', playList);
                 })
             }).catch(error => {
                 console.log('获取音乐名字出错');
