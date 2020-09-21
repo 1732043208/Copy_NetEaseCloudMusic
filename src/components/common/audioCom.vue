@@ -88,7 +88,6 @@
             },
             // 一个音频文件加入到audio时触发
             onLoadedmetadata(el) {
-                console.log('触发');
                 this.$store.state.maxTimer = el.target.duration;
 
             },

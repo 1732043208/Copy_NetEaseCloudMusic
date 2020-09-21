@@ -59,7 +59,7 @@
                         </van-tab>
                         <van-tab :title="`节目${programCount}`" name="jm">
                             <van-cell
-                                    @click="getMusicId(item.musicId)"
+                                    @click="getMusicId(item.id)"
                                     v-for="(item,index) in djPrograms"
                                     :key="index"
                                     :center="true">
@@ -162,9 +162,8 @@
                 this.$router.go(-1)
             },
             getMusicId(musicId) {
-                console.log(musicId);
-                this.$store.commit('changeMusicId', musicId);
                 this.musicCheck(musicId);
+                this.$store.commit('changeMusicId', musicId);
             },
             musicListScroll(position) {
                 let opacity = Math.abs(Math.round((position.y)) / 300);

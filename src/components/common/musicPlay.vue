@@ -5,6 +5,7 @@
                 :audio-src="changeMusicUrls">
 
         </audio-com>
+        <!--        迷你播放器-->
         <div @click.stop="minOrMax" v-show="!isMinOrMax" class="audio-com-box-min">
             <van-image
                     round
@@ -35,6 +36,7 @@
 
             </div>
         </div>
+        <!--        大播放器-->
         <transition name="move">
             <div
                     ref="bigPlayer"
@@ -48,7 +50,7 @@
                                 class="mc-cell"
                                 :center="true"
                                 :border="false"
-                                :title="musicInfo.name"
+                                :title="musicInfo.name===''?'正在播放电台':musicInfo.name"
                                 :label="musicInfo.singer"
                                 title-class="titleText"
                                 label-class="labelText">
@@ -210,6 +212,7 @@
             this.$store.dispatch('getMusicUrl', this.musicId);
             this.$store.dispatch('getMusicDetail', this.musicId);
             this.Lyric(this.musicId);
+            console.log('执行mounted');
         },
         data() {
             return {
@@ -237,6 +240,7 @@
             musicId: {
                 deep: true,
                 handler(nv, ov) {
+                    console.log('执行监听musicId');
                     console.log(ov + '监听' + nv);
                     this.$toast.loading({
                         message: '加载中',
@@ -252,10 +256,8 @@
                     }
                     this.Lyric(nv);
                     this.$nextTick(() => {
-                        setTimeout(() => {
-                            this.$toast.clear();
-                            if (Object.keys(this.currentLyric).length !== 0) this.currentLyric.play();
-                        }, 1000)
+                        this.$toast.clear();
+                        if (Object.keys(this.currentLyric).length !== 0) this.currentLyric.play();
                     });
                     this.$store.commit('NotPlaying');
 
@@ -454,6 +456,7 @@
                 }
             },
             Lyric(id) {
+                this.lines = [];
                 GetMusicLyricAPI(id).then(res => {
                     if (res.data.lrc !== undefined) {
                         this.lrc = res.data.lrc.lyric;
