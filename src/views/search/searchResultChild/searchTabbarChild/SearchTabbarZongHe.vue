@@ -12,7 +12,7 @@
             <div v-for="item in $store.state.searchResultList.song.songs">
                 <van-cell
                         @click="getMusicId(item.id)"
-                         label-class="labelStyle"
+                        label-class="labelStyle"
                         title-class="titleStyle">
                     <template #title>
                         <span>{{item.name}}</span>
@@ -21,9 +21,10 @@
                     <template #label>
                     <span v-for="(niubi,index) in item.ar">
                         <span v-if="index !==0">/</span>
-                        {{niubi.name}}
+                        <span :style="{color:niubi.name===$store.state.addWord?'#5A6E88':''}">{{niubi.name}}</span>
                     </span>
-                        <span>{{' - '+item.al.name}}</span>
+                        <span> - </span>
+                        <span :style="{color:item.al.name.includes($store.state.addWord)?'#5A6E88':''}">{{item.al.name}}</span>
                         <span v-if="item.alia.length!==0"> ({{item.alia[0]}})</span>
                     </template>
                     <!-- 使用 right-icon 插槽来自定义右侧图标 -->
@@ -47,7 +48,7 @@
                         </div>
                     </template>
                     <template #title>
-                        <div style="font-size: 16px">{{item.name}}</div>
+                        <div style="font-size: 16px" :style="{color:item.name.includes($store.state.addWord)?'#5A6E88':''}">{{item.name}}</div>
                     </template>
                     <template #tags>
                         <div v-for="biaoqian in item.officialTags" style="margin-top: 8px">
@@ -111,8 +112,9 @@
                     <template #title>
                         <div>
                             <div style="position: relative;top: 22px;left: 14px">
-                                <span>{{item.name}}</span>
-                                <span v-for="name in item.alia">{{name}}</span></div>
+                                <span :style="{color:item.name.includes($store.state.addWord)?'#5A6E88':''}">{{item.name}}</span>
+                                <span v-for="name in item.alia">{{name}}</span>
+                            </div>
                         </div>
                     </template>
                 </van-cell>
@@ -136,7 +138,7 @@
                     </template>
                     <template #label>
                         <div style="position: relative;top: 15px;left: 14px">
-                            <span>{{item.artist.name}} </span>
+                            <span :style="{color:item.artist.name.includes($store.state.addWord)?'#5A6E88':''}">{{item.artist.name}} </span>
                             <span> {{item.publishTime|formatDate}}</span>
                         </div>
                     </template>
@@ -162,6 +164,7 @@
         name: "SearchTabbarZongHe",
         created() {
             console.log(this.$store.state.searchResultList);
+
         },
         methods: {
             getMusicId(musicId) {
@@ -202,6 +205,9 @@
                         id: id
                     }
                 })
+            },
+            toArray(val){
+
             }
         },
         components: {
@@ -226,11 +232,12 @@
 </script>
 
 <style scoped>
-.titleStyle{
+    .titleStyle {
 
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
     .labelStyle {
         width: 600px;
         font-size: 10px;
@@ -244,7 +251,7 @@
         color: #BEBFC0;
         overflow: hidden;
         text-overflow: ellipsis;
-width: 100px;
+        width: 100px;
     }
 
     .search-icon {
