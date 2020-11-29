@@ -52,6 +52,7 @@
 
 <style scoped>
     .father {
+        z-index: 1000;
         position: absolute;
         top: 140px;
         left: 12%;

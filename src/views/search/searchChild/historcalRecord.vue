@@ -1,5 +1,4 @@
 <template>
-    <div>
         <div v-if="$store.state.historyList.length!==0">
             <van-cell title="历史记录" style="padding-top: 0" title-class="title">
                 <!-- 使用 right-icon 插槽来自定义右侧图标 -->
@@ -12,7 +11,6 @@
                         style="font-size: 14px">{{item}}</p></div>
             </div>
         </div>
-    </div>
 </template>
 
 <script>
@@ -66,6 +64,7 @@
 </script>
 
 <style scoped>
+
     .title {
         font-weight: bolder;
         font-size: 50px;

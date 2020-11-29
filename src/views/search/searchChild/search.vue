@@ -82,7 +82,7 @@
         },
         methods: {
             //确定搜索时触发
-            onSearch(val) {
+            onSearch() {
                 if (this.value.replace(/(^\s*)|(\s*$)/g, "") === "") {
                     this.value = this.$store.state.guanjianci;
                     // console.log('哈哈');
@@ -104,7 +104,7 @@
                     this.$store.commit('historyBianLiList', newarr);
 
                     this.$store.commit('searchWordFunc', this.value)
-                    this.$store.commit('addWord', val)
+                    this.$store.commit('addWord', this.value)
 
                 }).catch(error => {
                     console.log(error);
@@ -173,5 +173,8 @@
 </script>
 
 <style scoped>
-
+    .van-search__content{
+        background-color: #fff;
+        border-bottom: 1px solid #cccccc;
+    }
 </style>

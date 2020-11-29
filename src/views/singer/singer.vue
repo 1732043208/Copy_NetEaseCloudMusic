@@ -260,6 +260,7 @@
                 tupian:''
             }
         },
+
         filters: {
             formatDate(time) {
                 let date = new Date(time);
@@ -391,7 +392,10 @@
                 this.showJuBaoSecond=false;
                 this.showJuBao = false
             }
-        }
+        },
+        watch:()=>{
+
+    }
     }
 </script>
 
