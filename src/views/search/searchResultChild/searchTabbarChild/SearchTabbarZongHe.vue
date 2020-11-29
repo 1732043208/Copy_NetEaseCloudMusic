@@ -10,8 +10,8 @@
                     <div class="BoxFirstBox">
                         <p class="BoxFirstBoxFirstTitle">
                             <span>歌手:</span>
-                            <span>{{$store.state.searchResultList.artist.artists[0].name?$store.state.searchResultList.artist.artists[0].name:''}}</span>
-                            <span>{{$store.state.searchResultList.artist.artists[0].alias.length!==0?'('+$store.state.searchResultList.artist.artists[0].alia[0]+')':''}}</span>
+                            <span v-if="$store.state.searchResultList.artist.artists[0].name">{{$store.state.searchResultList.artist.artists[0].name}}</span>
+                            <span v-if="$store.state.searchResultList.artist.artists[0].alias.length!==0">{{'('+$store.state.searchResultList.artist.artists[0].alia[0]+')'}}</span>
                         </p>
                         <p class="BoxFirstBoxSecondTitle">
                             专辑:{{$store.state.searchResultList.artist.artists[0].albumSize}}</p>
@@ -28,6 +28,7 @@
                     <van-icon name="play-circle-o" color="black" style="margin-top: 2px"/>
                     <span style="color: black">播放</span></van-button>
             </div>
+
             <div v-for="item in $store.state.searchResultList.song.songs">
                 <van-cell
                         @click="getMusicId(item.id)"
@@ -53,8 +54,17 @@
                 </van-cell>
                 <div class="border"></div>
             </div>
-            <img src="../../../../assets/jietu.jpg" style="width: 100%;height: auto"/>
-            <!--        歌单-->
+            <div class="BoxSecondMoreSongs">
+                <p>
+                    <span>查看更多</span>
+                    <span :style="{color:$store.state.searchResultList.song.songs[0].ar[0].name.includes($store.state.addWord)?'#9ab4d1':''}">{{$store.state.searchResultList.song.songs[0].ar[0].name}}</span>
+                    <span>的歌曲></span>
+                </p>
+            </div>
+        </div>
+        <img src="../../../../assets/jietu.png" style="width: 100%;height: auto"/>
+        <!--        歌单-->
+        <div class="BoxSecond">
             <div style="height: 30px;">
                 <span style="margin-left: 18px;font-weight: bold;">歌单</span>
             </div>
@@ -81,91 +91,92 @@
                     </template>
                 </van-card>
             </div>
-            <div style="font-size: 14px;text-align: center;margin-top: 8px">
-                {{$store.state.searchResultList.playList.moreText}}
-            </div>
-            <img src="../../../../assets/jietu.jpg" style="width: 100%;height: auto"/>
+        </div>
+        <div style="font-size: 14px;text-align: center;margin-top: 8px">
+            {{$store.state.searchResultList.playList.moreText}}
+        </div>
+        <img src="../../../../assets/jietu.png" style="width: 100%;height: auto"/>
 
-            <!--        视频-->
-            <div style="height: 30px;">
-                <span style="margin-left: 18px;font-weight: bold;">视频</span>
-            </div>
-            <div v-for="item in $store.state.searchResultList.video.videos">
-                <van-card @click="getVideoDetailData(item.vid)">
-                    <template #thumb>
-                        <img :src="item.coverUrl" style="width: 130px;height: auto">
-                        <span style="position: absolute;left: 85px;color: white">{{Math.round(item.playTime/10000*Math.pow(10,1))/Math.pow(10,1)}}万</span>
-                    </template>
-                    <template #title>
-                        <div style="font-size: 14px;margin-left: 46px;white-space: pre-wrap;margin-top: 4px;margin-bottom: 6px">
-                            {{item.title}}
-                        </div>
-                    </template>
-                    <template #tags>
-                        <span style="margin-left: 46px;">{{item.durationms|formatDuring}}</span>
-                        <span> by </span>
-                        <span v-for="creator in item.creator">{{creator.userName}}</span>
-                    </template>
-                </van-card>
-            </div>
-            <div style="font-size: 14px;text-align: center;margin-top: 8px">
-                {{$store.state.searchResultList.video.moreText}}
-            </div>
-            <!--       相关搜索-->
-            <div style="height: 30px;margin-top: 10px">
-                <span style="margin-left: 18px;font-weight: bold;">相关搜索</span>
-            </div>
-            <div class="historyFather">
-                <div v-for="item in $store.state.searchResultList.sim_query.sim_querys"
-                     @click="relevantSearch(item.keyword)"
-                     style="background-color:#F3F3F3;font-size: 15px"
-                     class="historySon">{{item.keyword}}
-                </div>
-            </div>
-            <!--               歌手-->
-            <div style="height: 30px;margin-top: 10px">
-                <span style="margin-left: 18px;font-weight: bold;">歌手</span>
-            </div>
-            <div v-for="item in $store.state.searchResultList.artist.artists">
-                <van-cell>
-                    <!-- 使用 right-icon 插槽来自定义右侧图标 -->
-                    <template #icon><img :src="item.img1v1Url" class="getgold_top_head_img"></template>
-                    <template #title>
-                        <div>
-                            <div style="position: relative;top: 22px;left: 14px">
-                                <span :style="{color:item.name.includes($store.state.addWord)?'#5A6E88':''}">{{item.name}}</span>
-                                <span v-for="name in item.alia">{{name}}</span>
-                            </div>
-                        </div>
-                    </template>
-                </van-cell>
-            </div>
-            <!--            专辑-->
-            <div style="height: 30px;margin-top: 10px">
-                <span style="margin-left: 18px;font-weight: bold;">专辑</span>
-            </div>
-            <div v-for="item in $store.state.searchResultList.album.albums">
-                <van-cell>
-                    <!-- 使用 right-icon 插槽来自定义右侧图标 -->
-                    <template #icon>
-                        <img :src="item.picUrl" style="width: 80px;height: auto;">
-                    </template>
-                    <template #title>
-                        <div>
-                            <div style="position: relative;top: 20px;left: 14px">
-                                <span>{{item.name}}</span>
-                                <span v-for="name in item.alia">{{name}}</span></div>
-                        </div>
-                    </template>
-                    <template #label>
-                        <div style="position: relative;top: 15px;left: 14px">
-                            <span :style="{color:item.artist.name.includes($store.state.addWord)?'#5A6E88':''}">{{item.artist.name}} </span>
-                            <span> {{item.publishTime|formatDate}}</span>
-                        </div>
-                    </template>
-                </van-cell>
+        <!--        视频-->
+        <div style="height: 30px;">
+            <span style="margin-left: 18px;font-weight: bold;">视频</span>
+        </div>
+        <div v-for="item in $store.state.searchResultList.video.videos">
+            <van-card @click="getVideoDetailData(item.vid)">
+                <template #thumb>
+                    <img :src="item.coverUrl" style="width: 130px;height: auto">
+                    <span style="position: absolute;left: 85px;color: white">{{Math.round(item.playTime/10000*Math.pow(10,1))/Math.pow(10,1)}}万</span>
+                </template>
+                <template #title>
+                    <div style="font-size: 14px;margin-left: 46px;white-space: pre-wrap;margin-top: 4px;margin-bottom: 6px">
+                        {{item.title}}
+                    </div>
+                </template>
+                <template #tags>
+                    <span style="margin-left: 46px;">{{item.durationms|formatDuring}}</span>
+                    <span> by </span>
+                    <span v-for="creator in item.creator">{{creator.userName}}</span>
+                </template>
+            </van-card>
+        </div>
+        <div style="font-size: 14px;text-align: center;margin-top: 8px">
+            {{$store.state.searchResultList.video.moreText}}
+        </div>
+        <!--       相关搜索-->
+        <div style="height: 30px;margin-top: 10px">
+            <span style="margin-left: 18px;font-weight: bold;">相关搜索</span>
+        </div>
+        <div class="historyFather">
+            <div v-for="item in $store.state.searchResultList.sim_query.sim_querys"
+                 @click="relevantSearch(item.keyword)"
+                 style="background-color:#F3F3F3;font-size: 15px"
+                 class="historySon">{{item.keyword}}
             </div>
         </div>
+        <!--               歌手-->
+        <div style="height: 30px;margin-top: 10px">
+            <span style="margin-left: 18px;font-weight: bold;">歌手</span>
+        </div>
+        <div v-for="item in $store.state.searchResultList.artist.artists">
+            <van-cell>
+                <!-- 使用 right-icon 插槽来自定义右侧图标 -->
+                <template #icon><img :src="item.img1v1Url" class="getgold_top_head_img"></template>
+                <template #title>
+                    <div>
+                        <div style="position: relative;top: 22px;left: 14px">
+                            <span :style="{color:item.name.includes($store.state.addWord)?'#5A6E88':''}">{{item.name}}</span>
+                            <span v-for="name in item.alia">{{name}}</span>
+                        </div>
+                    </div>
+                </template>
+            </van-cell>
+        </div>
+        <!--            专辑-->
+        <div style="height: 30px;margin-top: 10px">
+            <span style="margin-left: 18px;font-weight: bold;">专辑</span>
+        </div>
+        <div v-for="item in $store.state.searchResultList.album.albums">
+            <van-cell>
+                <!-- 使用 right-icon 插槽来自定义右侧图标 -->
+                <template #icon>
+                    <img :src="item.picUrl" style="width: 80px;height: auto;">
+                </template>
+                <template #title>
+                    <div>
+                        <div style="position: relative;top: 20px;left: 14px">
+                            <span>{{item.name}}</span>
+                            <span v-for="name in item.alia">{{name}}</span></div>
+                    </div>
+                </template>
+                <template #label>
+                    <div style="position: relative;top: 15px;left: 14px">
+                        <span :style="{color:item.artist.name.includes($store.state.addWord)?'#5A6E88':''}">{{item.artist.name}} </span>
+                        <span> {{item.publishTime|formatDate}}</span>
+                    </div>
+                </template>
+            </van-cell>
+        </div>
+
 
     </div>
 </template>
@@ -262,6 +273,7 @@
     .BoxFirst {
         border-radius: 40px;
         position: relative;
+        margin-bottom: 40px;
     }
 
     .BoxFirstImg {
@@ -276,14 +288,21 @@
         top: 50%;
         transform: translateY(-50%);
         margin-left: 20px;
+
         border-radius: 40px;
     }
 
     .BoxSecond {
-        margin-top: 40px;
         background-color: #fff;
         padding-top: 30px;
         border-radius: 40px;
+    }
+
+    .BoxSecondMoreSongs {
+        font-size: 40px;
+        text-align: center;
+        padding-top: 16px;
+        padding-bottom: 16px;
     }
 
     .BoxFirstBoxFirstTitle {
@@ -347,6 +366,8 @@
         border-radius: 50%;
         margin-left: 10px;
     }
-
+    .van-card{
+        background-color: #fff;
+    }
 
 </style>
