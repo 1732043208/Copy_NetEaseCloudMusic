@@ -1,15 +1,18 @@
 <template>
     <div class="fatherBox">
-        <div >
+        <div>
             <van-cell class="BoxFirst">
                 <!-- 使用 right-icon 插槽来自定义右侧图标 -->
                 <template #icon>
                     <img :src="$store.state.searchResultList.artist.artists[0].picUrl"
-                         class="BoxFirstImg" ></template>
+                         class="BoxFirstImg"></template>
                 <template #title>
                     <div class="BoxFirstBox">
                         <p class="BoxFirstBoxFirstTitle">
-                            歌手:{{$store.state.searchResultList.artist.artists[0].name}}({{$store.state.searchResultList.artist.artists[0].alia[0]}})</p>
+                            <span>歌手:</span>
+                            <span>{{$store.state.searchResultList.artist.artists[0].name?$store.state.searchResultList.artist.artists[0].name:''}}</span>
+                            <span>{{$store.state.searchResultList.artist.artists[0].alias.length!==0?'('+$store.state.searchResultList.artist.artists[0].alia[0]+')':''}}</span>
+                        </p>
                         <p class="BoxFirstBoxSecondTitle">
                             专辑:{{$store.state.searchResultList.artist.artists[0].albumSize}}</p>
                     </div>
@@ -287,7 +290,8 @@
         font-weight: 700;
         font-size: 46px;
     }
-    .BoxFirstBoxSecondTitle{
+
+    .BoxFirstBoxSecondTitle {
         font-size: 30px;
         color: #bbbbbb;
     }
