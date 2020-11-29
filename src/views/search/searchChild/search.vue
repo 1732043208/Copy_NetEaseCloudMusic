@@ -101,7 +101,7 @@
                     this.$emit("isSearchResultFunc", true);
                     this.$store.commit("searchResultList", lists);
                     this.$store.commit('isSearchShowFunc', true);//修改搜索框背景颜色
-                    this.$store.state.historyList.unshift(val);
+                    this.$store.state.historyList.unshift(this.value);
                     let hisList = this.$store.state.historyList;
                     let newarr = Array.from(new Set(hisList));
                     this.$store.commit('historyBianLiList', newarr);
