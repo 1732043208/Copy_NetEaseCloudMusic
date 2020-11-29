@@ -61,8 +61,9 @@
                     let newarr= Array.from(new Set(hisList));
 
                     this.$store.commit('historyBianLiList', newarr);
-                    this.$store.commit('searchWordFunc',val)
-                    this.$store.commit('addWord',val)
+                    this.$store.commit('searchWordFunc',val);
+                    this.$store.commit('addWord',val);
+                    this.$store.commit('isSearchShowFunc', true);//改变搜索框背景颜色
                 })
             }
         }

@@ -49,6 +49,7 @@
                     let IsShow = false;
                     this.$store.commit('searchResultShow', IsShow)
                     this.$store.commit('addWord', item)
+                    this.$store.commit('isSearchShowFunc', true);//改变搜索框背景颜色
                 }).catch(error => {
 
                 });

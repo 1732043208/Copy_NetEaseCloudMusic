@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div ref="mycolor">
         <form action="/">
             <div v-if="$store.state.addWord===''">
                 <van-search
@@ -11,6 +11,8 @@
                         @blur="onBlur"
                         @focus="onFocus"
                         :clearable="false"
+                        :style="{'background-color':$store.state.isSearchShow?'#f7f7f7':'#ffffff'}"
+
                 >
                     <template #left>
                         <van-icon size="22" @click="goBack" color="black" name="arrow-left" style="margin-right: 10px"/>
@@ -34,6 +36,7 @@
                         @blur="onBlur"
                         @focus="onFocus"
                         :clearable="false"
+                        :style="{'background-color':$store.state.isSearchShow?'#f7f7f7':'#ffffff'}"
                 >
                     <template #left>
                         <van-icon size="22" @click="goBack" color="black" name="arrow-left" style="margin-right: 10px"/>
@@ -97,13 +100,12 @@
                     // console.log(res);
                     this.$emit("isSearchResultFunc", true);
                     this.$store.commit("searchResultList", lists);
-
+                    this.$store.commit('isSearchShowFunc', true);//修改搜索框背景颜色
                     this.$store.state.historyList.unshift(val);
                     let hisList = this.$store.state.historyList;
                     let newarr = Array.from(new Set(hisList));
                     this.$store.commit('historyBianLiList', newarr);
-
-                    this.$store.commit('searchWordFunc', this.value)
+                    this.$store.commit('searchWordFunc', this.value);
                     this.$store.commit('addWord', this.value)
 
                 }).catch(error => {
@@ -148,6 +150,7 @@
             goBack() {
                 if (this.isShow) {
                     this.$emit("isSearchResultFunc", false);
+                    this.$store.commit('isSearchShowFunc', false);
                     this.$store.commit('cutWord');
                     this.value = ''
                 } else {
@@ -173,8 +176,9 @@
 </script>
 
 <style scoped>
-    .van-search__content{
-        background-color: #fff;
+    .van-search__content {
+        --bcColor: 'transparent';
+        background-color: var(--bcColor);
         border-bottom: 1px solid #cccccc;
     }
 </style>

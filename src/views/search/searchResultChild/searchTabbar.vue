@@ -1,6 +1,6 @@
 <template>
     <div>
-        <van-tabs :swipeable="true">
+        <van-tabs :swipeable="true" background="#f7f7f7">
             <van-tab v-for="(item,index) in tabbarList" :key="index" :title="item">
                 <div v-if="index === 0">
                     <SearchTabbarZongHe @backtop="getbacktop"></SearchTabbarZongHe>

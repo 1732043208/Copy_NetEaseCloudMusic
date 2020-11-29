@@ -46,6 +46,7 @@ export default new Vuex.Store({
         guanjianci: '',
         addWord: '',
         searchWord: '',
+        isSearchShow: false, //控制搜索框背景颜色
     },
     mutations: {
         saveToken(state, token) {
@@ -134,6 +135,9 @@ export default new Vuex.Store({
         },
         update_musicAllDetail(state, {type, val}) {
             state.musicAllDetail[type] = val;
+        },
+        isSearchShowFunc(state, val) {
+            state.isSearchShow = val
         }
     },
     actions: {
