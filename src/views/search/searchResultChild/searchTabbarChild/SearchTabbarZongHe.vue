@@ -1,13 +1,29 @@
 <template>
-    <div>
+    <div class="fatherBox">
+        <div >
+            <van-cell class="BoxFirst">
+                <!-- 使用 right-icon 插槽来自定义右侧图标 -->
+                <template #icon>
+                    <img :src="$store.state.searchResultList.artist.artists[0].picUrl"
+                         class="BoxFirstImg" ></template>
+                <template #title>
+                    <div class="BoxFirstBox">
+                        <p class="BoxFirstBoxFirstTitle">
+                            歌手:{{$store.state.searchResultList.artist.artists[0].name}}({{$store.state.searchResultList.artist.artists[0].alia[0]}})</p>
+                        <p class="BoxFirstBoxSecondTitle">
+                            专辑:{{$store.state.searchResultList.artist.artists[0].albumSize}}</p>
+                    </div>
+                </template>
+            </van-cell>
+        </div>
         <!--        单曲-->
-        <div>
-            <div style="margin-top: 10px;height: 30px;">
+        <div class="BoxSecond">
+            <div>
                 <span style="margin-left: 18px;font-weight: bold;">单曲</span>
                 <van-button round type="info" plain hairline color="#BEBFC0" size="mini"
-                            style="width:80px;height: 24px;float: right;margin-right: 10px;display: inline-block;vertical-align: middle">
+                            style="width:60px;height: 24px;float: right;margin-right: 10px;display: inline-block;vertical-align: middle">
                     <van-icon name="play-circle-o" color="black" style="margin-top: 2px"/>
-                    <span style="color: black">播放全部</span></van-button>
+                    <span style="color: black">播放</span></van-button>
             </div>
             <div v-for="item in $store.state.searchResultList.song.songs">
                 <van-cell
@@ -31,8 +47,8 @@
                     <template #right-icon>
                         <van-icon name="ellipsis" class="search-icon" size="18px"/>
                     </template>
-
                 </van-cell>
+                <div class="border"></div>
             </div>
             <img src="../../../../assets/jietu.jpg" style="width: 100%;height: auto"/>
             <!--        歌单-->
@@ -48,7 +64,9 @@
                         </div>
                     </template>
                     <template #title>
-                        <div style="font-size: 16px" :style="{color:item.name.includes($store.state.addWord)?'#5A6E88':''}">{{item.name}}</div>
+                        <div style="font-size: 16px;overflow: hidden;text-overflow: ellipsis"
+                             :style="{color:item.name.includes($store.state.addWord)?'#9ab4d1':''}">{{item.name}}
+                        </div>
                     </template>
                     <template #tags>
                         <div v-for="biaoqian in item.officialTags" style="margin-top: 8px">
@@ -164,7 +182,6 @@
         name: "SearchTabbarZongHe",
         created() {
             console.log(this.$store.state.searchResultList);
-
         },
         methods: {
             getMusicId(musicId) {
@@ -184,7 +201,6 @@
             relevantSearch(item) {
                 GetSearchApi(item, '1018').then(res => {
                     let lists = res.data.result;
-
                     console.log(res);
                     this.$emit("isSearchResultFunc", true);
                     console.log(this.$store.state.searchResultShow);
@@ -206,7 +222,7 @@
                     }
                 })
             },
-            toArray(val){
+            toArray(val) {
 
             }
         },
@@ -232,14 +248,57 @@
 </script>
 
 <style scoped>
-    .titleStyle {
+    .fatherBox {
+        background-color: #F7F7F7;
+        padding-left: 40px;
+        padding-right: 40px;
+        padding-top: 60px;
 
+    }
+
+    .BoxFirst {
+        border-radius: 40px;
+        position: relative;
+    }
+
+    .BoxFirstImg {
+        height: 160px;
+        width: 160px;
+        border-radius: 50%;
+
+    }
+
+    .BoxFirstBox {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        margin-left: 20px;
+        border-radius: 40px;
+    }
+
+    .BoxSecond {
+        margin-top: 40px;
+        background-color: #fff;
+        padding-top: 30px;
+        border-radius: 40px;
+    }
+
+    .BoxFirstBoxFirstTitle {
+        font-weight: 700;
+        font-size: 46px;
+    }
+    .BoxFirstBoxSecondTitle{
+        font-size: 30px;
+        color: #bbbbbb;
+    }
+
+    .titleStyle {
         overflow: hidden;
         text-overflow: ellipsis;
     }
 
     .labelStyle {
-        width: 600px;
+        width: 700px;
         font-size: 10px;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -284,4 +343,6 @@
         border-radius: 50%;
         margin-left: 10px;
     }
+
+
 </style>
