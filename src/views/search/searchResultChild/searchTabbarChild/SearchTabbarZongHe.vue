@@ -1,7 +1,7 @@
 <template>
     <div class="fatherBox">
         <div>
-            <van-cell class="BoxFirst">
+            <van-cell class="BoxFirst" :to="{path:'/singer',query:{id:$store.state.searchResultList.artist.artists[0].id}}">
                 <!-- 使用 right-icon 插槽来自定义右侧图标 -->
                 <template #icon>
                     <img :src="$store.state.searchResultList.artist.artists[0].picUrl"
@@ -241,7 +241,9 @@
                     let IsShow = false;
                     this.$store.commit('searchResultShow', IsShow);
                     this.$store.commit('addWord', item);
+
                     this.$emit('backtop')
+
                 }).catch(error => {
 
                 });
@@ -254,9 +256,7 @@
                     }
                 })
             },
-            toArray(val) {
 
-            }
         },
         components: {
             [Icon.name]: Icon,
