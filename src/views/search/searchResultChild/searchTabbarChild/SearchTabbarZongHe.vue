@@ -168,7 +168,7 @@
             </div>
         </div>
         <!--            专辑-->
-        <div class="BoxSecond" style="margin-top: 20px">
+        <div class="BoxSecond" style="margin-top: 20px;padding-bottom: 10px">
             <div style="height: 30px;margin-top: 10px">
                 <span style="margin-left: 18px;font-weight: bold;">专辑</span>
             </div>
@@ -282,10 +282,7 @@
 <style scoped>
     .fatherBox {
         background-color: #F7F7F7;
-        padding-left: 40px;
-        padding-right: 40px;
-        padding-top: 60px;
-
+        padding: 40px 40px 100px 40px;
     }
 
     .BoxFirst {
@@ -306,7 +303,6 @@
         top: 50%;
         transform: translateY(-50%);
         margin-left: 20px;
-
         border-radius: 40px;
     }
 
@@ -357,7 +353,6 @@
     .search-icon {
         position: relative;
         top: 30px;
-
     }
 
     .historyFather {
@@ -400,6 +395,7 @@
     }
     .van-card{
         background-color: #fff;
+        height: 240px;
     }
 
 </style>
