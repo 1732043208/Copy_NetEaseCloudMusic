@@ -1,5 +1,5 @@
 <template>
-    <div ref="mycolor">
+    <div>
         <form action="/">
             <div v-if="$store.state.addWord===''">
                 <van-search

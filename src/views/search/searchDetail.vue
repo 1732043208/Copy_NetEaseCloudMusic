@@ -49,7 +49,8 @@ import searchTabbar from "./searchResultChild/searchTabbar";
         },
         methods: {
             isSearchResultFunc(val) {
-                this.isSearchResult = val
+                this.isSearchResult = val;
+                this.$store.commit('isSearchShowFunc', this.isSearchResult);//修改搜索框背景颜色
             },
             getbacktop(){
              this.$refs.scroll.scrollTo(0,0,400)
