@@ -61,7 +61,7 @@
                     </div>
                 </div>
                 <van-tabs :swipeable="true" :animated="true" ref="tabs" v-model="activeName"
-                          title-active-color="#DF393D" style="margin-top: 64px" background="#f3f3f1" line-height="6px" >
+                          title-active-color="#DF393D" style="margin-top: 64px" background="#f3f3f1" line-height="6px">
 
                     <van-tab title="主页" name="a">
 
@@ -106,19 +106,21 @@
                                         <span style="color: black">更多信息</span></van-button>
                                 </div>
                                 <div style="margin: 12px 10px 8px 14px;font-size: 14px;overflow: hidden;text-overflow: ellipsis;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:5;">
-                                    <p style="text-indent: 2em">{{SingerDescribe.briefDesc.trim()}}</p>
+                                    <p style="text-indent: 2em">{{SingerDescribe.briefDesc}}</p>
                                 </div>
                             </div>
                             <!--        相似艺人-->
                             <div class="artistBox">
-                                    <p style="padding-left: 14px;padding-top: 10px;;font-weight: bold">相似艺人</p>
+                                <p style="padding-left: 14px;padding-top: 10px;;font-weight: bold">相似艺人</p>
 
                                 <div style="margin: 10px 14px 20px 14px;display:flex;flex-direction:row;">
-                                    <div style="margin-left: 5px;margin-right: 5px;background:#F5F5F5;height: 130px;float: left;text-align: center;padding-top: 10px;flex: 1"
-                                         v-for="(item,index) in simiarts" v-if="index>2?false:true">
+                                    <div style="margin-left: 5px;margin-right: 5px;background:#F5F5F5;height: 130px;float: left;text-align: center;padding-top: 10px;flex: 1;border-radius: 10px"
+                                         v-for="(item,index) in simiarts" v-if="index>2?false:true"
+                                         @click="pushArtist(item.id)">
                                         <img :src="item.img1v1Url" style="width: 56px;border-radius: 50px;">
                                         <p style="font-size: 14px;height: 20px;display: block">{{item.name}}</p>
-                                        <van-button round type="info" color="linear-gradient(to right, #ff6034, #ee0a24)"
+                                        <van-button round type="info"
+                                                    color="linear-gradient(to right, #ff6034, #ee0a24)"
                                                     style="width: 60px;height: 20px;margin-top: 10px">
                                             <p style="font-size: 12px">关注</p>
                                         </van-button>
@@ -307,7 +309,7 @@
             //相似艺人
             GetSimilaritySingerApi(iid).then(res => {
                 this.simiarts = res.data.artists;
-                // console.log(res);
+                console.log(this.simiarts);
             }).catch(error => {
                 console.log(error);
             });
@@ -410,10 +412,21 @@
             closeshowJuBaoSecondfuc() {
                 this.showJuBaoSecond = false;
                 this.showJuBao = false
+            },
+            pushArtist(id) {
+                //清空完再赋值
+                this.$router.push({
+                    path: '/singer',
+                    query: {
+                        id: id
+                    }
+                })
             }
         },
-        watch: () => {
-
+        watch:{
+            $route(to,from){
+                this.$router.go(0)
+            }
         }
     }
 </script>
@@ -476,7 +489,8 @@
         padding-bottom: 6px;
         margin-top: 40px;
     }
-    .artistBox{
+
+    .artistBox {
         background-color: #fff;
         margin-top: 40px;
         border-radius: 40px;

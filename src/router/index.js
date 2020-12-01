@@ -24,7 +24,7 @@ const SearchDetail = () => import('../views/search/searchDetail');
 const Dj = () => import('../views/dj/dj');
 const DjDetail = () => import('../views/dj/djDetail');
 const Singer = () => import('../views/singer/singer');
-const SingIntroduction = () => import('../views/singer/sing-Introduction')
+const SingIntroduction = () => import('../views/singer/sing-Introduction');
 const routes = [
     {
         path: '/',
@@ -196,6 +196,7 @@ const routes = [
             isShow: false,
         }
     },
+
     {
         path: '/sing-introduction',
         name: 'sing-introduction',
