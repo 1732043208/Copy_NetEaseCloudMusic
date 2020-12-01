@@ -99,14 +99,15 @@
                             </div>
                             <!--        歌手简介-->
                             <div class="detailBox">
-                                <div style="margin-left: 10px;margin-top: 10px" @click="pushXinXi">
+                                <div style="margin-left: 10px;margin-top: 10px">
                                     <span style="font-weight: bold;margin-left: 4px">歌手简介</span>
-                                    <van-button round type="info" plain hairline color="#BEBFC0" size="mini"
-                                                style="width:80px;height: 24px;float: right;margin-right: 10px;display: inline-block;vertical-align: middle">
-                                        <span style="color: black">更多信息</span></van-button>
+
                                 </div>
-                                <div style="margin: 12px 10px 8px 14px;font-size: 14px;overflow: hidden;text-overflow: ellipsis;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:5;">
-                                    <p style="text-indent: 2em">{{SingerDescribe.briefDesc}}</p>
+                                <div style="margin: 12px 10px 8px 14px;font-size: 14px;overflow: hidden;text-overflow: ellipsis;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:7;">
+                                    <p>{{SingerDescribe.briefDesc}}</p>
+                                </div>
+                                <div class="singerDetailMore" @click="pushXinXi">
+                                    <span>查看全部></span>
                                 </div>
                             </div>
                             <!--        相似艺人-->
@@ -423,8 +424,8 @@
                 })
             }
         },
-        watch:{
-            $route(to,from){
+        watch: {
+            $route(to, from) {
                 this.$router.go(0)
             }
         }
@@ -496,6 +497,14 @@
         border-radius: 40px;
         padding-bottom: 10px;
         margin-bottom: 100px;
+    }
+
+    .singerDetailMore {
+        border-top: 1px solid #f7f7f7;
+        text-align: center;
+        font-size: 40px;
+        color: grey;
+        padding: 10px 0;
     }
 
 </style>
