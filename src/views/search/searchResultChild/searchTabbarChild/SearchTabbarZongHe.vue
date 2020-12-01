@@ -1,7 +1,8 @@
 <template>
     <div class="fatherBox">
         <div>
-            <van-cell class="BoxFirst" :to="{path:'/singer',query:{id:$store.state.searchResultList.artist.artists[0].id}}">
+            <van-cell class="BoxFirst"
+                      :to="{path:'/singer',query:{id:$store.state.searchResultList.artist.artists[0].id}}">
                 <!-- 使用 right-icon 插槽来自定义右侧图标 -->
                 <template #icon>
                     <img :src="$store.state.searchResultList.artist.artists[0].picUrl"
@@ -72,7 +73,7 @@
                 <van-card @click="getSongListData(item.id)">
                     <template #thumb><img :src="item.coverImgUrl" style="width: 80px;height: 80px"></template>
                     <template #desc>
-                        <div style="margin-top: 4px">
+                        <div style="margin-top: 4px;overflow: hidden;text-overflow: ellipsis">
                             <span> {{item.trackCount+'首'+' by '+item.creator.nickname+','+'播放'+Math.round(item.playCount/10000*Math.pow(10,1))/Math.pow(10,1)+'万次'}}</span>
                         </div>
                     </template>
@@ -93,13 +94,14 @@
                 <div class="borderLine"></div>
             </div>
 
-        <div class="BoxSecondMore">
-            <p>
-                <span>查看更多</span>
-                <span :style="{color:$store.state.searchResultList.song.songs[0].ar[0].name.includes($store.state.addWord)?'#9ab4d1':''}">{{$store.state.searchResultList.song.songs[0].ar[0].name}}</span>
-                <span>的相关歌单></span>
-            </p>
-        </div>    </div>
+            <div class="BoxSecondMore">
+                <p>
+                    <span>查看更多</span>
+                    <span :style="{color:$store.state.searchResultList.song.songs[0].ar[0].name.includes($store.state.addWord)?'#9ab4d1':''}">{{$store.state.searchResultList.song.songs[0].ar[0].name}}</span>
+                    <span>的相关歌单></span>
+                </p>
+            </div>
+        </div>
         <img src="../../../../assets/jietu.png" style="width: 100%;height: auto"/>
 
         <!--        视频-->
@@ -114,7 +116,8 @@
                         <span style="position: absolute;right:-12px;color: white">{{Math.round(item.playTime/10000*Math.pow(10,1))/Math.pow(10,1)}}万</span>
                     </template>
                     <template #title>
-                        <div style="font-size: 14px;margin-left: 16px;;margin-top: 4px;margin-bottom: 6px" class="videoLineText">
+                        <div style="font-size: 14px;margin-left: 16px;;margin-top: 4px;margin-bottom: 6px"
+                             class="videoLineText">
                             {{item.title}}
                         </div>
                     </template>
@@ -127,13 +130,14 @@
                 <div class="borderLine"></div>
             </div>
 
-        <div class="BoxSecondMore">
-            <p>
-                <span>查看更多</span>
-                <span :style="{color:$store.state.searchResultList.song.songs[0].ar[0].name.includes($store.state.addWord)?'#9ab4d1':''}">{{$store.state.searchResultList.song.songs[0].ar[0].name}}</span>
-                <span>的相关视频></span>
-            </p>
-        </div>  </div>
+            <div class="BoxSecondMore">
+                <p>
+                    <span>查看更多</span>
+                    <span :style="{color:$store.state.searchResultList.song.songs[0].ar[0].name.includes($store.state.addWord)?'#9ab4d1':''}">{{$store.state.searchResultList.song.songs[0].ar[0].name}}</span>
+                    <span>的相关视频></span>
+                </p>
+            </div>
+        </div>
         <!--       相关搜索-->
         <div class="BoxSecond" style="margin-top: 20px;padding-bottom: 12px">
             <div style="height: 30px;margin-top: 4px">
@@ -379,23 +383,35 @@
         border-radius: 50%;
         margin-left: 10px;
     }
-    .borderLine{
+
+    .borderLine {
         width: 90%;
         height: 1px;
         background-color: #f5f6f7;
         margin: 0 auto;
     }
-    .videoLineText{
-        overflow : hidden;
+
+    .videoLineText {
+        overflow: hidden;
         text-overflow: ellipsis;
     }
-    .videoImg{
+
+    .videoImg {
         width: 300px;
         height: auto;
     }
-    .van-card{
+    /*修改vant UI库默认样式*/
+    .van-card {
         background-color: #fff;
         height: 240px;
+        overflow: hidden;
     }
 
+    .van-card__header {
+        height: 60px
+    }
+
+    .van-card__content {
+        height: 60px;
+    }
 </style>

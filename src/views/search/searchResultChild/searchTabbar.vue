@@ -1,6 +1,7 @@
 <template>
     <div>
-        <van-tabs :swipeable="true" background="#f7f7f7" :animated="true" :duration="0.2" :line-width="30" :line-height="6" >
+        <van-tabs :swipeable="true" :background="tabColor" :animated="true" :duration="0.2" :line-width="30"
+                  :line-height="6" v-model="tabsIndex" @change="tabBackground">
             <van-tab v-for="(item,index) in tabbarList" :key="index" :title="item">
                 <div v-if="index === 0">
                     <SearchTabbarZongHe @backtop="getbacktop"></SearchTabbarZongHe>
@@ -12,7 +13,7 @@
                     <SearchTabbarShiPin></SearchTabbarShiPin>
                 </div>
                 <div v-if="index===4">
-                 <SearchTabbarGeShou></SearchTabbarGeShou>
+                    <SearchTabbarGeShou></SearchTabbarGeShou>
                 </div>
                 <div v-if="index===5">
                     <SearchTabbarZhuanJi></SearchTabbarZhuanJi>
@@ -21,7 +22,7 @@
                     <SearchTabbarGeDan></SearchTabbarGeDan>
                 </div>
                 <div v-if="index===7">
-              <SearchTabbarDianTai></SearchTabbarDianTai>
+                    <SearchTabbarDianTai></SearchTabbarDianTai>
                 </div>
             </van-tab>
         </van-tabs>
@@ -44,7 +45,8 @@
         data() {
             return {
                 tabbarList: ['综合', '单曲', '云村', '视频', '歌手', '专辑', '歌单', '主播电台', '用户'],
-
+                tabColor: '#f7f7f7',
+                tabsIndex: 0
             }
         },
         components: {
@@ -64,6 +66,17 @@
         methods: {
             getbacktop() {
                 this.$emit('backtop')
+            },
+            tabBackground() {
+                if (this.tabsIndex === 0) {
+                    this.tabColor = '#f7f7f7';
+                    this.$store.commit('isSearchShowFunc', true);//修改搜索框背景颜色
+                } else {
+                    this.tabColor = '#ffffff';
+                    this.$store.commit('isSearchShowFunc', false);//修改搜索框背景颜色
+                }
+                console.log(this.tabsIndex);
+
             }
         }
     }
