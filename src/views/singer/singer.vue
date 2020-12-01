@@ -25,7 +25,7 @@
         <scroll class="content" ref="scroll"
                 :probe-type="3"
                 :pull-up-load="true">
-            <div style="background-color:#f3f3f1;">
+            <div :style="{'background-color':tabsColor}">
                 <div style="width: 100%;height: 280px;position: relative;">
 
                     <img :src="xiangqing.picUrl" style="width: 100%">
@@ -61,7 +61,8 @@
                     </div>
                 </div>
                 <van-tabs :swipeable="true" :animated="true" ref="tabs" v-model="activeName"
-                          title-active-color="#DF393D" style="margin-top: 64px" background="#f3f3f1" line-height="6px">
+                          title-active-color="#DF393D" style="margin-top: 64px" :background="tabsColor"
+                          line-height="6px" @click="changeTabs">
 
                     <van-tab title="主页" name="a">
 
@@ -130,7 +131,6 @@
                             </div>
                         </div>
                     </van-tab>
-
                     <van-tab title="歌曲" name="b"> <!--        近期热门-->
                         <div style="margin-left: 10px;margin-top: 10px;margin-bottom: 6px">
                             <div @click="showPopupAdd">
@@ -279,7 +279,8 @@
                 mv: [],
                 showJuBao: false,
                 showJuBaoSecond: false,
-                tupian: ''
+                tupian: '',
+                tabsColor: '#f3f3f1'
             }
         },
 
@@ -354,6 +355,13 @@
             [Popup.name]: Popup
         },
         methods: {
+            changeTabs(name) {
+                if (name === 'a') {
+                    this.tabsColor = '#f3f3f1'
+                } else {
+                    this.tabsColor = '#ffffff'
+                }
+            },
             //专辑跳转
             pushAlbum(id) {
                 this.$router.push({
