@@ -14,10 +14,12 @@
                         {{val.name}}
                     </span>
                     <span>{{' - '+item.al.name}}</span>
-<!--                    <span v-if="item.alias.length!==0"> ({{item.alias[0]}})</span>-->
+                    <!--                    <span v-if="item.alias.length!==0"> ({{item.alias[0]}})</span>-->
                 </template>
                 <!-- 使用 right-icon 插槽来自定义右侧图标 -->
                 <template #right-icon>
+                    <img src="../../../../../src/assets/MV.png" alt="" class="mvImg" @click.stop="pushMV(item.mv)"
+                         v-if="item.mv !== 0">
                     <van-icon name="ellipsis" class="search-icon" size="18px"/>
                 </template>
             </van-cell>
@@ -29,23 +31,31 @@
 <script>
     import {Icon} from "vant";
     import {Button} from 'vant';
-    import {GetSearchApi,GetSingerDanQuApi} from "../../../../http/all-api";
-    import { Cell, CellGroup,List,PullRefresh } from 'vant';
+    import {GetSearchApi, GetSingerDanQuApi} from "../../../../http/all-api";
+    import {Cell, CellGroup, List, PullRefresh} from 'vant';
+
     export default {
         name: "SearchTabbarDanQu",
-        data(){
+        data() {
             return {
-                songsList:[],
+                songsList: [],
             }
         },
-        methods:{
-            getMusicId(musicId){
+        methods: {
+            getMusicId(musicId) {
                 // 音乐id
                 console.log(musicId);
                 this.$store.commit('changeMusicId', musicId);
                 this.musicCheck(musicId);
             },
-
+            pushMV(vid) {
+                this.$router.push({
+                    path: '/music-mv',
+                    query: {
+                        mvId: vid
+                    }
+                })
+            },
 
         },
         created() {
@@ -53,9 +63,9 @@
                 //通过搜索关键词，获取到歌手id
                 let id = res.data.result.songs[0].artists[0].id;
 
-                GetSingerDanQuApi(id).then(res=>{
+                GetSingerDanQuApi(id).then(res => {
 
-                    this.songsList=res.data.hotSongs;
+                    this.songsList = res.data.hotSongs;
                     console.log(this.songsList);
                 })
             }).catch(error => {
@@ -66,10 +76,10 @@
         components: {
             [Icon.name]: Icon,
             [Button.name]: Button,
-            [Cell.name]:Cell,
-            [CellGroup.name]:CellGroup,
-            [List.name]:List,
-            [PullRefresh.name]:PullRefresh ,
+            [Cell.name]: Cell,
+            [CellGroup.name]: CellGroup,
+            [List.name]: List,
+            [PullRefresh.name]: PullRefresh,
 
         }
     }
@@ -96,5 +106,12 @@
         position: relative;
         top: 30px;
 
+    }
+
+    .mvImg {
+        width: 50px;
+        height: 50px;
+        margin-top: 30px;
+        margin-right: 20px;
     }
 </style>

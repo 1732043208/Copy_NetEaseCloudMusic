@@ -22,7 +22,7 @@
         </div>
         <!--        单曲-->
         <div class="BoxSecond">
-            <div>
+            <div style="border-bottom: 1px solid #f5f6f7;padding-bottom: 10px">
                 <span style="margin-left: 18px;font-weight: bold;">单曲</span>
                 <van-button round type="info" plain hairline color="#BEBFC0" size="mini"
                             style="width:60px;height: 24px;float: right;margin-right: 10px;display: inline-block;vertical-align: middle">
@@ -50,6 +50,8 @@
                     </template>
                     <!-- 使用 right-icon 插槽来自定义右侧图标 -->
                     <template #right-icon>
+                        <img src="../../../../../src/assets/MV.png" alt="" class="mvImg" @click.stop="pushMV(item.mv)"
+                             v-if="item.mv !== 0">
                         <van-icon name="ellipsis" class="search-icon" size="18px"/>
                     </template>
                 </van-cell>
@@ -434,5 +436,11 @@
 
     .van-card__content {
         height: 60px;
+    }
+    .mvImg {
+        width: 50px;
+        height: 50px;
+        margin-top: 30px;
+        margin-right: 20px;
     }
 </style>
