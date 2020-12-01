@@ -4,7 +4,7 @@
                   :line-height="6" v-model="tabsIndex" @change="tabBackground">
             <van-tab v-for="(item,index) in tabbarList" :key="index" :title="item">
                 <div v-if="index === 0">
-                    <SearchTabbarZongHe @backtop="getbacktop"></SearchTabbarZongHe>
+                    <SearchTabbarZongHe @backtop="getbacktop" @pushDetail="pushDetail"></SearchTabbarZongHe>
                 </div>
                 <div v-if="index ===1">
                     <SearchTabbarDanQu></SearchTabbarDanQu>
@@ -76,7 +76,9 @@
                     this.$store.commit('isSearchShowFunc', false);//修改搜索框背景颜色
                 }
                 console.log(this.tabsIndex);
-
+            },
+            pushDetail(val) {
+                this.tabsIndex = val
             }
         }
     }

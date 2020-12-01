@@ -106,7 +106,7 @@
                                         <span style="color: black">更多信息</span></van-button>
                                 </div>
                                 <div style="margin: 12px 10px 8px 14px;font-size: 14px;overflow: hidden;text-overflow: ellipsis;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:5;">
-                                    <p>{{SingerDescribe.briefDesc}}</p>
+                                    <p style="text-indent: 2em">{{SingerDescribe.briefDesc.trim()}}</p>
                                 </div>
                             </div>
                             <!--        相似艺人-->

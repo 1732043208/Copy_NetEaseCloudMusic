@@ -56,7 +56,7 @@
                 <div class="border"></div>
             </div>
             <div class="BoxSecondMore">
-                <p>
+                <p @click="pushDetail(1)">
                     <span>查看更多</span>
                     <span :style="{color:$store.state.searchResultList.song.songs[0].ar[0].name.includes($store.state.addWord)?'#9ab4d1':''}">{{$store.state.searchResultList.song.songs[0].ar[0].name}}</span>
                     <span>的歌曲></span>
@@ -70,8 +70,8 @@
                 <span style="margin-left: 18px;font-weight: bold;">歌单</span>
             </div>
             <div v-for="item in $store.state.searchResultList.playList.playLists">
-                <van-card @click="getSongListData(item.id)">
-                    <template #thumb><img :src="item.coverImgUrl" style="width: 80px;height: 80px"></template>
+                <van-card @click="getSongListData(item.id)" style="height: 90px">
+                    <template #thumb><img :src="item.coverImgUrl" style="width: 76px;height: 76px"></template>
                     <template #desc>
                         <div style="margin-top: 4px;overflow: hidden;text-overflow: ellipsis">
                             <span> {{item.trackCount+'首'+' by '+item.creator.nickname+','+'播放'+Math.round(item.playCount/10000*Math.pow(10,1))/Math.pow(10,1)+'万次'}}</span>
@@ -95,7 +95,7 @@
             </div>
 
             <div class="BoxSecondMore">
-                <p>
+                <p @click="pushDetail(6)">
                     <span>查看更多</span>
                     <span :style="{color:$store.state.searchResultList.song.songs[0].ar[0].name.includes($store.state.addWord)?'#9ab4d1':''}">{{$store.state.searchResultList.song.songs[0].ar[0].name}}</span>
                     <span>的相关歌单></span>
@@ -113,7 +113,7 @@
                 <van-card @click="getVideoDetailData(item.vid)">
                     <template #thumb>
                         <img :src="item.coverUrl" class="videoImg">
-                        <span style="position: absolute;right:-12px;color: white">{{Math.round(item.playTime/10000*Math.pow(10,1))/Math.pow(10,1)}}万</span>
+                            <img src="../../../../../src/assets/play.png" style="position: absolute;left: 50%;top: 24%;width: 22px;opacity: 0.8">
                     </template>
                     <template #title>
                         <div style="font-size: 14px;margin-left: 16px;;margin-top: 4px;margin-bottom: 6px"
@@ -127,11 +127,12 @@
                         <span v-for="creator in item.creator">{{creator.userName}}</span>
                     </template>
                 </van-card>
+
                 <div class="borderLine"></div>
             </div>
 
             <div class="BoxSecondMore">
-                <p>
+                <p @click="pushDetail(3)">
                     <span>查看更多</span>
                     <span :style="{color:$store.state.searchResultList.song.songs[0].ar[0].name.includes($store.state.addWord)?'#9ab4d1':''}">{{$store.state.searchResultList.song.songs[0].ar[0].name}}</span>
                     <span>的相关视频></span>
@@ -157,7 +158,7 @@
                 <span style="margin-left: 18px;font-weight: bold;">歌手</span>
             </div>
             <div v-for="item in $store.state.searchResultList.artist.artists">
-                <van-cell>
+                <van-cell @click="pushSinger(item.id)">
                     <!-- 使用 right-icon 插槽来自定义右侧图标 -->
                     <template #icon><img :src="item.img1v1Url" class="getgold_top_head_img"></template>
                     <template #title>
@@ -177,7 +178,7 @@
                 <span style="margin-left: 18px;font-weight: bold;">专辑</span>
             </div>
             <div v-for="item in $store.state.searchResultList.album.albums">
-                <van-cell>
+                <van-cell @click="pushAlbum(item.id)">
                     <!-- 使用 right-icon 插槽来自定义右侧图标 -->
                     <template #icon>
                         <img :src="item.picUrl" style="width: 60px;height: auto;">
@@ -260,7 +261,27 @@
                     }
                 })
             },
-
+            pushDetail(val){
+                this.$emit('pushDetail',val)
+            },
+            //跳转到对应专辑页面
+            pushAlbum(id){
+                this.$router.push({
+                    path: '/album',
+                    query: {
+                        id: id
+                    }
+                })
+            },
+            //跳转到对应歌手页面
+            pushSinger(id) {
+                this.$router.push({
+                    path: '/singer',
+                    query: {
+                        id: id
+                    }
+                })
+            }
         },
         components: {
             [Icon.name]: Icon,

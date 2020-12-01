@@ -1,27 +1,20 @@
 <template>
     <div>
-        <div style="margin-top: 10px;height: 30px;">
-            <span style="margin-left: 18px;font-weight: bold;">单曲</span>
-            <van-button round type="info" plain hairline color="#BEBFC0" size="mini"
-                        style="width:80px;height: 24px;float: right;margin-right: 10px;display: inline-block;vertical-align: middle">
-                <van-icon name="play-circle-o" color="black" style="margin-top: 2px"/>
-                <span style="color: black">播放全部</span></van-button>
-        </div>
         <div v-for="item in songsList">
             <van-cell
                     @click="getMusicId(item.id)"
                     title-class="titleStyle" label-class="labelStyle">
                 <template #title>
                     <span>{{item.name}}</span>
-                    <span class="titleSecond" v-if="item.alias.length!==0"> ({{item.alias[0]}})</span>
+                    <span class="titleSecond" v-if="item.alia.length!==0"> ({{item.alia[0]}})</span>
                 </template>
                 <template #label>
-                    <span v-for="(val,index) in item.artists">
+                    <span v-for="(val,index) in item.ar">
                         <span v-if="index !==0">/</span>
                         {{val.name}}
                     </span>
-                    <span>{{' - '+item.album.name}}</span>
-                    <span v-if="item.alias.length!==0"> ({{item.alias[0]}})</span>
+                    <span>{{' - '+item.al.name}}</span>
+<!--                    <span v-if="item.alias.length!==0"> ({{item.alias[0]}})</span>-->
                 </template>
                 <!-- 使用 right-icon 插槽来自定义右侧图标 -->
                 <template #right-icon>
@@ -36,13 +29,13 @@
 <script>
     import {Icon} from "vant";
     import {Button} from 'vant';
-    import {GetSearchApi} from "../../../../http/all-api";
-    import { Cell, CellGroup } from 'vant';
+    import {GetSearchApi,GetSingerDanQuApi} from "../../../../http/all-api";
+    import { Cell, CellGroup,List,PullRefresh } from 'vant';
     export default {
         name: "SearchTabbarDanQu",
         data(){
             return {
-                songsList:[]
+                songsList:[],
             }
         },
         methods:{
@@ -57,20 +50,27 @@
         },
         created() {
             GetSearchApi(this.$store.state.addWord).then(res => {
-                // console.log(res);
-                let lists = res.data.result;
-                this.songsList=lists.songs;
-                console.log(lists);
+                //通过搜索关键词，获取到歌手id
+                let id = res.data.result.songs[0].artists[0].id;
 
+                GetSingerDanQuApi(id).then(res=>{
+
+                    this.songsList=res.data.hotSongs;
+                    console.log(this.songsList);
+                })
             }).catch(error => {
                 console.log(error);
             });
+
         },
         components: {
             [Icon.name]: Icon,
             [Button.name]: Button,
             [Cell.name]:Cell,
-            [CellGroup.name]:CellGroup
+            [CellGroup.name]:CellGroup,
+            [List.name]:List,
+            [PullRefresh.name]:PullRefresh ,
+
         }
     }
 </script>
