@@ -32,7 +32,6 @@ npm
                         :officialSongInfoList="officialSongInfoList"
                         :topTitle2="topTitle2"
                         :btnMore2="btnMore2"
-                        :yunCun="yunCun"
                         :liveList="liveList"
                         :liveInfoList="liveInfoList"
                         :topTitle3="topTitle3"
@@ -99,8 +98,6 @@ npm
                 topTitle2: '',
                 // 官方歌单更多按钮文案
                 btnMore2: '',
-                // 云村
-                yunCun: {},
                 // 直播
                 liveList: {},
                 liveInfoList: [],
@@ -136,8 +133,6 @@ npm
                 this.topTitle2 = '';
                 // 官方歌单更多按钮文案
                 this.btnMore2 = '';
-                // 云村
-                this.yunCun = {};
                 // 直播
                 this.liveList = {};
                 this.liveInfoList = [];
@@ -181,14 +176,15 @@ npm
                 await GetHomeFindAPI().then(res => {
                     this.initData();
                     let recommendSongList = res.data.data.blocks[0];
+
                     this.recommendMusic = res.data.data.blocks[1];
                     let officialSongList = res.data.data.blocks[2];
-                    this.yunCun = res.data.data.blocks[3].extInfo;
                     this.songListInfoList.push(...recommendSongList.creatives);
                     this.officialSongInfoList.push(...officialSongList.creatives);
                     // 新歌新碟
-                    this.newMusic.push(res.data.data.blocks[4].creatives[0], res.data.data.blocks[4].creatives[1]);
-                    this.newDisc.push(res.data.data.blocks[4].creatives[2], res.data.data.blocks[4].creatives[3]);
+                    console.log(res.data.data.blocks);
+                    this.newMusic.push(res.data.data.blocks[2].creatives[0], res.data.data.blocks[2].creatives[1]);
+                    this.newDisc.push(res.data.data.blocks[2].creatives[2], res.data.data.blocks[2].creatives[3]);
 
                     // this.liveList = res.data.data.blocks[4];
                     // this.liveInfoList.push(...this.liveList.creatives);
