@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div style="padding-bottom: 50px">
         <div v-for="item in songsList">
             <van-cell
                     @click="getMusicId(item.id)"

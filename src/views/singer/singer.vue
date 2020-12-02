@@ -62,7 +62,7 @@
                 </div>
                 <van-tabs :swipeable="true" :animated="true" ref="tabs" v-model="activeName"
                           title-active-color="#DF393D" style="margin-top: 64px" :background="tabsColor"
-                          line-height="6px" @click="changeTabs">
+                          line-height="6px" @click="changeTabs" :sticky="true">
 
                     <van-tab title="主页" name="a">
 
@@ -259,7 +259,7 @@
         GetSingerZhuanJiApi,
         GetSingerMVApi
     } from "../../http/all-api";
-    import {Icon, Button, Card, Tag, Cell, CellGroup, Tab, Tabs, Popup} from "vant";
+    import {Icon, Button, Card, Tag, Cell, CellGroup, Tab, Tabs, Popup,} from "vant";
     import commNav from "../../components/nav/commNav";
     import Scroll from "../../components/scroll"
     import {formatDate} from "../../components/common/utils";

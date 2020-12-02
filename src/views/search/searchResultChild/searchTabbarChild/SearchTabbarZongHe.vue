@@ -23,7 +23,7 @@
         <!--        单曲-->
         <div class="BoxSecond">
             <div style="border-bottom: 1px solid #f5f6f7;padding-bottom: 10px">
-                <span style="margin-left: 18px;font-weight: bold;">单曲</span>
+                <span style="margin-left: 18px;font-weight: bold;font-size: 18px">单曲</span>
                 <van-button round type="info" plain hairline color="#BEBFC0" size="mini"
                             style="width:60px;height: 24px;float: right;margin-right: 10px;display: inline-block;vertical-align: middle">
                     <van-icon name="play-circle-o" color="black" style="margin-top: 2px"/>
@@ -68,8 +68,8 @@
         <img src="../../../../assets/jietu.png" style="width: 100%;height: auto"/>
         <!--        歌单-->
         <div class="BoxSecond">
-            <div style="height: 30px;">
-                <span style="margin-left: 18px;font-weight: bold;">歌单</span>
+            <div style="height: 30px;border-bottom: 1px solid #f5f6f7">
+                <span style="margin-left: 18px;font-weight: bold;font-size: 18px">歌单</span>
             </div>
             <div v-for="item in $store.state.searchResultList.playList.playLists">
                 <van-card @click="getSongListData(item.id)" style="height: 90px">
@@ -108,14 +108,15 @@
 
         <!--        视频-->
         <div class="BoxSecond">
-            <div style="height: 30px;">
-                <span style="margin-left: 18px;font-weight: bold;">视频</span>
+            <div style="height: 30px;border-bottom: 1px solid #f5f6f7">
+                <span style="margin-left: 18px;font-weight: bold;font-size: 18px">视频</span>
             </div>
             <div v-for="item in $store.state.searchResultList.video.videos">
                 <van-card @click="getVideoDetailData(item.vid)">
                     <template #thumb>
                         <img :src="item.coverUrl" class="videoImg">
-                            <img src="../../../../../src/assets/play.png" style="position: absolute;left: 50%;top: 24%;width: 22px;opacity: 0.8">
+                        <img src="../../../../../src/assets/play.png"
+                             style="position: absolute;left: 50%;top: 24%;width: 22px;opacity: 0.8">
                     </template>
                     <template #title>
                         <div style="font-size: 14px;margin-left: 16px;;margin-top: 4px;margin-bottom: 6px"
@@ -143,8 +144,8 @@
         </div>
         <!--       相关搜索-->
         <div class="BoxSecond" style="margin-top: 20px;padding-bottom: 12px">
-            <div style="height: 30px;margin-top: 4px">
-                <span style="margin-left: 18px;font-weight: bold;">相关搜索</span>
+            <div style="height: 30px;margin-top: 4px;">
+                <span style="margin-left: 18px;font-weight: bold;font-size: 18px">相关搜索</span>
             </div>
             <div class="historyFather">
                 <div v-for="item in $store.state.searchResultList.sim_query.sim_querys"
@@ -156,8 +157,8 @@
         </div>
         <!--               歌手-->
         <div class="BoxSecond" style="margin-top: 20px">
-            <div style="height: 30px;margin-top: 10px">
-                <span style="margin-left: 18px;font-weight: bold;">歌手</span>
+            <div style="height: 30px;margin-top: 6px;border-bottom: 1px solid #f5f6f7">
+                <span style="margin-left: 18px;font-weight: bold;font-size: 18px">歌手</span>
             </div>
             <div v-for="item in $store.state.searchResultList.artist.artists">
                 <van-cell @click="pushSinger(item.id)">
@@ -175,34 +176,66 @@
             </div>
         </div>
         <!--            专辑-->
-        <div class="BoxSecond" style="margin-top: 20px;padding-bottom: 10px">
-            <div style="height: 30px;margin-top: 10px">
-                <span style="margin-left: 18px;font-weight: bold;">专辑</span>
+        <div class="BoxSecond" style="margin-top: 20px;">
+            <div style="height: 30px;margin-top: 6px;border-bottom: 1px solid #f5f6f7">
+                <span style="margin-left: 18px;font-weight: bold;font-size: 18px">专辑</span>
             </div>
             <div v-for="item in $store.state.searchResultList.album.albums">
                 <van-cell @click="pushAlbum(item.id)">
                     <!-- 使用 right-icon 插槽来自定义右侧图标 -->
                     <template #icon>
-                        <img :src="item.picUrl" style="width: 60px;height: auto;">
+                        <img :src="item.picUrl" style="width: 56px;height: auto;">
                     </template>
                     <template #title>
                         <div>
-                            <div style="position: relative;top: 10px;left: 14px">
+                            <div style="position: relative;top: 6px;left: 12px;font-size: 15px">
                                 <span>{{item.name}}</span>
                                 <span v-for="name in item.alia">{{name}}</span></div>
                         </div>
                     </template>
                     <template #label>
-                        <div style="position: relative;top: 5px;left: 14px">
+                        <div style="position: relative;top: 2px;left: 12px;font-size: 12px">
                             <span :style="{color:item.artist.name.includes($store.state.addWord)?'#5A6E88':''}">{{item.artist.name}} </span>
-                            <span> {{item.publishTime|formatDate}}</span>
+                            <span style="padding-left: 10px"> {{item.publishTime|formatDate}}</span>
                         </div>
                     </template>
                 </van-cell>
+
+            </div>
+            <div class="BoxSecondMore" style="border-top: 1px solid #f5f6f7" @click="pushDetail(5)">
+                <span>{{$store.state.searchResultList.album.moreText}} &gt</span>
             </div>
         </div>
-
-
+        <!--用户-->
+        <div class="BoxSecond" style="margin-top: 20px">
+            <div style="height: 30px;margin-top: 6px;border-bottom: 1px solid #f5f6f7">
+                <span style="margin-left: 18px;font-weight: bold;font-size: 18px">用户</span>
+            </div>
+            <div v-for="item in $store.state.searchResultList.user.users">
+                <van-cell>
+                    <!-- 使用 right-icon 插槽来自定义右侧图标 -->
+                    <template #icon>
+                        <img :src="item.avatarUrl" style="width: 60px;height: 60px;border-radius: 50%">
+                    </template>
+                    <template #title>
+                        <div>
+                            <div style="position: relative;top: 10px;left: 14px">
+                                <span :style="{color:item.nickname.includes($store.state.addWord)?'#5A6E88':''}">{{item.nickname}}</span>
+                            </div>
+                        </div>
+                    </template>
+                    <template #label>
+                        <div style="position: relative;top: 5px;left: 14px">
+                            <span :style="{color:item.description.includes($store.state.addWord)?'#5A6E88':''}">{{item.description}} </span>
+                        </div>
+                    </template>
+                    <div class="userFocus">+ 关注</div>
+                </van-cell>
+            </div>
+            <div class="BoxSecondMore" style="border-top: 1px solid #f5f6f7">
+                <span>{{$store.state.searchResultList.user.moreText}} &gt</span>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -263,11 +296,11 @@
                     }
                 })
             },
-            pushDetail(val){
-                this.$emit('pushDetail',val)
+            pushDetail(val) {
+                this.$emit('pushDetail', val)
             },
             //跳转到对应专辑页面
-            pushAlbum(id){
+            pushAlbum(id) {
                 this.$router.push({
                     path: '/album',
                     query: {
@@ -283,7 +316,15 @@
                         id: id
                     }
                 })
-            }
+            },
+            pushMV(vid) {
+                this.$router.push({
+                    path: '/music-mv',
+                    query: {
+                        mvId: vid
+                    }
+                })
+            },
         },
         components: {
             [Icon.name]: Icon,
@@ -340,10 +381,11 @@
     }
 
     .BoxSecondMore {
-        font-size: 40px;
+        font-size: 36px;
         text-align: center;
-        padding-top: 16px;
-        padding-bottom: 16px;
+        padding-top: 30px;
+        padding-bottom: 30px;
+        color: grey;
     }
 
     .BoxFirstBoxFirstTitle {
@@ -423,6 +465,7 @@
         width: 300px;
         height: auto;
     }
+
     /*修改vant UI库默认样式*/
     .van-card {
         background-color: #fff;
@@ -437,10 +480,26 @@
     .van-card__content {
         height: 60px;
     }
+
     .mvImg {
         width: 50px;
         height: 50px;
         margin-top: 30px;
         margin-right: 20px;
+    }
+
+    .userFocus {
+        width: 170px;
+        height: 54px;
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        line-height: 54px;
+        border: 1px solid #fe5151;
+        border-radius: 54px;
+        text-align: center;
+        font-size: 34px;
+        color: #fe5151;
     }
 </style>
