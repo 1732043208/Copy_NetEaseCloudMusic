@@ -70,4 +70,8 @@
         margin-top: 15px;
         margin-left: 20px;
     }
+    .van-cell__title{
+
+        border-bottom: 1px solid #f7f7f7;
+    }
 </style>

@@ -9,7 +9,7 @@
                     </div>
                 </template>
                 <template #title>
-                    <div style="font-size: 16px">{{item.name}}</div>
+                    <div style="font-size: 16px;margin-top: 10px;overflow: hidden;text-overflow: ellipsis">{{item.name}}</div>
                 </template>
             </van-card>
         </div>
@@ -57,5 +57,13 @@
 </script>
 
 <style scoped>
+    .van-card__thumb{
+        width: auto;
+        height: auto;
+    }
+    .van-card{
+        padding: 10px  20px 0 48px;
+        background-color: #fff;
+    }
 
 </style>

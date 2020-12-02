@@ -24,6 +24,9 @@
                 <div v-if="index===7">
                     <SearchTabbarDianTai></SearchTabbarDianTai>
                 </div>
+                <div v-if="index===8">
+                    <SearchTabbarUser></SearchTabbarUser>
+                </div>
             </van-tab>
         </van-tabs>
     </div>
@@ -37,6 +40,7 @@
     import SearchTabbarZhuanJi from "./searchTabbarChild/SearchTabbarZhuanJi";
     import SearchTabbarGeDan from "./searchTabbarChild/SearchTabbarGeDan";
     import SearchTabbarDianTai from "./searchTabbarChild/SearchTabbarDianTai";
+    import SearchTabbarUser from "./searchTabbarChild/SearchTabbarUser"
     import {Cell, CellGroup} from 'vant';
     import {Tab, Tabs} from 'vant';
 
@@ -57,6 +61,7 @@
             SearchTabbarZhuanJi,
             SearchTabbarGeDan,
             SearchTabbarDianTai,
+            SearchTabbarUser,
             [Cell.name]: Cell,
             [CellGroup.name]: CellGroup,
             [Tab.name]: Tab,

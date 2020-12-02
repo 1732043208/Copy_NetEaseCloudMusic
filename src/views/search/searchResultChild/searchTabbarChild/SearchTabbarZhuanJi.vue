@@ -15,7 +15,7 @@
                 </template>
                 <template #label>
                     <div style="position: relative;top: 5px;left: 14px">
-                        <span>{{item.artist.name}} </span>
+                        <span :style="{color:item.artist.name.includes($store.state.addWord)?'#9ab4d1':''}">{{item.artist.name}} </span>
                         <span> {{item.publishTime|formatDate}}</span>
                     </div>
                 </template>

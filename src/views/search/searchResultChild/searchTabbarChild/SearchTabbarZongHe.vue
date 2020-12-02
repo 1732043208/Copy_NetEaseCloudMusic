@@ -350,7 +350,7 @@
 <style scoped>
     .fatherBox {
         background-color: #F7F7F7;
-        padding: 40px 40px 100px 40px;
+        padding: 40px 40px 150px 40px;
     }
 
     .BoxFirst {
