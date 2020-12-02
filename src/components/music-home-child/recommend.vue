@@ -43,11 +43,7 @@
                 :top-title="topTitle2"
                 :btn-more="btnMore2">
         </official-song-list>
-        <yun-cun
-                v-if="Object.keys(yunCun).length>0"
-                :yun-cun="yunCun">
 
-        </yun-cun>
         <new-musci-or-disc
                 v-if="newMusic.length>0 && newDisc.length>0"
                 :new-disc="newDisc"
@@ -77,7 +73,7 @@
     import HorizontalScroll from '../horizontalScroll'
     import RecommendMusic from "./recommendMusic";
     import OfficialSongList from "./officialSongList";
-    import YunCun from "./yunCun";
+
     import NewMusciOrDisc from "./newMusciOrDisc";
     import Live from "./live";
 
@@ -183,12 +179,6 @@
             topTitle2: String,
             btnMore2: String,
 
-            yunCun: {
-                type: Object,
-                default() {
-                    return {}
-                }
-            },
 
             liveList: {
                 type: Object,
@@ -279,7 +269,6 @@
             HorizontalScroll,
             RecommendMusic,
             OfficialSongList,
-            YunCun,
             NewMusciOrDisc,
             Live,
         }

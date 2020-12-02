@@ -11,7 +11,8 @@
                 <div
                         v-for="(item,index) in officialSongList"
                         :key="index"
-                        class="gridItem">
+                        class="gridItem"
+                        @click="SongListClick(item.creativeId)">
 
                     <div class="playCount">
                         <van-icon name="service-o" color="#eee"/>
@@ -19,7 +20,6 @@
                     </div>
 
                     <div class="songListInfo"
-                         @click="SongListClick(item.creativeId)"
                     >
                         <van-image
                                 fit="cover"
@@ -70,12 +70,18 @@
         methods: {
             TopClick() {
                 console.log('更多歌单');
-            this.$router.push({
-                path:'/allPlayList'
-            })
+                this.$router.push({
+                    path: '/allPlayList'
+                })
             },
             SongListClick(id) {
                 // todo 跳转歌单详情
+                this.$router.push({
+                    path: '/daySongList',
+                    query: {
+                        id
+                    }
+                })
                 console.log('歌单点击跳转');
                 console.log(id);
             }
