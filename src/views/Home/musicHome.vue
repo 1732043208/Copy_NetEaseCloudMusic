@@ -182,9 +182,9 @@ npm
                     this.songListInfoList.push(...recommendSongList.creatives);
                     this.officialSongInfoList.push(...officialSongList.creatives);
                     // 新歌新碟
-                    console.log(res.data.data.blocks);
-                    this.newMusic.push(res.data.data.blocks[2].creatives[0], res.data.data.blocks[2].creatives[1]);
-                    this.newDisc.push(res.data.data.blocks[2].creatives[2], res.data.data.blocks[2].creatives[3]);
+                    // console.log(res.data.data.blocks);
+                    // this.newMusic.push(res.data.data.blocks[2].creatives[0], res.data.data.blocks[2].creatives[1]);
+                    // this.newDisc.push(res.data.data.blocks[2].creatives[2], res.data.data.blocks[2].creatives[3]);
 
                     // this.liveList = res.data.data.blocks[4];
                     // this.liveInfoList.push(...this.liveList.creatives);
