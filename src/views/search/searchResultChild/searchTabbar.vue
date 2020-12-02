@@ -9,22 +9,22 @@
                 <div v-if="index ===1">
                     <SearchTabbarDanQu></SearchTabbarDanQu>
                 </div>
-                <div v-if="index===3">
+                <div v-if="index===2">
                     <SearchTabbarShiPin></SearchTabbarShiPin>
                 </div>
-                <div v-if="index===4">
+                <div v-if="index===3">
                     <SearchTabbarGeShou></SearchTabbarGeShou>
                 </div>
-                <div v-if="index===5">
+                <div v-if="index===4">
                     <SearchTabbarZhuanJi></SearchTabbarZhuanJi>
                 </div>
-                <div v-if="index===6">
+                <div v-if="index===5">
                     <SearchTabbarGeDan></SearchTabbarGeDan>
                 </div>
-                <div v-if="index===7">
+                <div v-if="index===6">
                     <SearchTabbarDianTai></SearchTabbarDianTai>
                 </div>
-                <div v-if="index===8">
+                <div v-if="index===7">
                     <SearchTabbarUser></SearchTabbarUser>
                 </div>
             </van-tab>
@@ -48,7 +48,7 @@
         name: "searchTabbar",
         data() {
             return {
-                tabbarList: ['综合', '单曲', '云村', '视频', '歌手', '专辑', '歌单', '主播电台', '用户'],
+                tabbarList: ['综合', '单曲', '视频', '歌手', '专辑', '歌单', '主播电台', '用户'],
                 tabColor: '#f7f7f7',
                 tabsIndex: 0
             }
