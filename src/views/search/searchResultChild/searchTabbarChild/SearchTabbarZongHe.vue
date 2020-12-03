@@ -232,7 +232,7 @@
                     <div class="userFocus">+ 关注</div>
                 </van-cell>
             </div>
-            <div class="BoxSecondMore" style="border-top: 1px solid #f5f6f7">
+            <div class="BoxSecondMore" style="border-top: 1px solid #f5f6f7" @click="pushDetail(7)">
                 <span>{{$store.state.searchResultList.user.moreText}} &gt</span>
             </div>
         </div>

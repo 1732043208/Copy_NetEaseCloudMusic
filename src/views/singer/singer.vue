@@ -423,7 +423,6 @@
                 this.showJuBao = false
             },
             pushArtist(id) {
-                //清空完再赋值
                 this.$router.push({
                     path: '/singer',
                     query: {
