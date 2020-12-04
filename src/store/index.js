@@ -110,8 +110,10 @@ export default new Vuex.Store({
         searchResultShow(state, IsShow, Value) {
             if (Value === '') {
                 state.searchResultShow = false
+            }else {
+                state.searchResultShow = IsShow;
             }
-            state.searchResultShow = IsShow;
+
         },
         searchResultList(state, lists) {
             state.searchResultList = lists;

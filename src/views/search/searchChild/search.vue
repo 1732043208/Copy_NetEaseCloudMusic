@@ -129,23 +129,18 @@
                     GetSearchSuggestApi(this.value, 'mobile').then(res => {
                         const result = res.data.result.allMatch;
                         this.$store.commit('searchResult', result);
-                        let IsShow = true;
-                        let Value = this.value;
-                        this.$store.commit('searchResultShow', IsShow, Value);
+                        this.$store.commit('searchResultShow', true, this.value);
                         // console.log(res);
                     }).catch(error => {
                         // console.log(error);
                     })
                 } else {
-                    let IsShow = false;
-                    let Value = this.value;
-                    this.$store.commit('searchResultShow', IsShow, Value);
+                    this.$store.commit('searchResultShow', false, this.value);
                 }
             },
             // 输入框失去焦点时触发
             onBlur() {
-                let IsShow = false;
-                this.$store.commit('searchResultShow', IsShow)
+                this.$store.commit('searchResultShow', false)
             },
             goBack() {
                 if (this.isShow) {
