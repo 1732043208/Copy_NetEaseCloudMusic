@@ -1,25 +1,31 @@
 <template>
     <div>
-        <scroll
-                class="content"
-                ref="scroll"
-                :probe-type="3"
-                :pull-up-load="true">
-            <div>
-                <search @isSearchResultFunc="isSearchResultFunc" :isShow="isSearchResult"></search>
-                <div v-if="!isSearchResult">
+        <div v-if="!isSearchResult">
+            <search @isSearchResultFunc="isSearchResultFunc" :isShow="isSearchResult"></search>
+            <scroll
+                    class="content"
+                    ref="scroll"
+                    :probe-type="3"
+                    :pull-up-load="true"
+                    style="margin-top: 50px">
+                <div>
+                    <img src="../../assets/jietu.jpg" style="width: 100%;height: auto">
+                    <historcal-record @isSearchResultFunc="isSearchResultFunc"></historcal-record>
+                    <hot-search @isSearchResultFunc="isSearchResultFunc"></hot-search>
+
+                    <search-suggest @isSearchResultFunc="isSearchResultFunc"></search-suggest>
+                </div>
+            </scroll>
+        </div>
+        <div v-if="isSearchResult">
+            <search @isSearchResultFunc="isSearchResultFunc" :isShow="isSearchResult"></search>
+
                     <div>
-                        <img src="../../assets/jietu.jpg" style="width: 100%;height: auto">
-                        <historcal-record @isSearchResultFunc="isSearchResultFunc"></historcal-record>
-                        <hot-search @isSearchResultFunc="isSearchResultFunc"></hot-search>
+                        <search-tabbar @backtop="getbacktop"></search-tabbar>
                     </div>
-                </div>
-                <div v-if="isSearchResult">
-                    <search-tabbar @backtop="getbacktop"></search-tabbar>
-                </div>
-                <search-suggest @isSearchResultFunc="isSearchResultFunc"></search-suggest>
-            </div>
-        </scroll>
+                    <search-suggest @isSearchResultFunc="isSearchResultFunc"></search-suggest>
+
+        </div>
     </div>
 </template>
 
@@ -57,7 +63,7 @@
             },
             getbacktop() {
                 this.$refs.scroll.scrollTo(0, 0, 400)
-            }
+            },
         }
     }
 </script>
