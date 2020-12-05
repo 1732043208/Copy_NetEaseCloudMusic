@@ -1,6 +1,6 @@
 <template>
-    <div>
-        <div v-if="!isSearchResult">
+
+        <div>
             <search @isSearchResultFunc="isSearchResultFunc" :isShow="isSearchResult"></search>
             <scroll
                     class="content"
@@ -9,24 +9,19 @@
                     :pull-up-load="true"
                     style="margin-top: 50px">
                 <div>
-                    <img src="../../assets/jietu.jpg" style="width: 100%;height: auto">
-                    <historcal-record @isSearchResultFunc="isSearchResultFunc"></historcal-record>
-                    <hot-search @isSearchResultFunc="isSearchResultFunc"></hot-search>
+                    <div v-if="!isSearchResult">
+                        <img src="../../assets/jietu.jpg" style="width: 100%;height: auto">
+                        <historcal-record @isSearchResultFunc="isSearchResultFunc"></historcal-record>
+                        <hot-search @isSearchResultFunc="isSearchResultFunc"></hot-search>
+                    </div>
 
+                    <div v-if="isSearchResult">
+                        <search-tabbar @backtop="getbacktop"></search-tabbar>
+                    </div>
                     <search-suggest @isSearchResultFunc="isSearchResultFunc"></search-suggest>
                 </div>
             </scroll>
         </div>
-        <div v-if="isSearchResult">
-            <search @isSearchResultFunc="isSearchResultFunc" :isShow="isSearchResult"></search>
-
-                    <div>
-                        <search-tabbar @backtop="getbacktop"></search-tabbar>
-                    </div>
-                    <search-suggest @isSearchResultFunc="isSearchResultFunc"></search-suggest>
-
-        </div>
-    </div>
 </template>
 
 <script>
