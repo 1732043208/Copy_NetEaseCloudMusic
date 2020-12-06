@@ -28,7 +28,7 @@
             <div :style="{'background-color':tabsColor}">
                 <div style="width: 100%;height: 280px;position: relative;">
 
-                    <img :src="xiangqing.picUrl" style="width: 100%">
+                    <img :src="xiangqing.picUrl" style="width: 100%;">
                     <comm-nav style="position: absolute;top: 0;background-color:transparent;color: white">
                         <div style="position: absolute;right: 20px;">
                             <van-icon name="share" style="position: absolute;margin-left: 270px" size="22px"/>
