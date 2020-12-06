@@ -93,6 +93,22 @@ Github地址：[github.com/Binaryify/N…](https://github.com/Binaryify/NeteaseC
 
 [![2b08e8c1168305c0b2c5bd4faf1f5f1.png](https://i.postimg.cc/c4by3249/2b08e8c1168305c0b2c5bd4faf1f5f1.png)](https://postimg.cc/hfT5WCmT)
 
+##### 搜索：
+
+![6ad0914d7aff9d45f6184901054cde4.png](https://i.loli.net/2020/12/05/BR5xyJn3GD2eqFk.png)
+
+搜索-综合：
+
+![4f632e1bf56eb9c8bfe3b0c8a216349.png](https://i.loli.net/2020/12/05/zehnMQV6E8C3KTx.png)
+
+![c497cdef84bc79eb559c13023dd293b.png](https://i.loli.net/2020/12/05/KMh4gPXyFcJCVzi.png)
+
+![aea0e78c7cfd22746b75e8aea2d7b3a.png](https://i.loli.net/2020/12/05/toGc1Kj8HUpY5wb.png)
+
+![07ea066cfcb02ae783d0a1c70c68fd0.png](https://i.loli.net/2020/12/05/YIucivo8aSznJBy.png)
+
+![df7c074d58aa7cf64adbca281cc786b.png](https://i.loli.net/2020/12/05/4dwa725icbpoVZW.png)
+
 播放器页面：
 
 [![b0d9c7d3b75d75767f2992d39cb8cbd.png](https://i.postimg.cc/Fz6Wftg0/b0d9c7d3b75d75767f2992d39cb8cbd.png)](https://postimg.cc/gLvq5T70)[![365091f1a6f9881b9633718a3afa227.png](https://i.postimg.cc/YCYnSs4m/365091f1a6f9881b9633718a3afa227.png)](https://postimg.cc/XrNcHxkV)[![a5aa5f438b47fdb9c9ce44f985dce25.png](https://i.postimg.cc/MTKddZ9y/a5aa5f438b47fdb9c9ce44f985dce25.png)](https://postimg.cc/v1krmyFB)
