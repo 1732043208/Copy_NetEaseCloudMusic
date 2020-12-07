@@ -1,6 +1,6 @@
 <template>
     <div>
-        <p style="font-weight: bold;font-size: 16px;margin-left: 16px;margin-top: 6px">热搜榜</p>
+        <p class="title">热搜榜</p>
         <div v-for="(item,index) in hots">
             <van-cell-group>
                 <van-cell :title-style="{fontWeight:index+1<4?'Bold':'normal',fontSize: '15px'}"
@@ -19,7 +19,8 @@
 
 <script>
     import {GetHotSearchDetailApi, GetSearchApi} from "../../../http/all-api";
-    import { Cell, CellGroup } from 'vant';
+    import {Cell, CellGroup} from 'vant';
+
     export default {
         name: "hotSearch",
         data() {
@@ -27,9 +28,9 @@
                 hots: [],
             }
         },
-        components:{
-            [CellGroup.name]:CellGroup,
-            [Cell.name]:Cell
+        components: {
+            [CellGroup.name]: CellGroup,
+            [Cell.name]: Cell
         },
         created() {
             this.getHotSearchData();
@@ -44,7 +45,7 @@
                 )
             },
             getHotSearch(val) {
-                GetSearchApi(val,'1018').then(res => {
+                GetSearchApi(val, '1018').then(res => {
                     // console.log(res);
                     let lists = res.data.result;
                     console.log(lists);
@@ -56,13 +57,13 @@
                     this.$store.commit("searchResultList", lists);
 
                     this.$store.state.historyList.unshift(val);
-                    let hisList=this.$store.state.historyList;
+                    let hisList = this.$store.state.historyList;
 
-                    let newarr= Array.from(new Set(hisList));
+                    let newarr = Array.from(new Set(hisList));
 
                     this.$store.commit('historyBianLiList', newarr);
-                    this.$store.commit('searchWordFunc',val);
-                    this.$store.commit('addWord',val);
+                    this.$store.commit('searchWordFunc', val);
+                    this.$store.commit('addWord', val);
                     this.$store.commit('isSearchShowFunc', true);//改变搜索框背景颜色
                 })
             }
@@ -72,15 +73,20 @@
 
 <style scoped>
     .rightText {
-        font-size: 10px;
+        font-size: 30px;
         color: #CECECE;
-        width: 0px;
         height: 80px;
     }
 
     .labelText {
-        font-size: 10px;
+        font-size: 34px;
         font-weight: normal;
         color: #979797;
+    }
+
+    .title {
+        font-weight: bold;
+        font-size: 50px;
+        margin: 6px 0 20px 40px;
     }
 </style>
