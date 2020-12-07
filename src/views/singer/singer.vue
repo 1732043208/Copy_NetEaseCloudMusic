@@ -2,7 +2,7 @@
 
     <div>
         <comm-nav :title="xiangqing.name" v-show="false">
-            <div style="position: absolute;right: 20px;">
+            <div >
                 <van-icon name="ellipsis" @click="showPopupJuBao"/>
                 <van-popup :close="closeJuBao" v-model="showJuBao" position="top"
                            :style="{ height: '7%',width: '50%',top:'10px',left:'182px',borderRadius:'6px'}"
@@ -27,7 +27,6 @@
                 :pull-up-load="true">
             <div :style="{'background-color':tabsColor}">
                 <div style="width: 100%;height: 280px;position: relative;">
-
                     <img :src="xiangqing.picUrl" style="width: 100%;">
                     <comm-nav style="position: absolute;top: 0;background-color:transparent;color: white">
                         <div style="position: absolute;right: 20px;">
@@ -56,7 +55,7 @@
                         <h1>{{xiangqing.name}}</h1>
 
                         <van-button round type="info" color="linear-gradient(to right, #ff6034, #ee0a24)">
-                            <p style="font-size: 12px">关注</p>
+                            <p style="font-size: 12px;margin-bottom: 4px">关注</p>
                         </van-button>
                     </div>
                 </div>
@@ -104,7 +103,7 @@
                                     <span style="font-weight: bold;margin-left: 4px">歌手简介</span>
 
                                 </div>
-                                <div style="margin: 12px 10px 8px 14px;font-size: 14px;overflow: hidden;text-overflow: ellipsis;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:7;">
+                                <div style="margin: 12px 10px 8px 14px;font-size: 14px;overflow: hidden;text-overflow: ellipsis;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:7;text-indent: 2em">
                                     <p>{{SingerDescribe.briefDesc}}</p>
                                 </div>
                                 <div class="singerDetailMore" @click="pushXinXi">

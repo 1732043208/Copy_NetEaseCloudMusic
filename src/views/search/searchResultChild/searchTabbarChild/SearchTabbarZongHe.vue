@@ -404,7 +404,7 @@
     }
 
     .titleStyle {
-        font-size: 46px;
+        font-size: 44px;
         overflow: hidden;
         text-overflow: ellipsis;
     }
