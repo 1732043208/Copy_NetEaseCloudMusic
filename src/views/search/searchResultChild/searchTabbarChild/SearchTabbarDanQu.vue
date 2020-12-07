@@ -11,7 +11,7 @@
                 <template #label>
                     <span v-for="(val,index) in item.ar">
                         <span v-if="index !==0">/</span>
-                        {{val.name}}
+                       <span :style="{color:val.name===$store.state.addWord?'#5A6E88':''}">{{val.name}}</span>
                     </span>
                     <span>{{' - '+item.al.name}}</span>
                     <!--                    <span v-if="item.alias.length!==0"> ({{item.alias[0]}})</span>-->
@@ -92,7 +92,7 @@
 
     .labelStyle {
         width: 500px;
-        font-size: 10px;
+        font-size: 36px;
         overflow: hidden;
         text-overflow: ellipsis;
     }
