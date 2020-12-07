@@ -74,7 +74,7 @@ import commNav from "../../components/nav/commNav";
     }
 
     .textstyle {
-        font-size: 10px;
+        font-size: 36px;
         font-weight: lighter;
         margin: 12px 30px 12px 40px;
         line-height: 60px;

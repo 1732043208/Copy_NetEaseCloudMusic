@@ -5,8 +5,10 @@
                       :to="{path:'/singer',query:{id:$store.state.searchResultList.artist.artists[0].id}}">
                 <!-- 使用 right-icon 插槽来自定义右侧图标 -->
                 <template #icon>
-                    <img :src="$store.state.searchResultList.artist.artists[0].picUrl"
-                         class="BoxFirstImg"></template>
+                    <div class="BoxFirstImgFatherBox"
+                         :style="{'background-image':'url('+$store.state.searchResultList.artist.artists[0].picUrl+')'}">
+                    </div>
+                </template>
                 <template #title>
                     <div class="BoxFirstBox">
                         <p class="BoxFirstBoxFirstTitle">
@@ -359,12 +361,15 @@
         margin-bottom: 40px;
     }
 
-    .BoxFirstImg {
+    .BoxFirstImgFatherBox {
         height: 160px;
         width: 160px;
-        border-radius: 50%;
-
+        background-size: auto 110%;
+        border-radius: 80px;
+        background-repeat: no-repeat;
+        background-position: center center;
     }
+
 
     .BoxFirstBox {
         position: absolute;
@@ -394,18 +399,19 @@
     }
 
     .BoxFirstBoxSecondTitle {
-        font-size: 30px;
+        font-size: 38px;
         color: #bbbbbb;
     }
 
     .titleStyle {
+        font-size: 46px;
         overflow: hidden;
         text-overflow: ellipsis;
     }
 
     .labelStyle {
         width: 700px;
-        font-size: 10px;
+        font-size: 36px;
         overflow: hidden;
         text-overflow: ellipsis;
 
