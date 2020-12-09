@@ -73,9 +73,11 @@
             <div style="height: 30px;border-bottom: 1px solid #f5f6f7">
                 <span style="margin-left: 18px;font-weight: bold;font-size: 18px">歌单</span>
             </div>
+
             <div v-for="item in $store.state.searchResultList.playList.playLists">
                 <van-card @click="getSongListData(item.id)" style="height: 90px">
-                    <template #thumb><img :src="item.coverImgUrl" style="width: 76px;height: 76px"></template>
+                    <template #thumb>
+                        <van-image :src="item.coverImgUrl" style="width: 76px;height: 76px"  lazy-load/></template>
                     <template #desc>
                         <div style="margin-top: 4px;overflow: hidden;text-overflow: ellipsis">
                             <span> {{item.trackCount+'首'+' by '+item.creator.nickname+','+'播放'+Math.round(item.playCount/10000*Math.pow(10,1))/Math.pow(10,1)+'万次'}}</span>
@@ -116,7 +118,7 @@
             <div v-for="item in $store.state.searchResultList.video.videos">
                 <van-card @click="getVideoDetailData(item.vid)">
                     <template #thumb>
-                        <img :src="item.coverUrl" class="videoImg">
+                        <van-image :src="item.coverUrl" class="videoImg" lazy-load/>
                         <img src="../../../../../src/assets/play.png"
                              style="position: absolute;left: 50%;top: 24%;width: 22px;opacity: 0.8">
                     </template>
@@ -165,7 +167,7 @@
             <div v-for="item in $store.state.searchResultList.artist.artists">
                 <van-cell @click="pushSinger(item.id)">
                     <!-- 使用 right-icon 插槽来自定义右侧图标 -->
-                    <template #icon><img :src="item.img1v1Url" class="getgold_top_head_img"></template>
+                    <template #icon><van-image :src="item.img1v1Url" class="getgold_top_head_img" round/></template>
                     <template #title>
                         <div>
                             <div style="position: relative;top: 22px;left: 14px">
@@ -186,7 +188,7 @@
                 <van-cell @click="pushAlbum(item.id)">
                     <!-- 使用 right-icon 插槽来自定义右侧图标 -->
                     <template #icon>
-                        <img :src="item.picUrl" style="width: 56px;height: auto;">
+                        <van-image :src="item.picUrl" style="width: 56px;height: auto;" lazy-load/>
                     </template>
                     <template #title>
                         <div>
@@ -246,7 +248,7 @@
     import {Button} from 'vant';
     import {Card} from 'vant';
     import {Tag} from 'vant';
-    import {Cell, CellGroup} from 'vant';
+    import {Cell, CellGroup,Image as VanImage} from 'vant';
     import {formatDuring} from "../../../../components/common/utils";
 
     import {GetSearchApi} from "../../../../http/all-api";
@@ -335,6 +337,7 @@
             [Tag.name]: Tag,
             [Cell.name]: Cell,
             [CellGroup.name]: CellGroup,
+            [VanImage.name]:VanImage
         },
         filters: {
             // 将整数转化成分秒
@@ -451,7 +454,6 @@
     .getgold_top_head_img {
         height: 180px;
         width: 180px;
-        border-radius: 50%;
         margin-left: 10px;
     }
 
