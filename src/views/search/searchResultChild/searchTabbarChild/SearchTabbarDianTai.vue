@@ -4,7 +4,7 @@
             <van-cell @click="pushDianTai(item.id)">
                 <!-- 使用 right-icon 插槽来自定义右侧图标 -->
                 <template #icon>
-                    <img :src="item.picUrl" style="width: 50px;height: auto;">
+                    <van-image :src="item.picUrl" style="width: 50px;height: auto;" lazy-load/>
                 </template>
                 <template #title>
                     <div>
@@ -29,7 +29,7 @@
     import {Button} from 'vant';
     import {Card} from 'vant';
     import {Tag} from 'vant';
-    import {Cell, CellGroup} from 'vant';
+    import {Cell, CellGroup,Image as VanImage} from 'vant';
 
     export default {
         name: "SearchTabbarDianTai",
@@ -45,6 +45,7 @@
             [Tag.name]: Tag,
             [Cell.name]: Cell,
             [CellGroup.name]: CellGroup,
+            [VanImage.name]:VanImage
         },
         created() {
             GetSearchApi(this.$store.state.addWord, '1009').then(res => {
