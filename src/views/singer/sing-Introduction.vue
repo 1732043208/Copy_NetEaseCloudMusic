@@ -24,10 +24,11 @@
     import {GetSingerDescribeApi, GetSingerDanQuApi} from "../../http/all-api";
     import Scroll from "../../components/scroll";
     import {Icon} from 'vant';
-import commNav from "../../components/nav/commNav";
+    import commNav from "../../components/nav/commNav";
+
     export default {
         name: "sing-introduction",
-        components: {Scroll, [Icon.name]: Icon,   commNav},
+        components: {Scroll, [Icon.name]: Icon, commNav},
         data() {
             return {
                 SingerDescribe: [],

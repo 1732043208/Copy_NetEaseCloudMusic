@@ -2,7 +2,7 @@
 
     <div>
         <comm-nav :title="xiangqing.name" v-show="false">
-            <div >
+            <div>
                 <van-icon name="ellipsis" @click="showPopupJuBao"/>
                 <van-popup :close="closeJuBao" v-model="showJuBao" position="top"
                            :style="{ height: '7%',width: '50%',top:'10px',left:'182px',borderRadius:'6px'}"

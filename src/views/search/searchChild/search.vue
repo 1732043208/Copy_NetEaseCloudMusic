@@ -55,9 +55,7 @@
 </template>
 <script>
     import {GetSearchGuanJianCiAPI, GetSearchSuggestApi, GetSearchApi} from "../../../http/all-api";
-    import {Icon} from 'vant';
-    import {Cell, CellGroup} from 'vant';
-    import {Search} from 'vant';
+    import {Cell, CellGroup, Icon, Search} from 'vant';
 
     export default {
         name: "search",

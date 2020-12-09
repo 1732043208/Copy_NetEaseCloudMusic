@@ -16,6 +16,7 @@
 <script>
     import {GetSearchApi} from "../../../http/all-api";
     import { Cell, CellGroup } from 'vant';
+
     export default {
         name: "searchSuggest",
         components:{
@@ -60,6 +61,5 @@
         left: 12%;
         width: 77%;
         box-shadow: 2px 2px 10px #909090;
-
     }
 </style>

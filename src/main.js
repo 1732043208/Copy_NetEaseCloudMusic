@@ -13,14 +13,16 @@ Vue.use(VueCookies);
 import vueMiniPlayer from 'vue-mini-player'
 import 'vue-mini-player/lib/vue-mini-player.css'
 
-Vue.use(vueMiniPlayer);
-Vue.use(base);
+Vue.use(vueMiniPlayer)
+    .use(base);
+
+
 // 全局引入vant组件
-import {Toast,Lazyload } from 'vant';
+import {Toast, Lazyload} from 'vant';
 
+Vue.use(Toast)
+    .use(Lazyload);
 
-Vue.use(Toast);
-Vue.use(Lazyload);
 
 Vue.config.productionTip = false;
 if (Vue.$cookies.get('MUSIC_U')) store.commit('saveToken', Vue.$cookies.get('MUSIC_U'));

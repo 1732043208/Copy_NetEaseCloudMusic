@@ -1,23 +1,22 @@
 <template>
-        <div v-if="$store.state.historyList.length!==0">
-            <van-cell title="历史记录" style="padding-top: 0" title-class="title">
-                <!-- 使用 right-icon 插槽来自定义右侧图标 -->
-                <template #right-icon>
-                    <van-icon name="delete" class="delete-icon" @click="deleteIcon" size="18px"/>
-                </template>
-            </van-cell>
-            <div class="historyFather">
-                <div v-for="(item,index) in $store.state.historyList" class="historySon" @click="historysearch(item)"><p
-                        style="font-size: 14px">{{item}}</p></div>
-            </div>
+    <div v-if="$store.state.historyList.length!==0">
+        <van-cell title="历史记录" style="padding-top: 0" title-class="title">
+            <!-- 使用 right-icon 插槽来自定义右侧图标 -->
+            <template #right-icon>
+                <van-icon name="delete" class="delete-icon" @click="deleteIcon" size="18px"/>
+            </template>
+        </van-cell>
+        <div class="historyFather">
+            <div v-for="(item,index) in $store.state.historyList" class="historySon" @click="historysearch(item)"><p
+                    style="font-size: 14px">{{item}}</p></div>
         </div>
+    </div>
 </template>
 
 <script>
-    import {Icon} from 'vant';
-    import {Dialog} from 'vant';
+
     import {GetSearchApi} from "../../../http/all-api";
-    import { Cell, CellGroup } from 'vant';
+    import {Cell, CellGroup, Icon, Dialog} from 'vant';
 
     export default {
         name: "historcalRecord",
@@ -38,7 +37,7 @@
                     });
             },
             historysearch(item) {
-                GetSearchApi(item,'1018').then(res => {
+                GetSearchApi(item, '1018').then(res => {
                     let lists = res.data.result;
 
                     console.log(res);
@@ -58,8 +57,8 @@
         components: {
             [Icon.name]: Icon,
             [Dialog.Component.name]: Dialog.Component,
-            [Cell.name]:Cell,
-            [CellGroup.name]:CellGroup
+            [Cell.name]: Cell,
+            [CellGroup.name]: CellGroup
         },
     }
 </script>
