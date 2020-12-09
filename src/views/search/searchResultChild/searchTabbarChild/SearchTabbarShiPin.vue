@@ -3,7 +3,7 @@
         <div v-for="item in this.videos">
             <van-card @click="getVideoDetailData(item.vid,item.type)">
                 <template #thumb>
-                    <img :src="item.coverUrl" style="width: 130px;height: auto">
+                    <van-image :src="item.coverUrl" style="width: 130px;height: auto" lazy-load />
                     <span style="position: absolute;left: 85px;color: white">{{Math.round(item.playTime/10000*Math.pow(10,1))/Math.pow(10,1)}}万</span>
                 </template>
                 <template #title>
@@ -25,7 +25,7 @@
     import {Icon} from "vant";
     import {Button} from 'vant';
     import {Card} from 'vant';
-    import {Tag} from 'vant';
+    import {Tag,Image as VanImage} from 'vant';
     import {formatDuring} from "../../../../components/common/utils";
     import {Cell, CellGroup} from 'vant';
     import {GetSearchApi} from "../../../../http/all-api";
@@ -44,6 +44,7 @@
             [Tag.name]: Tag,
             [Cell.name]: Cell,
             [CellGroup.name]: CellGroup,
+            [VanImage.name]:VanImage
         },
         created() {
             GetSearchApi(this.$store.state.addWord, '1014').then(res => {
