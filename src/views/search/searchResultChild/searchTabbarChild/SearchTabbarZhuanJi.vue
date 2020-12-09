@@ -4,7 +4,7 @@
             <van-cell @click="pushAlbum(item.id)">
                 <!-- 使用 right-icon 插槽来自定义右侧图标 -->
                 <template #icon>
-                    <img :src="item.picUrl" style="width: 60px;height: auto;">
+                    <van-image :src="item.picUrl" style="width: 60px;height: auto;" lazy-load/>
                 </template>
                 <template #title>
                     <div>
@@ -30,7 +30,7 @@
     import {Button} from 'vant';
     import {Card} from 'vant';
     import {Tag} from 'vant';
-    import {Cell, CellGroup} from 'vant';
+    import {Cell, CellGroup,Image as VanImage} from 'vant';
     import {formatDate, formatDuring} from "../../../../components/common/utils";
     export default {
         name: "SearchTabbarZhuanJi",
@@ -46,6 +46,7 @@
             [Tag.name]: Tag,
             [Cell.name]: Cell,
             [CellGroup.name]: CellGroup,
+            [VanImage.name]:VanImage
         },
         created() {
             GetSearchApi(this.$store.state.addWord,'10').then(res => {
