@@ -18,12 +18,7 @@
 
 <script>
     import {GetSearchApi} from "../../../../http/all-api";
-    import {Icon} from "vant";
-    import {Button} from 'vant';
-    import {Card} from 'vant';
-    import {Tag} from 'vant';
-    import {Cell, CellGroup} from 'vant';
-
+    import {Button, Icon, Card, Tag, Cell, CellGroup} from 'vant';
 
     export default {
         name: "SearchTabbarGeShou",
@@ -70,8 +65,8 @@
         margin-top: 15px;
         margin-left: 20px;
     }
-    .van-cell__title{
 
+    .van-cell__title {
         border-bottom: 1px solid #f7f7f7;
     }
 </style>

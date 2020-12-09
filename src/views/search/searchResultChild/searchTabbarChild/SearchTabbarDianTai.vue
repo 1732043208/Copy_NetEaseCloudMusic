@@ -25,11 +25,7 @@
 
 <script>
     import {GetSearchApi} from "../../../../http/all-api";
-    import {Icon} from "vant";
-    import {Button} from 'vant';
-    import {Card} from 'vant';
-    import {Tag} from 'vant';
-    import {Cell, CellGroup,Image as VanImage} from 'vant';
+    import {Button, Icon, Card, Tag, Cell, CellGroup, Image as VanImage} from 'vant';
 
     export default {
         name: "SearchTabbarDianTai",
@@ -45,7 +41,7 @@
             [Tag.name]: Tag,
             [Cell.name]: Cell,
             [CellGroup.name]: CellGroup,
-            [VanImage.name]:VanImage
+            [VanImage.name]: VanImage
         },
         created() {
             GetSearchApi(this.$store.state.addWord, '1009').then(res => {
@@ -55,12 +51,12 @@
                 console.log(error);
             });
         },
-        methods:{
-            pushDianTai(id){
+        methods: {
+            pushDianTai(id) {
                 this.$router.push({
-                    path:'/Dj-detail',
-                    query:{
-                        id:id
+                    path: '/Dj-detail',
+                    query: {
+                        id: id
                     }
                 })
             }

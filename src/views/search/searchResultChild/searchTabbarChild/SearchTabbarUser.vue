@@ -1,27 +1,27 @@
 <template>
-<div>
-    <div v-for="item in $store.state.searchResultList.user.users">
-        <van-cell>
-            <!-- 使用 right-icon 插槽来自定义右侧图标 -->
-            <template #icon>
-                <img :src="item.avatarUrl" style="width: 60px;height: 60px;border-radius: 50%">
-            </template>
-            <template #title>
-                <div>
-                    <div style="position: relative;top: 10px;left: 14px">
-                        <span :style="{color:item.nickname.includes($store.state.addWord)?'#5A6E88':''}">{{item.nickname}}</span>
+    <div>
+        <div v-for="item in $store.state.searchResultList.user.users">
+            <van-cell>
+                <!-- 使用 right-icon 插槽来自定义右侧图标 -->
+                <template #icon>
+                    <img :src="item.avatarUrl" style="width: 60px;height: 60px;border-radius: 50%">
+                </template>
+                <template #title>
+                    <div>
+                        <div style="position: relative;top: 10px;left: 14px">
+                            <span :style="{color:item.nickname.includes($store.state.addWord)?'#5A6E88':''}">{{item.nickname}}</span>
+                        </div>
                     </div>
-                </div>
-            </template>
-            <template #label>
-                <div style="position: relative;top: 5px;left: 14px">
-                    <span :style="{color:item.description.includes($store.state.addWord)?'#5A6E88':''}">{{item.description}} </span>
-                </div>
-            </template>
-            <div class="userFocus">+ 关注</div>
-        </van-cell>
+                </template>
+                <template #label>
+                    <div style="position: relative;top: 5px;left: 14px">
+                        <span :style="{color:item.description.includes($store.state.addWord)?'#5A6E88':''}">{{item.description}} </span>
+                    </div>
+                </template>
+                <div class="userFocus">+ 关注</div>
+            </van-cell>
+        </div>
     </div>
-</div>
 </template>
 
 <script>
@@ -29,7 +29,7 @@
 
     export default {
         name: "SearchTabbarUser",
-        components:{
+        components: {
             [Cell.name]: Cell,
         }
 

@@ -22,12 +22,9 @@
 </template>
 
 <script>
-    import {Icon} from "vant";
-    import {Button} from 'vant';
-    import {Card} from 'vant';
-    import {Tag,Image as VanImage} from 'vant';
+
+    import {Tag,Image as VanImage,Icon,Button,Card,Cell, CellGroup} from 'vant';
     import {formatDuring} from "../../../../components/common/utils";
-    import {Cell, CellGroup} from 'vant';
     import {GetSearchApi} from "../../../../http/all-api";
 
     export default {

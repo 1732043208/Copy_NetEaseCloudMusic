@@ -29,10 +29,8 @@
 </template>
 
 <script>
-    import {Icon} from "vant";
-    import {Button} from 'vant';
     import {GetSearchApi, GetSingerDanQuApi} from "../../../../http/all-api";
-    import {Cell, CellGroup, List, PullRefresh} from 'vant';
+    import {Cell, CellGroup, List, PullRefresh, Icon, Button} from 'vant';
 
     export default {
         name: "SearchTabbarDanQu",

@@ -26,31 +26,28 @@
 
 <script>
     import {GetSearchApi} from "../../../../http/all-api";
-    import {Icon} from "vant";
-    import {Button} from 'vant';
-    import {Card} from 'vant';
-    import {Tag} from 'vant';
-    import {Cell, CellGroup,Image as VanImage} from 'vant';
-    import {formatDate, formatDuring} from "../../../../components/common/utils";
+    import {Cell, CellGroup, Image as VanImage, Icon, Button, Card, Tag} from 'vant';
+    import {formatDate} from "../../../../components/common/utils";
+
     export default {
         name: "SearchTabbarZhuanJi",
-        data(){
-          return {
-              zhuanjis:[]
-          }
+        data() {
+            return {
+                zhuanjis: []
+            }
         },
-        components:{
+        components: {
             [Icon.name]: Icon,
             [Button.name]: Button,
             [Card.name]: Card,
             [Tag.name]: Tag,
             [Cell.name]: Cell,
             [CellGroup.name]: CellGroup,
-            [VanImage.name]:VanImage
+            [VanImage.name]: VanImage
         },
         created() {
-            GetSearchApi(this.$store.state.addWord,'10').then(res => {
-                this.zhuanjis=res.data.result.albums;
+            GetSearchApi(this.$store.state.addWord, '10').then(res => {
+                this.zhuanjis = res.data.result.albums;
                 console.log(res);
             }).catch(error => {
                 console.log(error);
@@ -62,8 +59,8 @@
                 return formatDate(date, 'yyyy.MM.dd')
             }
         },
-        methods:{
-            pushAlbum(id){
+        methods: {
+            pushAlbum(id) {
                 this.$router.push({
                     path: '/album',
                     query: {

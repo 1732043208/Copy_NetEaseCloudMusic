@@ -77,7 +77,8 @@
             <div v-for="item in $store.state.searchResultList.playList.playLists">
                 <van-card @click="getSongListData(item.id)" style="height: 90px">
                     <template #thumb>
-                        <van-image :src="item.coverImgUrl" style="width: 76px;height: 76px"  lazy-load/></template>
+                        <van-image :src="item.coverImgUrl" style="width: 76px;height: 76px" lazy-load/>
+                    </template>
                     <template #desc>
                         <div style="margin-top: 4px;overflow: hidden;text-overflow: ellipsis">
                             <span> {{item.trackCount+'首'+' by '+item.creator.nickname+','+'播放'+Math.round(item.playCount/10000*Math.pow(10,1))/Math.pow(10,1)+'万次'}}</span>
@@ -167,7 +168,9 @@
             <div v-for="item in $store.state.searchResultList.artist.artists">
                 <van-cell @click="pushSinger(item.id)">
                     <!-- 使用 right-icon 插槽来自定义右侧图标 -->
-                    <template #icon><van-image :src="item.img1v1Url" class="getgold_top_head_img" round/></template>
+                    <template #icon>
+                        <van-image :src="item.img1v1Url" class="getgold_top_head_img" round/>
+                    </template>
                     <template #title>
                         <div>
                             <div style="position: relative;top: 22px;left: 14px">
@@ -244,15 +247,9 @@
 </template>
 
 <script>
-    import {Icon} from "vant";
-    import {Button} from 'vant';
-    import {Card} from 'vant';
-    import {Tag} from 'vant';
-    import {Cell, CellGroup,Image as VanImage} from 'vant';
-    import {formatDuring} from "../../../../components/common/utils";
-
+    import {Icon, Button, Card, Tag, Cell, CellGroup, Image as VanImage} from 'vant';
+    import {formatDuring, formatDate} from "../../../../components/common/utils";
     import {GetSearchApi} from "../../../../http/all-api";
-    import {formatDate} from "../../../../components/common/utils";
 
     export default {
         name: "SearchTabbarZongHe",
@@ -337,7 +334,7 @@
             [Tag.name]: Tag,
             [Cell.name]: Cell,
             [CellGroup.name]: CellGroup,
-            [VanImage.name]:VanImage
+            [VanImage.name]: VanImage
         },
         filters: {
             // 将整数转化成分秒
