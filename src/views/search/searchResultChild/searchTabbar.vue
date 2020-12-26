@@ -34,13 +34,13 @@
 
 <script>
     import SearchTabbarZongHe from "./searchTabbarChild/SearchTabbarZongHe/SearchTabbarZongHe";
-    import SearchTabbarDanQu from "./searchTabbarChild/SearchTabbarDanQu";
-    import SearchTabbarShiPin from "./searchTabbarChild/SearchTabbarShiPin";
-    import SearchTabbarGeShou from "./searchTabbarChild/SearchTabbarGeShou";
-    import SearchTabbarZhuanJi from "./searchTabbarChild/SearchTabbarZhuanJi";
-    import SearchTabbarGeDan from "./searchTabbarChild/SearchTabbarGeDan";
-    import SearchTabbarDianTai from "./searchTabbarChild/SearchTabbarDianTai";
-    import SearchTabbarUser from "./searchTabbarChild/SearchTabbarUser"
+    import SearchTabbarDanQu from "./searchTabbarChild/SearchTabbarDanQu/SearchTabbarDanQu";
+    import SearchTabbarShiPin from "./searchTabbarChild/SearchTabbarShiPin/SearchTabbarShiPin";
+    import SearchTabbarGeShou from "./searchTabbarChild/SearchTabbarGeShou/SearchTabbarGeShou";
+    import SearchTabbarZhuanJi from "./searchTabbarChild/SearchTabbarZhuanJi/SearchTabbarZhuanJi";
+    import SearchTabbarGeDan from "./searchTabbarChild/SearchTabbarGeDan/SearchTabbarGeDan";
+    import SearchTabbarDianTai from "./searchTabbarChild/SearchTabbarDianTai/SearchTabbarDianTai";
+    import SearchTabbarUser from "./searchTabbarChild/SearchTabbarUser/SearchTabbarUser"
     import {Cell, CellGroup} from 'vant';
     import {Tab, Tabs} from 'vant';
 

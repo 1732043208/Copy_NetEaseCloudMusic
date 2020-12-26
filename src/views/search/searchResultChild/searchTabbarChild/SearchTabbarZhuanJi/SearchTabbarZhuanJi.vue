@@ -25,9 +25,9 @@
 </template>
 
 <script>
-    import {GetSearchApi} from "../../../../http/all-api";
+    import {GetSearchApi} from "../../../../../http/all-api";
     import {Cell, CellGroup, Image as VanImage, Icon, Button, Card, Tag} from 'vant';
-    import {formatDate} from "../../../../components/common/utils";
+    import {formatDate} from "../../../../../components/common/utils";
 
     export default {
         name: "SearchTabbarZhuanJi",

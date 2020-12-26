@@ -18,7 +18,7 @@
                 </template>
                 <!-- 使用 right-icon 插槽来自定义右侧图标 -->
                 <template #right-icon>
-                    <img src="../../../../../src/assets/MV.png" alt="" class="mvImg" @click.stop="pushMV(item.mv)"
+                    <img src="../../../../../assets/MV.png" alt="" class="mvImg" @click.stop="pushMV(item.mv)"
                          v-if="item.mv !== 0">
                     <van-icon name="ellipsis" class="search-icon" size="18px"/>
                 </template>
@@ -29,7 +29,7 @@
 </template>
 
 <script>
-    import {GetSearchApi, GetSingerDanQuApi} from "../../../../http/all-api";
+    import {GetSearchApi, GetSingerDanQuApi} from "../../../../../http/all-api";
     import {Cell, CellGroup, List, PullRefresh, Icon, Button} from 'vant';
 
     export default {

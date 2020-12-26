@@ -24,8 +24,8 @@
 <script>
 
     import {Tag,Image as VanImage,Icon,Button,Card,Cell, CellGroup} from 'vant';
-    import {formatDuring} from "../../../../components/common/utils";
-    import {GetSearchApi} from "../../../../http/all-api";
+    import {formatDuring} from "../../../../../components/common/utils";
+    import {GetSearchApi} from "../../../../../http/all-api";
 
     export default {
         name: "SearchTabbarShiPin",

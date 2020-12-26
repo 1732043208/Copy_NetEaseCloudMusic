@@ -21,7 +21,7 @@
 </template>
 
 <script>
-    import {GetSearchApi} from "../../../../http/all-api";
+    import {GetSearchApi} from "../../../../../http/all-api";
     import {Button, Card, Cell, CellGroup, Icon, Tag, Image as VanImage} from "vant";
 
     export default {

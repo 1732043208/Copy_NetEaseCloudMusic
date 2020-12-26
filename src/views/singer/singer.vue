@@ -131,10 +131,9 @@
                         </div>
                     </van-tab>
                     <van-tab title="歌曲" name="b"> <!--        近期热门-->
-                        <div style="margin-left: 10px;margin-top: 10px;margin-bottom: 6px">
-                            <div @click="showPopupAdd">
-                                <van-icon name="add-o"/>
-                                <span style="font-weight: bold;margin-left: 4px">收藏热门50</span>
+                        <div style="margin-left: 10px;margin-top: 10px;margin-bottom: 6px;display: flex;justify-content: space-between">
+                            <div>
+                                <span style="font-weight: bold;margin-left: 4px">播放热门50</span>
                                 <van-popup v-model="showAdd" get-container="body" :close="closeAddfunc">内容</van-popup>
                             </div>
                             <div style="float: right;display: inline-block;vertical-align: middle;margin-right: 16px"
@@ -168,7 +167,7 @@
                                 <template #right-icon>
                                     <van-icon name="play-circle-o" size="18px" style="line-height: 50px"/>
                                     <van-icon name="ellipsis" class="search-icon" size="18px"
-                                              style="line-height: 50px;margin-left: 16px"/>
+                                              style="line-height: 50px;margin-left: 16px" @click.stop/>
                                 </template>
 
                             </van-cell>
@@ -176,15 +175,15 @@
                     </van-tab>
                     <van-tab :title="'专辑'+xiangqing.albumSize" name="c">
                         <div style="margin-left: 10px;margin-top: 10px;margin-bottom: 6px">
-                            <div @click="showPopupAdd" style="float: left">
+                            <div style="float: left">
                                 <span style="font-weight: bold;margin-left: 4px;font-size: 15px">按发行时间排序</span>
                             </div>
                             <div style="float: right;display: inline-block;vertical-align: middle;margin-right: 16px"
-                                 @click="showPopup">
+                                 @click="showPopupSecond">
                                 <van-icon name="bars" size="13px" style="line-height: 20px"/>
                                 <span style="font-size: 13px">管理</span>
                                 <!--                                    底部弹出框-->
-                                <van-popup :close="closefunc" v-model="showBottom" round
+                                <van-popup :close="closefunc" v-model="showBottomSecond" round
                                            :style="{ height: '20%' ,width:'80%'}" get-container="body">
                                     <van-cell title="按发行时间排序"/>
                                     <van-cell title="按热度排序"/>
@@ -272,6 +271,7 @@
                 SingerDescribe: [],
                 xiangqing: [],
                 showBottom: false,
+                showBottomSecond: false,
                 activeName: 'a',
                 showAdd: false,
                 zhuanji: [],
@@ -388,15 +388,16 @@
             showPopup() {
                 this.showBottom = true;
             },
+            showPopupSecond() {
+                this.showBottomSecond = true;
+            },
             showPopupJuBao() {
                 this.showJuBao = true
             },
             closeJuBao() {
                 this.showJuBao = false
             },
-            showPopupAdd() {
-                this.showAdd = true;
-            },
+
             closefunc() {
                 this.showBottom = false
             },
