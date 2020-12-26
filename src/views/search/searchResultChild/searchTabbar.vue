@@ -33,7 +33,7 @@
 </template>
 
 <script>
-    import SearchTabbarZongHe from "./searchTabbarChild/SearchTabbarZongHe";
+    import SearchTabbarZongHe from "./searchTabbarChild/SearchTabbarZongHe/SearchTabbarZongHe";
     import SearchTabbarDanQu from "./searchTabbarChild/SearchTabbarDanQu";
     import SearchTabbarShiPin from "./searchTabbarChild/SearchTabbarShiPin";
     import SearchTabbarGeShou from "./searchTabbarChild/SearchTabbarGeShou";

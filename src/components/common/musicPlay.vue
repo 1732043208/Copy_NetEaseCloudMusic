@@ -1,10 +1,6 @@
 <template>
     <div class="musicPlay">
-        <audio-com
-                ref="audio"
-                :audio-src="changeMusicUrls">
-
-        </audio-com>
+        <audio-com ref="audio" :audio-src="changeMusicUrls"/>
         <!--        迷你播放器-->
         <div @click.stop="minOrMax" v-show="!isMinOrMax" class="audio-com-box-min">
             <van-image
